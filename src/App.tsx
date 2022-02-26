@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { CryptoInfo } from './models/cryptoInfo';
+import { CryptoInfo } from './models/CryptoInfo';
+import { ApiRes } from './models/ApiRes';
 
 const App: React.FC = () => {
   const [cryptoData, setCryptoData] = useState<CryptoInfo[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get('https://api.coinstats.app/public/v1/coins?skip=0');
+      const res = await axios.get<ApiRes>('https://api.coinstats.app/public/v1/coins?skip=0');
+      console.log(res);
       setCryptoData(res.data.coins);
     };
     fetchData();
