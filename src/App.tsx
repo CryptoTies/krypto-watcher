@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-function App() {
+const App: React.FC = () => {
   return <div>Hello World!</div>;
-}
+};
 
 export default App;
