@@ -5,10 +5,16 @@ import { ApiRes } from './models/ApiRes';
 
 const App: React.FC = () => {
   const [cryptoData, setCryptoData] = useState<CryptoInfo[]>([]);
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get<ApiRes>('https://api.coinstats.app/public/v1/coins?skip=0');
+      const res = await axios.get<ApiRes>(
+        'https://api.coinstats.app/public/v1/coins?skip=0'
+      );
       console.log(res);
       setCryptoData(res.data.coins);
     };
@@ -21,7 +27,7 @@ const App: React.FC = () => {
         <div key={coin.id}>
           <h2>Name: {coin.name}</h2>
           <p>Symbol: {coin.symbol}</p>
-          <p>Price: {coin.price}</p>
+          <p>Price: {formatter.format(coin.price)}</p>
         </div>
       ))}
     </div>
