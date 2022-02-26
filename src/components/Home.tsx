@@ -13,9 +13,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get<ApiRes>(
-        'https://api.coinstats.app/public/v1/coins?skip=0'
-      );
+      const res = await axios.get<ApiRes>('https://api.coinstats.app/public/v1/coins?skip=0');
       setCryptoData(res.data.coins);
     };
     fetchData();
