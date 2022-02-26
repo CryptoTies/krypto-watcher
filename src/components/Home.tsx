@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { CryptoInfo } from './models/CryptoInfo';
-import { ApiRes } from './models/ApiRes';
+import { Link } from 'react-router-dom';
+import { CryptoInfo } from '../models/CryptoInfo';
+import { ApiRes } from '../models/ApiRes';
 
-const App: React.FC = () => {
+const Home: React.FC = () => {
   const [cryptoData, setCryptoData] = useState<CryptoInfo[]>([]);
 
   useEffect(() => {
@@ -15,6 +16,16 @@ const App: React.FC = () => {
   }, []);
   return (
     <div>
+      <nav>
+        <ul>
+          <li>
+            <Link to='/login'>Login</Link>
+          </li>
+          <li>
+            <Link to='/register'>Register</Link>
+          </li>
+        </ul>
+      </nav>
       <h1>Welcome to Krypto Watcher!</h1>
       {cryptoData.map(coin => (
         <div key={coin.id}>
@@ -27,4 +38,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Home;
