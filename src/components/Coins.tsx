@@ -1,4 +1,3 @@
-import React from 'react';
 import Coin from './Coin';
 import { ICoin } from '../models/ICoin';
 
