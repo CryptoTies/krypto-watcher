@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { auth, db } from '../../firebaseConfig';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { IRegisterUser } from '../models/IRegisterUser';
 import styles from '../styles/Register.module.css';
 
 const Register = () => {
-  const [registerInfo, setRegisterInfo] = useState({
+  const [registerInfo, setRegisterInfo] = useState<IRegisterUser>({
     firstName: '',
     lastName: '',
     email: '',
@@ -53,24 +54,23 @@ const Register = () => {
         // PhotoURL: 'https://example.com/jane-q-user/profile.jpg',
       });
 
-      setRegisterInfo({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      });
-
       console.log('REGISTERED AS: ', user);
     } catch (err) {
       console.error(err);
     }
+    setRegisterInfo({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    });
   };
 
   return (
     <div>
       <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.register__form}>
         <input
           type='text'
           placeholder='First Name'
