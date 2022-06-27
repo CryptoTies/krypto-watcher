@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../firebaseConfig';
+import { auth, db } from '../../firebaseConfig';
 import axios from 'axios';
 import { ICoin } from '../models/ICoin';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
@@ -10,12 +11,13 @@ import styles from '../styles/Home.module.css';
 
 const Home = () => {
   const [cryptoData, setCryptoData] = useState<ICoin[]>([]);
+  const updateUserRef = useRef(() => {});
 
   const navigate = useNavigate();
 
-  const [user, loading] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
 
-  const fetchData = async () => {
+  const fetchCoins = async () => {
     const {
       data: { coins },
     } = await axios.get<ICryptoApiRes>(
@@ -24,13 +26,52 @@ const Home = () => {
     setCryptoData(coins);
   };
 
+  updateUserRef.current = async () => {
+    if (user) {
+      const firstName = user.displayName
+        ? user.displayName.split(' ')[0]
+        : null;
+      const lastName = user.displayName ? user.displayName.split(' ')[1] : null;
+      const userRef = doc(db, 'users', user.uid);
+      try {
+        await setDoc(
+          userRef,
+          {
+            firstName,
+            lastName,
+            email: user.email,
+            lastSeen: serverTimestamp(),
+          },
+          { merge: true }
+        );
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
   useEffect(() => {
+    if (user && !loading) {
+      updateUserRef.current();
+      fetchCoins();
+    }
     if (!user && !loading) {
       navigate('/login');
-    } else if (user) {
-      fetchData();
     }
-  }, [user, loading, navigate]);
+  }, [loading, user, navigate]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    console.error(error);
+    return (
+      <div>
+        <p>{error.message}</p>
+      </div>
+    );
+  }
 
   return (
     <>
