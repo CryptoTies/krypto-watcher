@@ -26,7 +26,7 @@ const UseFetch = (api: string) => {
       loading: true,
     }));
     try {
-      const { data } = await axios.get(api);
+      const { data } = await axios.get<ICryptoApiRes>(api);
       setAllData(currAllData => ({
         ...currAllData,
         data: data.coins as ICoin[],

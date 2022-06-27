@@ -10,7 +10,8 @@ const CoinDetails = () => {
   const {
     specificData: { data, loading, error },
   } = UseFetch(`${cryptoAPI}/${id}`);
-  console.log(data);
+
+  const coin = data as ICoin;
 
   if (loading) {
     return <div>Loading...</div>;
@@ -25,8 +26,8 @@ const CoinDetails = () => {
 
   return (
     <div>
-      <h1>Symbol: {(data as ICoin).symbol}</h1>
-      <h1>Rank: {(data as ICoin).rank}</h1>
+      <h1>Symbol: {coin.symbol}</h1>
+      <h1>Rank: {coin.rank}</h1>
     </div>
   );
 };

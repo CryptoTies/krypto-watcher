@@ -29,9 +29,11 @@ const Home = () => {
   // };
 
   const fetchCoins = async () => {
-    const res = await axios.get<ICryptoApiRes>(`${cryptoAPI}?skip=0`);
-    console.log(res.data.coins);
-    setCryptoData(res.data.coins as ICoin[]);
+    const {
+      data: { coins },
+    } = await axios.get<ICryptoApiRes>(`${cryptoAPI}?skip=0`);
+    console.log(coins);
+    setCryptoData(coins as ICoin[]);
   };
 
   updateUserRef.current = async () => {
