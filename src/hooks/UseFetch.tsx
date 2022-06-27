@@ -74,8 +74,6 @@ const UseFetch = (api: string) => {
   return {
     allData,
     specificData,
-    fetchAllData: fetchAllDataRef.current,
-    fetchSpecificData: fetchSpecificDataRef.current,
   };
 };
 
