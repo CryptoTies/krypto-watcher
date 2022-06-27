@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -7,12 +6,15 @@ import {
 } from 'firebase/auth';
 import { db, auth, googleProvider } from '../../firebaseConfig';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginInfo(currLoginInfo => ({
@@ -44,6 +46,7 @@ const Login = () => {
         { merge: true }
       );
       console.log('USER GOOGLE LOGGED IN: ', user);
+      navigate('/');
     } catch (err) {
       console.error(err);
     }
@@ -59,6 +62,7 @@ const Login = () => {
         password
       );
       console.log('LOGGED IN: ', userCredential);
+      navigate('/');
     } catch (err) {
       console.error(err);
       if (err instanceof Error) alert(err.message);

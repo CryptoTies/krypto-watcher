@@ -1,14 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ICoin } from '../models/ICoin';
 import style from '../styles/Coin.module.css';
-
-const formatPrice = (price: number) => {
-  const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  });
-  return formatter.format(price);
-};
+import { formatPrice } from '../utils/formatPrice';
 
 interface Props {
   coin: ICoin;

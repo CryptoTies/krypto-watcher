@@ -2,3 +2,12 @@
   display: flex;
   justify-content: space-around;
 }
+
+.navbar__logout {
+  color: blue;
+  text-decoration: underline;
+}
+
+.navbar__logout:hover {
+  cursor: pointer;
+}
