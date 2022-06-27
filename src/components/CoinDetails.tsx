@@ -28,6 +28,9 @@ const CoinDetails = () => {
     <div>
       <h1>Symbol: {coin.symbol}</h1>
       <h1>Rank: {coin.rank}</h1>
+      <h1>Price: {coin.price}</h1>
+      <h1>Volume: {coin.volume}</h1>
+      <h1>Market Cap: {coin.marketCap}</h1>
     </div>
   );
 };
