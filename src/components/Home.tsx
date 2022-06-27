@@ -20,11 +20,18 @@ const Home = () => {
 
   const [user, loading, error] = useAuthState(auth);
 
+  // const fetchCoins = async () => {
+  //   const {
+  //     data: { coins },
+  //   } = await axios.get<ICryptoApiRes>(`${cryptoAPI}?skip=0`);
+  //   console.log(coins);
+  //   setCryptoData(coins as ICoin[]);
+  // };
+
   const fetchCoins = async () => {
-    const {
-      data: { coins },
-    } = await axios.get<ICryptoApiRes>(`${cryptoAPI}?skip=0`);
-    setCryptoData(coins);
+    const res = await axios.get<ICryptoApiRes>(`${cryptoAPI}?skip=0`);
+    console.log(res.data.coins);
+    setCryptoData(res.data.coins as ICoin[]);
   };
 
   updateUserRef.current = async () => {

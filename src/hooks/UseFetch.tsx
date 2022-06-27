@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { ICoin } from '../models/ICoin';
 import { IFetchedData } from '../models/IFetchedData';
-
 import axios from 'axios';
+import { ICryptoApiRes } from '../models/ICryptoApiRes';
 
 const UseFetch = (api: string) => {
   const [allData, setAllData] = useState<IFetchedData>({
@@ -49,10 +49,10 @@ const UseFetch = (api: string) => {
       loading: true,
     }));
     try {
-      const { data } = await axios.get(api);
+      const res = await axios.get<ICryptoApiRes>(api);
       setSpecificData(currSpecificData => ({
         ...currSpecificData,
-        data,
+        data: res.data.coin as ICoin,
       }));
     } catch (err) {
       setSpecificData(currSpecificData => ({

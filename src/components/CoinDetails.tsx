@@ -9,13 +9,9 @@ const CoinDetails = () => {
   const { id } = params;
 
   const {
-    specificData: {
-      data: { coin },
-      loading,
-      error,
-    },
+    specificData: { data, loading, error },
   } = UseFetch(`${cryptoAPI}/${id}`);
-  console.log(coin);
+  console.log(data);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -31,7 +27,7 @@ const CoinDetails = () => {
   return (
     <div>
       CoinDetails
-      <h1>{coin?.symbol}</h1>
+      <h1>{(data as ICoin).symbol}</h1>
     </div>
   );
 };

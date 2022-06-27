@@ -1,7 +1,7 @@
 import { ICoin } from './ICoin';
 
 export interface IFetchedData {
-  data: any;
+  data: ICoin[] | ICoin;
   loading: boolean;
   error: unknown | Error;
 }
