@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { cryptoAPI } from '../utils/crypto-api';
 import UseFetch from '../hooks/UseFetch';
-import { IFetchedData } from '../models/IFetchedData';
 import { ICoin } from '../models/ICoin';
 
 const CoinDetails = () => {
@@ -26,8 +25,8 @@ const CoinDetails = () => {
 
   return (
     <div>
-      CoinDetails
-      <h1>{(data as ICoin).symbol}</h1>
+      <h1>Symbol: {(data as ICoin).symbol}</h1>
+      <h1>Rank: {(data as ICoin).rank}</h1>
     </div>
   );
 };

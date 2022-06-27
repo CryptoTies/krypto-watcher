@@ -6,7 +6,7 @@ import { ICryptoApiRes } from '../models/ICryptoApiRes';
 
 const UseFetch = (api: string) => {
   const [allData, setAllData] = useState<IFetchedData>({
-    data: [],
+    data: [] as ICoin[],
     loading: false,
     error: null,
   });
@@ -29,7 +29,7 @@ const UseFetch = (api: string) => {
       const { data } = await axios.get(api);
       setAllData(currAllData => ({
         ...currAllData,
-        data,
+        data: data.coins as ICoin[],
       }));
     } catch (err) {
       setAllData(currAllData => ({
@@ -49,10 +49,10 @@ const UseFetch = (api: string) => {
       loading: true,
     }));
     try {
-      const res = await axios.get<ICryptoApiRes>(api);
+      const { data } = await axios.get<ICryptoApiRes>(api);
       setSpecificData(currSpecificData => ({
         ...currSpecificData,
-        data: res.data.coin as ICoin,
+        data: data.coin as ICoin,
       }));
     } catch (err) {
       setSpecificData(currSpecificData => ({
