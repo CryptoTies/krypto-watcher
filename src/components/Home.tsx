@@ -4,10 +4,13 @@ import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../firebaseConfig';
 import axios from 'axios';
+import { cryptoAPI } from '../utils/crypto-api';
 import { ICoin } from '../models/ICoin';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
+import useFetch from '../hooks/UseFetch';
 import Coins from './Coins';
 import styles from '../styles/Home.module.css';
+import { IFetchedData } from '../models/IFetchedData';
 
 const Home = () => {
   const [cryptoData, setCryptoData] = useState<ICoin[]>([]);
@@ -20,9 +23,7 @@ const Home = () => {
   const fetchCoins = async () => {
     const {
       data: { coins },
-    } = await axios.get<ICryptoApiRes>(
-      'https://api.coinstats.app/public/v1/coins?skip=0'
-    );
+    } = await axios.get<ICryptoApiRes>(`${cryptoAPI}?skip=0`);
     setCryptoData(coins);
   };
 

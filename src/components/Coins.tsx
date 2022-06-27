@@ -7,6 +7,7 @@ interface Props {
 }
 
 const Coins = ({ coins }: Props) => {
+  console.log('COINS: ', coins);
   return (
     <div className={styles.coins}>
       {coins.map(coin => (
