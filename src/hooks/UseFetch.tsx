@@ -1,80 +1,29 @@
 import { useState, useEffect, useRef } from 'react';
-import { ICoin } from '../models/ICoin';
-import { IFetchedData } from '../models/IFetchedData';
 import axios from 'axios';
-import { ICryptoApiRes } from '../models/ICryptoApiRes';
 
 const UseFetch = (api: string) => {
-  const [allData, setAllData] = useState<IFetchedData>({
-    data: [] as ICoin[],
-    loading: false,
-    error: null,
-  });
+  const [data, setData] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<unknown | Error>();
 
-  const [specificData, setSpecificData] = useState<IFetchedData>({
-    data: {} as ICoin,
-    loading: false,
-    error: null,
-  });
+  const fetchDataRef = useRef(() => {});
 
-  const fetchAllDataRef = useRef(() => {});
-  const fetchSpecificDataRef = useRef(() => {});
-
-  fetchAllDataRef.current = async () => {
-    setAllData(currAllData => ({
-      ...currAllData,
-      loading: true,
-    }));
+  fetchDataRef.current = async () => {
+    setLoading(true);
     try {
-      const { data } = await axios.get<ICryptoApiRes>(api);
-      setAllData(currAllData => ({
-        ...currAllData,
-        data: data.coins as ICoin[],
-      }));
-    } catch (err) {
-      setAllData(currAllData => ({
-        ...currAllData,
-        error: err,
-      }));
+      const { data } = await axios.get<any>(api);
+      setData(data);
+    } catch (error) {
+      setError(error);
     }
-    setAllData(currAllData => ({
-      ...currAllData,
-      loading: false,
-    }));
-  };
-
-  fetchSpecificDataRef.current = async () => {
-    setSpecificData(currSpecificData => ({
-      ...currSpecificData,
-      loading: true,
-    }));
-    try {
-      const { data } = await axios.get<ICryptoApiRes>(api);
-      setSpecificData(currSpecificData => ({
-        ...currSpecificData,
-        data: data.coin as ICoin,
-      }));
-    } catch (err) {
-      setSpecificData(currSpecificData => ({
-        ...currSpecificData,
-        error: err,
-      }));
-    }
-    setSpecificData(currSpecificData => ({
-      ...currSpecificData,
-      loading: false,
-    }));
+    setLoading(false);
   };
 
   useEffect(() => {
-    fetchAllDataRef.current();
-    fetchSpecificDataRef.current();
+    fetchDataRef.current();
   }, []);
 
-  return {
-    allData,
-    specificData,
-  };
+  return [data, loading, error];
 };
 
 export default UseFetch;

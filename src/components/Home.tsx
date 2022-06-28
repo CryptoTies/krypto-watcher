@@ -8,11 +8,10 @@ import { ICoin } from '../models/ICoin';
 import useFetch from '../hooks/UseFetch';
 import Coins from './Coins';
 import styles from '../styles/Home.module.css';
+import { ICryptoApiRes } from '../models/ICryptoApiRes';
 
 const Home = () => {
-  const {
-    allData: { data: coins, loading: coinsLoading, error: coinsError },
-  } = useFetch(`${cryptoAPI}?skip=0`);
+  const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
 
   const [authUser, authLoading, authError] = useAuthState(auth);
 
@@ -23,7 +22,7 @@ const Home = () => {
   const anyErrors = coinsError || authError;
 
   const showHomePage =
-    authUser && !authLoading && coins && !coinsLoading && !anyErrors;
+    authUser && !authLoading && coinsData && !coinsLoading && !anyErrors;
 
   updateUserRef.current = async () => {
     if (authUser) {
@@ -76,7 +75,7 @@ const Home = () => {
       {showHomePage && (
         <div className={styles.home}>
           <h1>Welcome to Krypto Watcher!</h1>
-          <Coins coins={coins as ICoin[]} />
+          <Coins coins={(coinsData as ICryptoApiRes).coins as ICoin[]} />
         </div>
       )}
     </>
