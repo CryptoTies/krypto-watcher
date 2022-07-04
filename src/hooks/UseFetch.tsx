@@ -4,7 +4,7 @@ import axios from 'axios';
 const UseFetch = (api: string) => {
   const [data, setData] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<unknown | Error>();
+  const [error, setError] = useState<any>();
 
   const fetchDataRef = useRef(() => {});
 

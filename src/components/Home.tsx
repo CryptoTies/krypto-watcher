@@ -10,8 +10,6 @@ import Coins from './Coins';
 import styles from '../styles/Home.module.css';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
 
-type TError = Error | unknown | undefined | null;
-
 const Home = () => {
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
 
@@ -21,14 +19,14 @@ const Home = () => {
 
   const updateUserRef = useRef(() => {});
 
-  const anyErrors: TError = coinsError || authError;
+  const anyErrors = coinsError || authError;
 
   const showHomePage =
     authUser &&
     !authLoading &&
     (coinsData as ICryptoApiRes) &&
     (!coinsLoading as boolean) &&
-    (!anyErrors as TError);
+    !anyErrors;
 
   updateUserRef.current = async () => {
     if (authUser) {

@@ -24,20 +24,22 @@ const Header = () => {
   return (
     <header>
       <nav className={styles.navbar}>
-        <section>
-          <Link to='/login'>Login</Link>
-        </section>
-        <section>
-          <Link to='/register'>Register</Link>
-        </section>
-        <section>
-          <Link to='/'>Home</Link>
-        </section>
-        <section>
-          <span onClick={handleSignOut} className={styles.navbar__logout}>
-            Logout
-          </span>
-        </section>
+        <ul className={styles.navbar__list}>
+          <li>
+            <Link to='/login'>Login</Link>
+          </li>
+          <li>
+            <Link to='/register'>Register</Link>
+          </li>
+          <li>
+            <Link to='/'>Home</Link>
+          </li>
+          <li>
+            <span onClick={handleSignOut} className={styles.navbar__logout}>
+              Logout
+            </span>
+          </li>
+        </ul>
       </nav>
     </header>
   );

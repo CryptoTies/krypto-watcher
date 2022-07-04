@@ -4,14 +4,13 @@ import useFetch from '../hooks/UseFetch';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
 
 const CoinDetails = () => {
-  const params = useParams();
-  const { id } = params;
+  const { id } = useParams();
 
   const [data, loading, error] = useFetch(`${cryptoAPI}/${id}`);
 
   const coin = (data as ICryptoApiRes)?.coin;
 
-  if (loading) {
+  if (loading as boolean) {
     return <div>Loading...</div>;
   }
 

@@ -1,6 +1,4 @@
 .navbar {
-  display: flex;
-  justify-content: space-around;
 }
 
 .navbar__logout {
@@ -10,4 +8,12 @@
 
 .navbar__logout:hover {
   cursor: pointer;
+}
+
+.navbar__list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  list-style: none;
+  justify-content: space-around;
 }
