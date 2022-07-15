@@ -6,7 +6,7 @@ import { auth, db } from '../../firebaseConfig';
 import { cryptoAPI } from '../utils/crypto-api';
 import { ICoin } from '../models/ICoin';
 import useFetch from '../hooks/UseFetch';
-import Coins from './Coins';
+import Coins from '../components/Coins';
 import styles from '../styles/Home.module.css';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
 

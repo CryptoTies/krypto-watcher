@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ICoin } from '../models/ICoin';
-import style from '../styles/Coin.module.css';
 import { formatPrice } from '../utils/formatPrice';
+import style from '../styles/Coin.module.css';
 
 interface Props {
   coin: ICoin;
