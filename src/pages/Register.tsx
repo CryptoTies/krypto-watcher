@@ -53,8 +53,6 @@ const Register = () => {
         displayName: `${firstName} ${lastName}`,
         // PhotoURL: 'https://example.com/jane-q-user/profile.jpg',
       });
-
-      console.log('REGISTERED AS: ', user);
     } catch (err) {
       console.error(err);
     }
