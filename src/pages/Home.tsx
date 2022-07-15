@@ -79,7 +79,7 @@ const Home = () => {
       {showHomePage && (
         <div className={styles.home}>
           <h1>Welcome to Krypto Watcher!</h1>
-          <Coins coins={(coinsData as ICryptoApiRes).coins as ICoin[]} />
+          <Coins coins={(coinsData as ICryptoApiRes)?.coins as ICoin[]} />
         </div>
       )}
     </>

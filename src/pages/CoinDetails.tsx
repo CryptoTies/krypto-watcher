@@ -25,11 +25,25 @@ const CoinDetails = () => {
     <>
       {coin && (
         <div>
-          <h1>Symbol: {coin.symbol}</h1>
           <h1>Rank: {coin.rank}</h1>
+          <h1>Symbol: {coin.symbol}</h1>
           <h1>Price: {coin.price}</h1>
           <h1>Volume: {coin.volume}</h1>
           <h1>Market Cap: {coin.marketCap}</h1>
+          <h1>Total Supply: {coin.totalSupply}</h1>
+          <h1>Available Supply: {coin.availableSupply}</h1>
+          <h1>
+            Official Site:{' '}
+            <a href={coin.websiteUrl} target='_blank' rel='noreferrer'>
+              {coin.websiteUrl}
+            </a>
+          </h1>
+          <h1>
+            Twitter:{' '}
+            <a href={coin.twitterUrl} target='_blank' rel='noreferrer'>
+              {coin.twitterUrl}
+            </a>
+          </h1>
         </div>
       )}
     </>
