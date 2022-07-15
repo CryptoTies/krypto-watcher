@@ -42,8 +42,6 @@ const Header = () => {
     setAnchorEl(null);
   };
 
-  console.log(authUser);
-
   return (
     <header>
       <nav className={styles.navbar}>
