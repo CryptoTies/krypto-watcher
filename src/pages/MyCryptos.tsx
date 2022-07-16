@@ -14,6 +14,14 @@ function MyCryptos() {
 
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
 
+  const noIssues =
+    authUser &&
+    !authLoading &&
+    !authError &&
+    coinsData &&
+    !coinsLoading &&
+    !coinsError;
+
   const getMyCryptos = useCallback(async () => {
     if (authUser && coinsData) {
       const userRef = doc(db, 'users', authUser.uid);
@@ -29,40 +37,27 @@ function MyCryptos() {
   }, [authUser, coinsData]);
 
   useEffect(() => {
-    if (
-      authUser &&
-      !authLoading &&
-      !authError &&
-      coinsData &&
-      !coinsLoading &&
-      !coinsError
-    ) {
+    if (noIssues) {
       getMyCryptos();
     }
-  }, [
-    authUser,
-    authLoading,
-    authError,
-    coinsData,
-    coinsLoading,
-    coinsError,
-    getMyCryptos,
-  ]);
+  }, [noIssues, getMyCryptos]);
 
   if (authLoading) {
     return <div>Loading...</div>;
   }
 
-  // const showPage = authUser && !authLoading && !coinsLoading && !coinsError;
-
   return (
     <>
-      My Cryptos
-      <div>
-        {myCoins.map((coin: ICoin) => (
-          <div key={coin.id}>{coin.name}</div>
-        ))}
-      </div>
+      {noIssues && (
+        <div>
+          <h1>My Account</h1>
+          <ul>
+            {myCoins.map((coin: ICoin) => (
+              <li key={coin.id}>{coin.name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </>
   );
 }
