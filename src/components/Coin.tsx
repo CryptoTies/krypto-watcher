@@ -7,7 +7,9 @@ interface Props {
   coin: ICoin;
 }
 
-const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
+const Coin = ({
+  coin: { id, name, symbol, price, icon, rank, isFavorited },
+}: Props) => {
   return (
     <div className={style.coin}>
       <h3>Rank {rank}</h3>
@@ -17,6 +19,7 @@ const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
       <p>Symbol: {symbol}</p>
       <p>Price: {formatPrice(price)}</p>
       <img src={icon} alt={name} />
+      {isFavorited ? 'Favorited' : 'Favorite'}
     </div>
   );
 };

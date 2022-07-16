@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { db, auth, googleProvider } from '../../firebaseConfig';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -29,18 +29,20 @@ const Login = () => {
       const credential = GoogleAuthProvider.credentialFromResult(res);
       const token = credential?.accessToken;
       console.log('TOKEN: ', token);
-      const user = res.user;
+      const { user } = res;
       const firstName = user.displayName
         ? user.displayName.split(' ')[0]
         : null;
       const lastName = user.displayName ? user.displayName.split(' ')[1] : null;
       const userRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(userRef);
       await setDoc(
         userRef,
         {
           firstName,
           lastName,
           email: user.email,
+          favorites: userDoc.data()?.favorites ?? [],
           lastSeen: serverTimestamp(),
         },
         { merge: true }

@@ -16,4 +16,5 @@ export interface ICoin {
   twitterUrl: string;
   volume: number;
   websiteUrl: string;
+  isFavorited: boolean;
 }

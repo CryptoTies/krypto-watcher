@@ -55,6 +55,9 @@ const Header = () => {
           <li>
             <Link to='/'>Home</Link>
           </li>
+          <li>
+            <Link to='/my-cryptos'>My Cryptos</Link>
+          </li>
 
           {authUser && (
             <>
@@ -77,7 +80,7 @@ const Header = () => {
                     {authUser.photoURL ? (
                       <Avatar src={authUser.photoURL} />
                     ) : (
-                      <Avatar>{authUser.displayName![0]}</Avatar>
+                      <Avatar>{authUser.displayName?.[0].toUpperCase()}</Avatar>
                     )}
                   </IconButton>
                 </Tooltip>

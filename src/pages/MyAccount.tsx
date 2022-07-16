@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect, useCallback } from 'react';
 import { auth, db } from '../../firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useNavigate, useParams, Navigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 
 const MyAccount = () => {
@@ -19,18 +19,12 @@ const MyAccount = () => {
 
     setCheckedUser({
       ...userDoc.data(),
-      // uuid: userDoc.id,
     });
   }, [paramsUUID]);
 
   useEffect(() => {
     findUser();
   }, [findUser]);
-
-  console.log('authUser: ', authUser);
-  console.log('authLoading: ', authLoading);
-  console.log('authError: ', authError);
-  console.log('Checked user: ', checkedUser);
 
   if (authLoading) {
     return <div>Loading...</div>;
@@ -42,7 +36,12 @@ const MyAccount = () => {
     !authError &&
     Object.keys(checkedUser).length > 0;
 
-  if (authUser?.uid !== paramsUUID && !authLoading && !authError) {
+  if (
+    authUser?.uid !== paramsUUID &&
+    !authLoading &&
+    !authError &&
+    Object.keys(checkedUser).length === 0
+  ) {
     navigate('/');
   }
 

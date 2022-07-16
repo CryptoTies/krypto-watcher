@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../../firebaseConfig';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
@@ -6,6 +7,8 @@ import { IRegisterUser } from '../models/IRegisterUser';
 import styles from '../styles/Register.module.css';
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [registerInfo, setRegisterInfo] = useState<IRegisterUser>({
     firstName: '',
     lastName: '',
@@ -45,14 +48,15 @@ const Register = () => {
           firstName,
           lastName,
           email,
+          favorites: [],
           lastSeen: serverTimestamp(),
         },
         { merge: true }
       );
       await updateProfile(user, {
         displayName: `${firstName} ${lastName}`,
-        // PhotoURL: 'https://example.com/jane-q-user/profile.jpg',
       });
+      navigate('/');
     } catch (err) {
       console.error(err);
     }

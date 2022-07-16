@@ -1,6 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import {
+  doc,
+  setDoc,
+  serverTimestamp,
+  getDoc,
+  query,
+  where,
+} from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../firebaseConfig';
 import { cryptoAPI } from '../utils/crypto-api';
@@ -37,6 +44,7 @@ const Home = () => {
         ? authUser.displayName.split(' ')[1]
         : null;
       const userRef = doc(db, 'users', authUser.uid);
+      const userDoc = await getDoc(userRef);
       try {
         await setDoc(
           userRef,
@@ -44,6 +52,7 @@ const Home = () => {
             firstName,
             lastName,
             email: authUser.email,
+            favorites: userDoc.data()?.favorites || [],
             lastSeen: serverTimestamp(),
           },
           { merge: true }
@@ -74,12 +83,33 @@ const Home = () => {
     }
   }
 
+  const checkIfFavorited = async (coinName: string) => {
+    if (authUser) {
+      const userRef = doc(db, 'users', authUser.uid);
+      const userDoc = await getDoc(userRef);
+      console.log(userDoc.data()?.favorites.includes(coinName));
+      return userDoc.data()?.favorites.includes(coinName);
+    }
+  };
+
+  console.log(
+    'test: ',
+    checkIfFavorited('ethereum').then(doc => console.log(doc))
+  );
+
   return (
     <>
       {showHomePage && (
         <div className={styles.home}>
           <h1>Welcome to Krypto Watcher!</h1>
-          <Coins coins={(coinsData as ICryptoApiRes)?.coins as ICoin[]} />
+          <Coins
+            coins={
+              (coinsData as ICryptoApiRes)?.coins?.map(coin => ({
+                ...coin,
+                isFavorited: false,
+              })) as ICoin[]
+            }
+          />
         </div>
       )}
     </>
