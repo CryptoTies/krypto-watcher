@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import useFetch from '../hooks/UseFetch';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../firebaseConfig';
@@ -13,8 +13,6 @@ function MyCryptos() {
   const [authUser, authLoading, authError] = useAuthState(auth);
 
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
-
-  const [isCoinFavorited, setIsCoinFavorited] = useState(false);
 
   const noIssues =
     authUser &&
@@ -50,23 +48,20 @@ function MyCryptos() {
     return <div>Loading...</div>;
   }
 
-  const handleToggleFavorite = async (e: any) => {
+  const handleToggleFavorite = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
     if (authUser) {
-      const { id } = e.target;
-      console.log(id);
+      const { id } = e.target as HTMLButtonElement;
       const userRef = doc(db, 'users', authUser.uid);
       const userDoc = await getDoc(userRef);
 
-      setMyCoins(
-        myCoins.map((coin: ICoin) =>
-          coin.id === id ? { ...coin, isFavorited: !coin.isFavorited } : coin
-        )
-      );
+      setMyCoins(myCoins.filter((coin: ICoin) => coin.id !== id));
 
       await updateDoc(userRef, {
-        favorites: isCoinFavorited
-          ? userDoc.data()?.favorites.filter((coin: string) => coin !== id)
-          : [...userDoc.data()?.favorites, id],
+        favorites: userDoc
+          .data()
+          ?.favorites.filter((coin: string) => coin !== id),
       });
     }
   };
