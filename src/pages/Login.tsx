@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
+import { db, auth, googleProvider } from '../../firebaseConfig';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 import {
   signInWithPopup,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { db, auth, googleProvider } from '../../firebaseConfig';
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [loginInfo, setLoginInfo] = useState({

@@ -1,6 +1,6 @@
+import useFetch from '../hooks/UseFetch';
 import { useParams } from 'react-router-dom';
 import { cryptoAPI } from '../utils/crypto-api';
-import useFetch from '../hooks/UseFetch';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
 
 const CoinDetails = () => {

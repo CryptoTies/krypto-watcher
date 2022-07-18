@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { doc, setDoc, serverTimestamp, getDoc } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useState } from 'react';
 import { auth, db } from '../../firebaseConfig';
 import { cryptoAPI } from '../utils/crypto-api';
 import { ICoin } from '../models/ICoin';
@@ -9,11 +10,19 @@ import useFetch from '../hooks/UseFetch';
 import Coins from '../components/Coins';
 import styles from '../styles/Home.module.css';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { PAGINATION_NUM } from '../utils/pagination-num';
 
 const Home = () => {
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
 
   const [authUser, authLoading, authError] = useAuthState(auth);
+
+  const [slicedCoins, setSlicedCoins] = useState<never[]>(
+    Array.from({ length: PAGINATION_NUM })
+  );
+
+  const [endOfListMsg, setEndOfListMsg] = useState('Loading...');
 
   const navigate = useNavigate();
 
@@ -76,12 +85,41 @@ const Home = () => {
     }
   }
 
+  const fetchMoreCoins = () => {
+    setTimeout(() => {
+      const coins = (coinsData as ICryptoApiRes).coins;
+      if (
+        slicedCoins.concat(Array.from({ length: PAGINATION_NUM })).length <=
+        coins!.length
+      ) {
+        setSlicedCoins(currSliceCoins =>
+          currSliceCoins.concat(Array.from({ length: PAGINATION_NUM }))
+        );
+      } else {
+        if (coins) {
+          setSlicedCoins(coins as never[]);
+        }
+        setEndOfListMsg('No more coins to load');
+      }
+    }, 1000);
+  };
+
   return (
     <>
       {showHomePage && (
         <div className={styles.home}>
           <h1>Welcome to Krypto Watcher!</h1>
-          <Coins coins={(coinsData as ICryptoApiRes)?.coins as ICoin[]} />
+          <InfiniteScroll
+            dataLength={slicedCoins?.length}
+            next={fetchMoreCoins}
+            hasMore={true}
+            loader={<h4 className='scroll-load-text'>{endOfListMsg}</h4>}
+          >
+            <Coins
+              slicedCoins={slicedCoins}
+              coins={(coinsData as ICryptoApiRes)?.coins as ICoin[]}
+            />
+          </InfiniteScroll>
         </div>
       )}
     </>

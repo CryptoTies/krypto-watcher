@@ -4,13 +4,14 @@ import styles from '../styles/Coins.module.css';
 
 interface Props {
   coins: ICoin[];
+  slicedCoins: never[];
 }
 
-const Coins = ({ coins }: Props) => {
+const Coins = ({ coins, slicedCoins }: Props) => {
   return (
     <div className={styles.coins}>
-      {coins.map(coin => (
-        <Coin key={coin.id} coin={coin} />
+      {slicedCoins.map((_, idx) => (
+        <Coin key={idx} coin={coins[idx]} />
       ))}
     </div>
   );

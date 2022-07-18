@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ICoin } from '../models/ICoin';
 import { formatPrice } from '../utils/formatPrice';
-import style from '../styles/Coin.module.css';
 import { auth, db } from '../../firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useState, useEffect, useCallback } from 'react';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import style from '../styles/Coin.module.css';
 
 interface Props {
   coin: ICoin;
@@ -53,7 +53,7 @@ const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
   return (
     <>
       {isLoading ? (
-        <div></div>
+        <></>
       ) : (
         <div className={style.coin}>
           <h3>Rank {rank}</h3>
