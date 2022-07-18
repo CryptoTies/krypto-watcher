@@ -5,7 +5,6 @@ import style from '../styles/Coin.module.css';
 import { auth, db } from '../../firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useState, useEffect, useCallback } from 'react';
-
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 interface Props {
@@ -15,8 +14,9 @@ interface Props {
 const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
   const [authUser] = useAuthState(auth);
   const [isCoinFavorited, setIsCoinFavorited] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const checkIfFavorited = useCallback(
+  const isCoinInFavs = useCallback(
     async (coinName: string) => {
       if (authUser) {
         const userRef = doc(db, 'users', authUser.uid);
@@ -28,8 +28,11 @@ const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
   );
 
   useEffect(() => {
-    checkIfFavorited(id).then(res => setIsCoinFavorited(res));
-  }, [id, checkIfFavorited]);
+    isCoinInFavs(id).then(res => {
+      setIsCoinFavorited(res);
+      setIsLoading(false);
+    });
+  }, [id, isCoinInFavs]);
 
   const handleToggleFavorite = async () => {
     if (authUser) {
@@ -48,18 +51,24 @@ const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
   };
 
   return (
-    <div className={style.coin}>
-      <h3>Rank {rank}</h3>
-      <Link to={`/coin/${id}`}>
-        <h2>Name: {name}</h2>
-      </Link>
-      <p>Symbol: {symbol}</p>
-      <p>Price: {formatPrice(price)}</p>
-      <img src={icon} alt={name} />
-      <button onClick={handleToggleFavorite}>
-        {isCoinFavorited ? 'Favorited' : 'Favorite'}
-      </button>
-    </div>
+    <>
+      {isLoading ? (
+        <div></div>
+      ) : (
+        <div className={style.coin}>
+          <h3>Rank {rank}</h3>
+          <Link to={`/coin/${id}`}>
+            <h2>Name: {name}</h2>
+          </Link>
+          <p>Symbol: {symbol}</p>
+          <p>Price: {formatPrice(price)}</p>
+          <img src={icon} alt={name} />
+          <button onClick={handleToggleFavorite}>
+            {isCoinFavorited ? 'Favorited' : 'Favorite'}
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 
