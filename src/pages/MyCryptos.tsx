@@ -6,6 +6,7 @@ import { cryptoAPI } from '../utils/crypto-api';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import { ICoin } from '../models/ICoin';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
+import { useNavigate } from 'react-router-dom';
 
 function MyCryptos() {
   const [myCoins, setMyCoins] = useState<ICoin[]>([]);
@@ -13,6 +14,8 @@ function MyCryptos() {
   const [authUser, authLoading, authError] = useAuthState(auth);
 
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
+
+  const navigate = useNavigate();
 
   const noIssues =
     authUser &&
@@ -42,7 +45,11 @@ function MyCryptos() {
     if (noIssues) {
       getMyCryptos();
     }
-  }, [noIssues, getMyCryptos]);
+
+    if (!authUser && !authLoading) {
+      navigate('/login');
+    }
+  }, [noIssues, getMyCryptos, navigate, authUser, authLoading]);
 
   if (authLoading) {
     return <div>Loading...</div>;

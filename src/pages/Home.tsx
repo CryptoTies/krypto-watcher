@@ -101,7 +101,7 @@ const Home = () => {
         }
         setEndOfListMsg('No more coins to load');
       }
-    }, 1000);
+    }, 750);
   };
 
   return (
