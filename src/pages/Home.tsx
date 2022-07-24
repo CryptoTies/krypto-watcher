@@ -24,13 +24,14 @@ const Home = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const [showScrollLoader, setShowScrollLoader] = useState(true);
+  const [shouldFetchMoreCoins, setShouldFetchMoreCoins] = useState(true);
 
   const [endOfListMsg, setEndOfListMsg] = useState('Loading...');
 
   const navigate = useNavigate();
 
   const updateUserRef = useRef(() => {});
+
   const searchBarRef = useRef<HTMLInputElement>(null);
 
   const anyErrors = coinsError || authError;
@@ -104,11 +105,22 @@ const Home = () => {
         setSlicedCoins(coins as never[]);
         setEndOfListMsg('No more coins to load');
       }
-    }, 750);
+    }, 1000);
   };
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
+  };
+
+  const handleFetchMoreCoinsState = (state: boolean) => {
+    if (!state) setEndOfListMsg('');
+
+    const coins = (coinsData as ICryptoApiRes).coins!;
+
+    if (state && slicedCoins.length !== coins.length)
+      setEndOfListMsg('Loading...');
+
+    setShouldFetchMoreCoins(state);
   };
 
   return (
@@ -123,7 +135,7 @@ const Home = () => {
           />
           <InfiniteScroll
             dataLength={slicedCoins?.length}
-            next={fetchMoreCoins}
+            next={shouldFetchMoreCoins ? fetchMoreCoins : () => {}}
             hasMore={true}
             loader={
               <h4
@@ -141,6 +153,7 @@ const Home = () => {
               slicedCoins={slicedCoins}
               coins={(coinsData as ICryptoApiRes)?.coins as ICoin[]}
               searchQuery={searchQuery}
+              handleFetchMoreCoinsState={handleFetchMoreCoinsState}
             />
           </InfiniteScroll>
         </div>

@@ -6,15 +6,23 @@ interface Props {
   coins: ICoin[];
   slicedCoins: never[];
   searchQuery: string;
+  handleFetchMoreCoinsState: (state: boolean) => void;
 }
 
-const Coins = ({ coins, slicedCoins, searchQuery }: Props) => {
+const Coins = ({
+  coins,
+  slicedCoins,
+  searchQuery,
+  handleFetchMoreCoinsState,
+}: Props) => {
   const handleFilteredCoins = () => {
     if (searchQuery.length > 0) {
+      handleFetchMoreCoinsState(false);
       return coins.filter((coin: ICoin) =>
         coin.id.includes(searchQuery.toLowerCase().trim())
       );
     } else {
+      handleFetchMoreCoinsState(true);
       return coins
         .slice(0, slicedCoins.length)
         .filter((coin: ICoin) =>
