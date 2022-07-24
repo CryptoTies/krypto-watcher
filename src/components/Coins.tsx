@@ -9,12 +9,23 @@ interface Props {
 }
 
 const Coins = ({ coins, slicedCoins, searchQuery }: Props) => {
-  const filteredCoins = coins
-    .slice(0, slicedCoins.length)
-    .filter((coin: ICoin) => coin.id.includes(searchQuery.toLowerCase()));
+  const handleFilteredCoins = () => {
+    if (searchQuery.length > 0) {
+      return coins.filter((coin: ICoin) =>
+        coin.id.includes(searchQuery.toLowerCase().trim())
+      );
+    } else {
+      return coins
+        .slice(0, slicedCoins.length)
+        .filter((coin: ICoin) =>
+          coin.id.includes(searchQuery.toLowerCase().trim())
+        );
+    }
+  };
+  console.log('handleFilteredCoins', handleFilteredCoins());
   return (
     <div className={styles.coins}>
-      {filteredCoins.map((coin, idx) => (
+      {handleFilteredCoins().map((coin, idx) => (
         <Coin key={idx} coin={coins[coin.rank - 1]} />
       ))}
     </div>
