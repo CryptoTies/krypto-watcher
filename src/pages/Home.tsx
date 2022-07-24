@@ -87,7 +87,7 @@ const Home = () => {
 
   const fetchMoreCoins = () => {
     setTimeout(() => {
-      const coins = (coinsData as ICryptoApiRes).coins;
+      const coins = (coinsData as ICryptoApiRes).coins!;
       if (
         slicedCoins.concat(Array.from({ length: PAGINATION_NUM })).length <=
         coins!.length
@@ -96,9 +96,7 @@ const Home = () => {
           currSliceCoins.concat(Array.from({ length: PAGINATION_NUM }))
         );
       } else {
-        if (coins) {
-          setSlicedCoins(coins as never[]);
-        }
+        setSlicedCoins(coins as never[]);
         setEndOfListMsg('No more coins to load');
       }
     }, 750);
@@ -113,7 +111,17 @@ const Home = () => {
             dataLength={slicedCoins?.length}
             next={fetchMoreCoins}
             hasMore={true}
-            loader={<h4 className='scroll-load-text'>{endOfListMsg}</h4>}
+            loader={
+              <h4
+                className='scroll-load-text'
+                style={{
+                  display:
+                    slicedCoins.length <= PAGINATION_NUM ? 'none' : 'block',
+                }}
+              >
+                {endOfListMsg}
+              </h4>
+            }
           >
             <Coins
               slicedCoins={slicedCoins}
