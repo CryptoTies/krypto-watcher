@@ -1,8 +1,7 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { doc, setDoc, serverTimestamp, getDoc } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useState } from 'react';
 import { auth, db } from '../../firebaseConfig';
 import { cryptoAPI } from '../utils/crypto-api';
 import { ICoin } from '../models/ICoin';
@@ -12,6 +11,7 @@ import styles from '../styles/Home.module.css';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { PAGINATION_NUM } from '../utils/pagination-num';
+import SearchBar from '../components/SearchBar';
 
 const Home = () => {
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
@@ -22,11 +22,13 @@ const Home = () => {
     Array.from({ length: PAGINATION_NUM })
   );
 
+  const [searchQuery, setSearchQuery] = useState('');
   const [endOfListMsg, setEndOfListMsg] = useState('Loading...');
 
   const navigate = useNavigate();
 
   const updateUserRef = useRef(() => {});
+  const searchBarRef = useRef<HTMLInputElement>(null);
 
   const anyErrors = coinsError || authError;
 
@@ -102,11 +104,22 @@ const Home = () => {
     }, 750);
   };
 
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  console.log('SearchBarRef', searchBarRef?.current);
+
   return (
     <>
       {showHomePage && (
         <div className={styles.home}>
           <h1>Welcome to Krypto Watcher!</h1>
+          <SearchBar
+            ref={searchBarRef}
+            value={searchQuery}
+            onChange={onInputChange}
+          />
           <InfiniteScroll
             dataLength={slicedCoins?.length}
             next={fetchMoreCoins}
@@ -126,6 +139,7 @@ const Home = () => {
             <Coins
               slicedCoins={slicedCoins}
               coins={(coinsData as ICryptoApiRes)?.coins as ICoin[]}
+              searchQuery={searchQuery}
             />
           </InfiniteScroll>
         </div>

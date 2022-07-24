@@ -5,13 +5,17 @@ import styles from '../styles/Coins.module.css';
 interface Props {
   coins: ICoin[];
   slicedCoins: never[];
+  searchQuery: string;
 }
 
-const Coins = ({ coins, slicedCoins }: Props) => {
+const Coins = ({ coins, slicedCoins, searchQuery }: Props) => {
+  const filteredCoins = coins
+    .slice(0, slicedCoins.length)
+    .filter((coin: ICoin) => coin.id.includes(searchQuery.toLowerCase()));
   return (
     <div className={styles.coins}>
-      {slicedCoins.map((_, idx) => (
-        <Coin key={idx} coin={coins[idx]} />
+      {filteredCoins.map((coin, idx) => (
+        <Coin key={idx} coin={coins[coin.rank - 1]} />
       ))}
     </div>
   );
