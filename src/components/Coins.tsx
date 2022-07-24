@@ -1,3 +1,4 @@
+import { useEffect, useCallback } from 'react';
 import Coin from './Coin';
 import { ICoin } from '../models/ICoin';
 import styles from '../styles/Coins.module.css';
@@ -7,6 +8,7 @@ interface Props {
   slicedCoins: never[];
   searchQuery: string;
   handleFetchMoreCoinsState: (state: boolean) => void;
+  fetchMoreCoinsState: boolean;
 }
 
 const Coins = ({
@@ -14,15 +16,22 @@ const Coins = ({
   slicedCoins,
   searchQuery,
   handleFetchMoreCoinsState,
+  fetchMoreCoinsState,
 }: Props) => {
-  const handleFilteredCoins = () => {
+  useEffect(() => {
     if (searchQuery.length > 0) {
       handleFetchMoreCoinsState(false);
+    } else {
+      handleFetchMoreCoinsState(true);
+    }
+  }, [searchQuery.length, handleFetchMoreCoinsState]);
+
+  const handleFilteredCoins = () => {
+    if (!fetchMoreCoinsState) {
       return coins.filter((coin: ICoin) =>
         coin.id.includes(searchQuery.toLowerCase().trim())
       );
     } else {
-      handleFetchMoreCoinsState(true);
       return coins
         .slice(0, slicedCoins.length)
         .filter((coin: ICoin) =>
@@ -30,6 +39,9 @@ const Coins = ({
         );
     }
   };
+
+  console.log('opa');
+
   return (
     <div className={styles.coins}>
       {handleFilteredCoins().map(coin => (

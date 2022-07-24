@@ -105,7 +105,7 @@ const Home = () => {
         setSlicedCoins(coins as never[]);
         setEndOfListMsg('No more coins to load');
       }
-    }, 1000);
+    }, 1300);
   };
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -151,9 +151,10 @@ const Home = () => {
           >
             <Coins
               slicedCoins={slicedCoins}
-              coins={(coinsData as ICryptoApiRes)?.coins as ICoin[]}
+              coins={(coinsData as ICryptoApiRes)!.coins as ICoin[]}
               searchQuery={searchQuery}
               handleFetchMoreCoinsState={handleFetchMoreCoinsState}
+              fetchMoreCoinsState={shouldFetchMoreCoins}
             />
           </InfiniteScroll>
         </div>
