@@ -22,11 +22,10 @@ const Coins = ({ coins, slicedCoins, searchQuery }: Props) => {
         );
     }
   };
-  console.log('handleFilteredCoins', handleFilteredCoins());
   return (
     <div className={styles.coins}>
-      {handleFilteredCoins().map((coin, idx) => (
-        <Coin key={idx} coin={coins[coin.rank - 1]} />
+      {handleFilteredCoins().map(coin => (
+        <Coin key={coin.id} coin={coins[coin.rank - 1]} />
       ))}
     </div>
   );

@@ -23,6 +23,9 @@ const Home = () => {
   );
 
   const [searchQuery, setSearchQuery] = useState('');
+
+  const [showScrollLoader, setShowScrollLoader] = useState(true);
+
   const [endOfListMsg, setEndOfListMsg] = useState('Loading...');
 
   const navigate = useNavigate();
@@ -107,8 +110,6 @@ const Home = () => {
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
-
-  console.log('SearchBarRef', searchBarRef?.current);
 
   return (
     <>
