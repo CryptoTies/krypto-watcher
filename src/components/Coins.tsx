@@ -9,6 +9,7 @@ interface Props {
   searchQuery: string;
   handleFetchMoreCoinsState: (state: boolean) => void;
   fetchMoreCoinsState: boolean;
+  coinOptionsState: string;
 }
 
 const Coins = ({
@@ -19,13 +20,14 @@ const Coins = ({
   fetchMoreCoinsState,
 }: Props) => {
   const [filteredCoins, setFilteredCoins] = useState<ICoin[]>([]);
+
   useEffect(() => {
-    if (searchQuery.length > 0) {
+    if (searchQuery.trim().length > 0) {
       handleFetchMoreCoinsState(false);
     } else {
       handleFetchMoreCoinsState(true);
     }
-  }, [searchQuery.length, handleFetchMoreCoinsState]);
+  }, [searchQuery, handleFetchMoreCoinsState]);
 
   useEffect(() => {
     const handleFilteredCoins = () => {
@@ -47,8 +49,6 @@ const Coins = ({
     };
     handleFilteredCoins();
   }, [coins, slicedCoins, searchQuery, fetchMoreCoinsState]);
-
-  console.log('opa');
 
   return (
     <div className={styles.coins}>

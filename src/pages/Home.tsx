@@ -12,6 +12,8 @@ import { ICryptoApiRes } from '../models/ICryptoApiRes';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { PAGINATION_NUM } from '../utils/pagination-num';
 import SearchBar from '../components/SearchBar';
+import CoinFilterOptions from '../components/CoinFilterOptions';
+import { COIN_FILTER_OPTIONS } from '../models/CoinFilterOptions';
 
 const Home = () => {
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
@@ -23,6 +25,10 @@ const Home = () => {
   );
 
   const [searchQuery, setSearchQuery] = useState('');
+
+  const [coinOptionsState, setCoinOptionsState] = useState<string>(
+    COIN_FILTER_OPTIONS[0][0]
+  );
 
   const [shouldFetchMoreCoins, setShouldFetchMoreCoins] = useState(true);
 
@@ -108,7 +114,7 @@ const Home = () => {
     }, 1300);
   };
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
@@ -131,7 +137,12 @@ const Home = () => {
           <SearchBar
             ref={searchBarRef}
             value={searchQuery}
-            onChange={onInputChange}
+            onChange={onSearchInputChange}
+          />
+          <CoinFilterOptions
+            handleFilterOptionsChange={(filterState: string) =>
+              setCoinOptionsState(filterState)
+            }
           />
           <InfiniteScroll
             dataLength={slicedCoins?.length}
@@ -155,6 +166,7 @@ const Home = () => {
               searchQuery={searchQuery}
               handleFetchMoreCoinsState={handleFetchMoreCoinsState}
               fetchMoreCoinsState={shouldFetchMoreCoins}
+              coinOptionsState={coinOptionsState}
             />
           </InfiniteScroll>
         </div>
