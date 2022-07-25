@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { COIN_FILTER_OPTIONS } from '../models/CoinFilterOptions';
 
 interface Props {

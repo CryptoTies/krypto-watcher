@@ -29,6 +29,7 @@ const Coins = ({
     }
   }, [searchQuery, handleFetchMoreCoinsState]);
 
+  // edit filtering logic here
   useEffect(() => {
     const handleFilteredCoins = () => {
       if (!fetchMoreCoinsState) {
