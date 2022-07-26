@@ -81,21 +81,6 @@ const Coins = ({
     handleFilteredCoins();
   }, [coins, slicedCoins, searchQuery, fetchMoreCoinsState, coinOptionsState]);
 
-  // useEffect(() => {
-  //   const handleFilteredCoins = () => {
-  //     let coinsFiltered: ICoin[] = coins.filter((coin: ICoin) =>
-  //       coin.id.includes(searchQuery.toLowerCase().trim())
-  //     );
-
-  //     if (!fetchMoreCoinsState) {
-  //       setFilteredCoins(coinsFiltered);
-  //     } else {
-  //       setFilteredCoins(coinsFiltered.slice(0, slicedCoins.length));
-  //     }
-  //   };
-  //   handleFilteredCoins();
-  // }, [coins, slicedCoins, searchQuery, fetchMoreCoinsState]);
-
   return (
     <div className={styles.coins}>
       {filteredCoins.map(coin => (
