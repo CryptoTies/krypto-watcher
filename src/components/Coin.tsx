@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ICoin } from '../models/ICoin';
 import { formatPrice } from '../utils/formatPrice';
@@ -50,6 +51,8 @@ const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
     }
   };
 
+  console.log('Coin render');
+
   return (
     <>
       {isLoading ? (
@@ -72,4 +75,4 @@ const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
   );
 };
 
-export default Coin;
+export default memo(Coin);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import Coin from './Coin';
 import { ICoin } from '../models/ICoin';
 import styles from '../styles/Coins.module.css';
@@ -20,8 +20,6 @@ const Coins = ({
   fetchMoreCoinsState,
   coinOptionsState,
 }: Props) => {
-  const [filteredCoins, setFilteredCoins] = useState<ICoin[]>([]);
-
   useEffect(() => {
     if (searchQuery.trim().length > 0) {
       handleFetchMoreCoinsState(false);
@@ -30,60 +28,59 @@ const Coins = ({
     }
   }, [searchQuery, handleFetchMoreCoinsState]);
 
-  useEffect(() => {
-    const handleFilteredCoins = () => {
-      let coinsFiltered: ICoin[] = [];
+  const memoFilteredCoins = useMemo(() => {
+    let coinsFiltered: ICoin[] = [];
 
-      if (coinOptionsState === 'popular') {
-        coinsFiltered = coins.filter((coin: ICoin) =>
+    if (coinOptionsState === 'popular') {
+      coinsFiltered = coins.filter((coin: ICoin) =>
+        coin.id.includes(searchQuery.toLowerCase().trim())
+      );
+    }
+
+    if (coinOptionsState === 'expensive') {
+      coinsFiltered = coins
+        .filter((coin: ICoin) =>
           coin.id.includes(searchQuery.toLowerCase().trim())
-        );
-      }
+        )
+        .sort((a: ICoin, b: ICoin) => b.price - a.price);
+    }
 
-      if (coinOptionsState === 'expensive') {
-        coinsFiltered = coins
-          .filter((coin: ICoin) =>
-            coin.id.includes(searchQuery.toLowerCase().trim())
-          )
-          .sort((a: ICoin, b: ICoin) => b.price - a.price);
-      }
+    if (coinOptionsState === 'cheapest') {
+      coinsFiltered = coins
+        .filter((coin: ICoin) =>
+          coin.id.includes(searchQuery.toLowerCase().trim())
+        )
+        .sort((a: ICoin, b: ICoin) => a.price - b.price);
+    }
 
-      if (coinOptionsState === 'cheapest') {
-        coinsFiltered = coins
-          .filter((coin: ICoin) =>
-            coin.id.includes(searchQuery.toLowerCase().trim())
-          )
-          .sort((a: ICoin, b: ICoin) => a.price - b.price);
-      }
+    if (coinOptionsState === 'asc') {
+      coinsFiltered = coins
+        .filter((coin: ICoin) =>
+          coin.id.includes(searchQuery.toLowerCase().trim())
+        )
+        .sort((a: ICoin, b: ICoin) => (a.id > b.id ? 1 : -1));
+    }
 
-      if (coinOptionsState === 'asc') {
-        coinsFiltered = coins
-          .filter((coin: ICoin) =>
-            coin.id.includes(searchQuery.toLowerCase().trim())
-          )
-          .sort((a: ICoin, b: ICoin) => (a.id > b.id ? 1 : -1));
-      }
+    if (coinOptionsState === 'desc') {
+      coinsFiltered = coins
+        .filter((coin: ICoin) =>
+          coin.id.includes(searchQuery.toLowerCase().trim())
+        )
+        .sort((a: ICoin, b: ICoin) => b.id.localeCompare(a.id));
+    }
 
-      if (coinOptionsState === 'desc') {
-        coinsFiltered = coins
-          .filter((coin: ICoin) =>
-            coin.id.includes(searchQuery.toLowerCase().trim())
-          )
-          .sort((a: ICoin, b: ICoin) => b.id.localeCompare(a.id));
-      }
+    if (!fetchMoreCoinsState) {
+      return coinsFiltered;
+    } else {
+      return coinsFiltered.slice(0, slicedCoins.length);
+    }
+  }, [coinOptionsState, searchQuery, coins, slicedCoins, fetchMoreCoinsState]);
 
-      if (!fetchMoreCoinsState) {
-        setFilteredCoins(coinsFiltered);
-      } else {
-        setFilteredCoins(coinsFiltered.slice(0, slicedCoins.length));
-      }
-    };
-    handleFilteredCoins();
-  }, [coins, slicedCoins, searchQuery, fetchMoreCoinsState, coinOptionsState]);
+  console.log('Coins rendered');
 
   return (
     <div className={styles.coins}>
-      {filteredCoins.map(coin => (
+      {memoFilteredCoins.map(coin => (
         <Coin key={coin.id} coin={coins[coin.rank - 1]} />
       ))}
     </div>
