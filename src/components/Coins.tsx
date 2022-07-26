@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import Coin from './Coin';
 import { ICoin } from '../models/ICoin';
 import styles from '../styles/Coins.module.css';
@@ -18,6 +18,7 @@ const Coins = ({
   searchQuery,
   handleFetchMoreCoinsState,
   fetchMoreCoinsState,
+  coinOptionsState,
 }: Props) => {
   const [filteredCoins, setFilteredCoins] = useState<ICoin[]>([]);
 
@@ -29,23 +30,16 @@ const Coins = ({
     }
   }, [searchQuery, handleFetchMoreCoinsState]);
 
-  // edit filtering logic here
   useEffect(() => {
     const handleFilteredCoins = () => {
+      let coinsFiltered: ICoin[] = coins.filter((coin: ICoin) =>
+        coin.id.includes(searchQuery.toLowerCase().trim())
+      );
+
       if (!fetchMoreCoinsState) {
-        setFilteredCoins(
-          coins.filter((coin: ICoin) =>
-            coin.id.includes(searchQuery.toLowerCase().trim())
-          )
-        );
+        setFilteredCoins(coinsFiltered);
       } else {
-        setFilteredCoins(
-          coins
-            .slice(0, slicedCoins.length)
-            .filter((coin: ICoin) =>
-              coin.id.includes(searchQuery.toLowerCase().trim())
-            )
-        );
+        setFilteredCoins(coinsFiltered.slice(0, slicedCoins.length));
       }
     };
     handleFilteredCoins();
