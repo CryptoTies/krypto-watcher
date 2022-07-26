@@ -2,14 +2,18 @@ import { COIN_FILTER_OPTIONS } from '../models/CoinFilterOptions';
 
 interface Props {
   handleFilterOptionsChange: (filterState: string) => void;
+  coinOptionsState: string;
 }
 
-const CoinFilterOptions = ({ handleFilterOptionsChange }: Props) => {
+const CoinFilterOptions = ({
+  handleFilterOptionsChange,
+  coinOptionsState,
+}: Props) => {
   return (
     <div>
       <label htmlFor='coins'>Filter by: </label>
       <select
-        value={COIN_FILTER_OPTIONS[0][0]}
+        value={coinOptionsState}
         id='coins'
         name='coins'
         onChange={e => handleFilterOptionsChange(e.target.value)}

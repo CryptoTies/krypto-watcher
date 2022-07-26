@@ -143,6 +143,7 @@ const Home = () => {
             handleFilterOptionsChange={(filterState: string) =>
               setCoinOptionsState(filterState)
             }
+            coinOptionsState={coinOptionsState}
           />
           <InfiniteScroll
             dataLength={slicedCoins?.length}
