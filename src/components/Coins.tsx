@@ -76,8 +76,6 @@ const Coins = ({
     }
   }, [coinOptionsState, searchQuery, coins, slicedCoins, fetchMoreCoinsState]);
 
-  console.log('Coins rendered');
-
   return (
     <div className={styles.coins}>
       {memoFilteredCoins.map(coin => (

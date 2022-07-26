@@ -51,8 +51,6 @@ const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
     }
   };
 
-  console.log('Coin render');
-
   return (
     <>
       {isLoading ? (
