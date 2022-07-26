@@ -32,9 +32,45 @@ const Coins = ({
 
   useEffect(() => {
     const handleFilteredCoins = () => {
-      let coinsFiltered: ICoin[] = coins.filter((coin: ICoin) =>
-        coin.id.includes(searchQuery.toLowerCase().trim())
-      );
+      let coinsFiltered: ICoin[] = [];
+
+      if (coinOptionsState === 'popular') {
+        coinsFiltered = coins.filter((coin: ICoin) =>
+          coin.id.includes(searchQuery.toLowerCase().trim())
+        );
+      }
+
+      if (coinOptionsState === 'expensive') {
+        coinsFiltered = coins
+          .filter((coin: ICoin) =>
+            coin.id.includes(searchQuery.toLowerCase().trim())
+          )
+          .sort((a: ICoin, b: ICoin) => b.price - a.price);
+      }
+
+      if (coinOptionsState === 'cheapest') {
+        coinsFiltered = coins
+          .filter((coin: ICoin) =>
+            coin.id.includes(searchQuery.toLowerCase().trim())
+          )
+          .sort((a: ICoin, b: ICoin) => a.price - b.price);
+      }
+
+      if (coinOptionsState === 'asc') {
+        coinsFiltered = coins
+          .filter((coin: ICoin) =>
+            coin.id.includes(searchQuery.toLowerCase().trim())
+          )
+          .sort((a: ICoin, b: ICoin) => (a.id > b.id ? 1 : -1));
+      }
+
+      if (coinOptionsState === 'desc') {
+        coinsFiltered = coins
+          .filter((coin: ICoin) =>
+            coin.id.includes(searchQuery.toLowerCase().trim())
+          )
+          .sort((a: ICoin, b: ICoin) => b.id.localeCompare(a.id));
+      }
 
       if (!fetchMoreCoinsState) {
         setFilteredCoins(coinsFiltered);
@@ -43,7 +79,22 @@ const Coins = ({
       }
     };
     handleFilteredCoins();
-  }, [coins, slicedCoins, searchQuery, fetchMoreCoinsState]);
+  }, [coins, slicedCoins, searchQuery, fetchMoreCoinsState, coinOptionsState]);
+
+  // useEffect(() => {
+  //   const handleFilteredCoins = () => {
+  //     let coinsFiltered: ICoin[] = coins.filter((coin: ICoin) =>
+  //       coin.id.includes(searchQuery.toLowerCase().trim())
+  //     );
+
+  //     if (!fetchMoreCoinsState) {
+  //       setFilteredCoins(coinsFiltered);
+  //     } else {
+  //       setFilteredCoins(coinsFiltered.slice(0, slicedCoins.length));
+  //     }
+  //   };
+  //   handleFilteredCoins();
+  // }, [coins, slicedCoins, searchQuery, fetchMoreCoinsState]);
 
   return (
     <div className={styles.coins}>
