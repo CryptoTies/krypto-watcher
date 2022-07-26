@@ -9,6 +9,7 @@ const CoinFilterOptions = ({ handleFilterOptionsChange }: Props) => {
     <div>
       <label htmlFor='coins'>Filter by: </label>
       <select
+        value={COIN_FILTER_OPTIONS[0][0]}
         id='coins'
         name='coins'
         onChange={e => handleFilterOptionsChange(e.target.value)}
