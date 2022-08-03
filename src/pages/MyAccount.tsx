@@ -73,6 +73,8 @@ const MyAccount = () => {
     setNewPasswordConfirm('');
   };
 
+  console.log('AUTHUSER', authUser);
+
   return (
     <Fragment>
       {showPage && (
@@ -80,6 +82,9 @@ const MyAccount = () => {
           <h1>My Account</h1>
           <p>Full Name: {authUser.displayName}</p>
           <p>Email: {authUser.email}</p>
+          <p>Email Verified: {authUser.emailVerified.toString()}</p>
+          {authUser.phoneNumber && <p>Phone Number: {authUser.phoneNumber}</p>}
+          <p>Last Signed In: {authUser.metadata.lastSignInTime}</p>
           {authUser.phoneNumber && <p>Phone Number: {authUser.phoneNumber}</p>}
           {authProvider === EProvider.NATIVE && (
             <form onSubmit={handleSubmit}>
