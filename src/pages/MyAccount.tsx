@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { updatePassword } from 'firebase/auth';
 import { ICheckedUser } from '../models/ICheckedUser';
+import { formatPhoneNum } from '../utils/formatPhoneNum';
 
 enum EProvider {
   GOOGLE = 'google.com',
@@ -94,12 +95,9 @@ const MyAccount = () => {
           <p>Full Name: {authUser.displayName}</p>
           <p>Email: {authUser.email}</p>
           <p>Email Verified: {authUser.emailVerified.toString()}</p>
-          {authUser.phoneNumber ||
-            (checkedUser.phoneNumber && (
-              <p>
-                Phone Number: {authUser.phoneNumber || checkedUser.phoneNumber}
-              </p>
-            ))}
+          {checkedUser.phoneNumber && (
+            <p>Phone Number: {formatPhoneNum(checkedUser.phoneNumber)}</p>
+          )}
           <p>Last Signed In: {authUser.metadata.lastSignInTime}</p>
 
           {authProvider === EProvider.NATIVE && (

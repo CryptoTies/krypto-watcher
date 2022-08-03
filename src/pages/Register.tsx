@@ -57,7 +57,7 @@ const Register = () => {
           firstName,
           lastName,
           email,
-          phoneNumber: phoneNumber || null,
+          phoneNumber: phoneNumber ? '+' + phoneNumber : null,
           favorites: [],
           lastSeen: serverTimestamp(),
         },
@@ -111,7 +111,8 @@ const Register = () => {
         <PhoneInput
           country={'us'}
           value={registerInfo.phoneNumber}
-          onChange={phoneNumber => {
+          onChange={(phoneNumber, countryObj) => {
+            console.log('phoneNumber: ', phoneNumber, 'country: ', countryObj);
             setRegisterInfo(currRegisterInfo => ({
               ...currRegisterInfo,
               phoneNumber,
