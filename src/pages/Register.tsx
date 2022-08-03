@@ -5,6 +5,8 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { IRegisterUser } from '../models/IRegisterUser';
 import styles from '../styles/Register.module.css';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -13,6 +15,7 @@ const Register = () => {
     firstName: '',
     lastName: '',
     email: '',
+    phoneNumber: '',
     password: '',
     confirmPassword: '',
   });
@@ -26,8 +29,14 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { email, password, confirmPassword, firstName, lastName } =
-      registerInfo;
+    const {
+      email,
+      password,
+      confirmPassword,
+      firstName,
+      lastName,
+      phoneNumber,
+    } = registerInfo;
 
     if (password !== confirmPassword) {
       alert('Passwords do not match');
@@ -48,6 +57,7 @@ const Register = () => {
           firstName,
           lastName,
           email,
+          phoneNumber: phoneNumber || null,
           favorites: [],
           lastSeen: serverTimestamp(),
         },
@@ -64,6 +74,7 @@ const Register = () => {
       firstName: '',
       lastName: '',
       email: '',
+      phoneNumber: '',
       password: '',
       confirmPassword: '',
     });
@@ -79,6 +90,7 @@ const Register = () => {
           name='firstName'
           value={registerInfo.firstName}
           onChange={handleChange}
+          required
         />
         <input
           type='text'
@@ -86,6 +98,7 @@ const Register = () => {
           name='lastName'
           value={registerInfo.lastName}
           onChange={handleChange}
+          required
         />
         <input
           type='email'
@@ -93,6 +106,17 @@ const Register = () => {
           name='email'
           value={registerInfo.email}
           onChange={handleChange}
+          required
+        />
+        <PhoneInput
+          country={'us'}
+          value={registerInfo.phoneNumber}
+          onChange={phoneNumber => {
+            setRegisterInfo(currRegisterInfo => ({
+              ...currRegisterInfo,
+              phoneNumber,
+            }));
+          }}
         />
         <input
           type='password'
@@ -100,6 +124,7 @@ const Register = () => {
           name='password'
           value={registerInfo.password}
           onChange={handleChange}
+          required
         />
         <input
           type='password'
@@ -107,6 +132,7 @@ const Register = () => {
           name='confirmPassword'
           value={registerInfo.confirmPassword}
           onChange={handleChange}
+          required
         />
         <button type='submit'>Register</button>
       </form>

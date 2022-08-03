@@ -4,6 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate, useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { updatePassword } from 'firebase/auth';
+import { ICheckedUser } from '../models/ICheckedUser';
 
 enum EProvider {
   GOOGLE = 'google.com',
@@ -12,7 +13,14 @@ enum EProvider {
 
 const MyAccount = () => {
   const [authUser, authLoading, authError] = useAuthState(auth);
-  const [checkedUser, setCheckedUser] = useState({});
+  const [checkedUser, setCheckedUser] = useState<ICheckedUser>({
+    email: '',
+    favorites: [],
+    firstName: '',
+    lastName: '',
+    phoneNumber: null,
+    lastSeen: {},
+  });
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
 
@@ -28,7 +36,7 @@ const MyAccount = () => {
     authUser.uid === paramsUUID &&
     !authLoading &&
     !authError &&
-    Object.keys(checkedUser).length > 0;
+    checkedUser.email;
 
   const findUser = useCallback(async () => {
     const userRef = doc(db, 'users', paramsUUID as string);
@@ -36,7 +44,12 @@ const MyAccount = () => {
     const userDoc = await getDoc(userRef);
 
     setCheckedUser({
-      ...userDoc.data(),
+      email: userDoc.data()?.email,
+      favorites: userDoc.data()?.favorites,
+      firstName: userDoc.data()?.firstName,
+      lastName: userDoc.data()?.lastName,
+      phoneNumber: userDoc.data()?.phoneNumber ?? null,
+      lastSeen: userDoc.data()?.lastSeen,
     });
   }, [paramsUUID]);
 
@@ -52,7 +65,7 @@ const MyAccount = () => {
     authUser?.uid !== paramsUUID &&
     !authLoading &&
     !authError &&
-    Object.keys(checkedUser).length === 0
+    checkedUser.email
   ) {
     navigate('/');
   }
@@ -73,8 +86,6 @@ const MyAccount = () => {
     setNewPasswordConfirm('');
   };
 
-  console.log('AUTHUSER', authUser);
-
   return (
     <Fragment>
       {showPage && (
@@ -83,9 +94,14 @@ const MyAccount = () => {
           <p>Full Name: {authUser.displayName}</p>
           <p>Email: {authUser.email}</p>
           <p>Email Verified: {authUser.emailVerified.toString()}</p>
-          {authUser.phoneNumber && <p>Phone Number: {authUser.phoneNumber}</p>}
+          {authUser.phoneNumber ||
+            (checkedUser.phoneNumber && (
+              <p>
+                Phone Number: {authUser.phoneNumber || checkedUser.phoneNumber}
+              </p>
+            ))}
           <p>Last Signed In: {authUser.metadata.lastSignInTime}</p>
-          {authUser.phoneNumber && <p>Phone Number: {authUser.phoneNumber}</p>}
+
           {authProvider === EProvider.NATIVE && (
             <form onSubmit={handleSubmit}>
               <label htmlFor='changePW'>Change Password</label>
