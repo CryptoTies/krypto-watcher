@@ -1,2 +1,8 @@
 .home {
+  margin-top: 7rem;
+}
+
+.home__filterContainer {
+  display: flex;
+  justify-content: space-between;
 }

@@ -111,8 +111,7 @@ const Register = () => {
         <PhoneInput
           country={'us'}
           value={registerInfo.phoneNumber}
-          onChange={(phoneNumber, countryObj) => {
-            console.log('phoneNumber: ', phoneNumber, 'country: ', countryObj);
+          onChange={phoneNumber => {
             setRegisterInfo(currRegisterInfo => ({
               ...currRegisterInfo,
               phoneNumber,

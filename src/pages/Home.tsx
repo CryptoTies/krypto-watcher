@@ -134,17 +134,19 @@ const Home = () => {
       {showHomePage && (
         <div className={styles.home}>
           <h1>Welcome to Krypto Watcher!</h1>
-          <SearchBar
-            ref={searchBarRef}
-            value={searchQuery}
-            onChange={onSearchInputChange}
-          />
-          <CoinFilterOptions
-            handleFilterOptionsChange={(filterState: string) =>
-              setCoinOptionsState(filterState)
-            }
-            coinOptionsState={coinOptionsState}
-          />
+          <div className={styles.home__filterContainer}>
+            <SearchBar
+              ref={searchBarRef}
+              value={searchQuery}
+              onChange={onSearchInputChange}
+            />
+            <CoinFilterOptions
+              handleFilterOptionsChange={(filterState: string) =>
+                setCoinOptionsState(filterState)
+              }
+              coinOptionsState={coinOptionsState}
+            />
+          </div>
           <InfiniteScroll
             dataLength={slicedCoins?.length}
             next={shouldFetchMoreCoins ? fetchMoreCoins : () => {}}

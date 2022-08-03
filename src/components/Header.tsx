@@ -13,6 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Logout from '@mui/icons-material/Logout';
 import styles from '../styles/Header.module.css';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   const [authUser] = useAuthState(auth);
@@ -42,21 +43,49 @@ const Header = () => {
     setAnchorEl(null);
   };
 
+  let activeStyle = {
+    color: 'gold',
+  };
+
+  let unActiveStyle = {
+    color: 'white',
+  };
+
   return (
-    <header>
+    <header className={styles.header}>
       <nav className={styles.navbar}>
         <ul className={styles.navbar__list}>
           <li>
-            <Link to='/login'>Login</Link>
+            <NavLink
+              to='/login'
+              style={({ isActive }) => (isActive ? activeStyle : unActiveStyle)}
+            >
+              Login
+            </NavLink>
           </li>
           <li>
-            <Link to='/register'>Register</Link>
+            <NavLink
+              to='/register'
+              style={({ isActive }) => (isActive ? activeStyle : unActiveStyle)}
+            >
+              Register
+            </NavLink>
           </li>
           <li>
-            <Link to='/'>Home</Link>
+            <NavLink
+              to='/home'
+              style={({ isActive }) => (isActive ? activeStyle : unActiveStyle)}
+            >
+              Home
+            </NavLink>
           </li>
           <li>
-            <Link to='/my-cryptos'>My Cryptos</Link>
+            <NavLink
+              to='/my-cryptos'
+              style={({ isActive }) => (isActive ? activeStyle : unActiveStyle)}
+            >
+              My Cryptos
+            </NavLink>
           </li>
 
           {authUser && (

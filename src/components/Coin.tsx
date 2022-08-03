@@ -57,14 +57,19 @@ const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
         <></>
       ) : (
         <div className={style.coin}>
-          <h3>Rank {rank}</h3>
-          <Link to={`/coin/${id}`}>
-            <h2>Name: {name}</h2>
+          <h3 className={style.coin__rank}>Rank {rank}</h3>
+          <Link to={`/coin/${id}`} style={{ color: 'blue' }}>
+            <h2 className={style.coin__name}>Name: {name}</h2>
           </Link>
-          <p>Symbol: {symbol}</p>
-          <p>Price: {formatPrice(price)}</p>
-          <img src={icon} alt={name} />
-          <button onClick={handleToggleFavorite}>
+          <p className={style.coin__symbol}>Symbol: {symbol}</p>
+          <p className={style.coin__price}>Price: {formatPrice(price)}</p>
+          <img
+            src={icon}
+            alt={name}
+            loading='lazy'
+            className={style.coin__img}
+          />
+          <button onClick={handleToggleFavorite} className={style.coin__favBtn}>
             {isCoinFavorited ? 'Favorited' : 'Favorite'}
           </button>
         </div>
