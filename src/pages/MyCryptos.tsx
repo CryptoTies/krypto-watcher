@@ -79,19 +79,23 @@ function MyCryptos() {
       {showPage && (
         <div className={styles['my-cryptos']}>
           <h1>My Account</h1>
-          <div>
-            {myCoins.map((coin: ICoin) => (
-              <div key={coin.id}>
-                <h2>{coin.name}</h2>
-                <img src={coin.icon} alt={coin.name} loading='lazy' />
-                {coin.isFavorited && (
-                  <button id={coin.id} onClick={handleToggleFavorite}>
-                    Favorited
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
+          {myCoins.length > 0 ? (
+            <ul className={styles['my-cryptos__list']}>
+              {myCoins.map((coin: ICoin) => (
+                <li key={coin.id}>
+                  <h2>{coin.name}</h2>
+                  <img src={coin.icon} alt={coin.name} loading='lazy' />
+                  {coin.isFavorited && (
+                    <button id={coin.id} onClick={handleToggleFavorite}>
+                      Remove
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No coins added yet</p>
+          )}
         </div>
       )}
     </>

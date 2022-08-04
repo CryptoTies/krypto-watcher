@@ -56,7 +56,7 @@ const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
       {isLoading ? (
         <></>
       ) : (
-        <div className={style.coin}>
+        <li className={style.coin}>
           <h3 className={style.coin__rank}>Rank {rank}</h3>
           <Link to={`/coin/${id}`} style={{ color: 'blue' }}>
             <h2 className={style.coin__name}>Name: {name}</h2>
@@ -72,7 +72,7 @@ const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
           <button onClick={handleToggleFavorite} className={style.coin__favBtn}>
             {isCoinFavorited ? 'Favorited' : 'Favorite'}
           </button>
-        </div>
+        </li>
       )}
     </>
   );

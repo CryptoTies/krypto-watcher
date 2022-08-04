@@ -77,11 +77,11 @@ const Coins = ({
   }, [coinOptionsState, searchQuery, coins, slicedCoins, fetchMoreCoinsState]);
 
   return (
-    <div className={styles.coins}>
+    <ul className={styles.coins}>
       {memoFilteredCoins.map(coin => (
         <Coin key={coin.id} coin={coins[coin.rank - 1]} />
       ))}
-    </div>
+    </ul>
   );
 };
 
