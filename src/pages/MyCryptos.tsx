@@ -83,6 +83,7 @@ function MyCryptos() {
             {myCoins.map((coin: ICoin) => (
               <div key={coin.id}>
                 <h2>{coin.name}</h2>
+                <img src={coin.icon} alt={coin.name} loading='lazy' />
                 {coin.isFavorited && (
                   <button id={coin.id} onClick={handleToggleFavorite}>
                     Favorited
