@@ -13,7 +13,12 @@ import { ILoginUser } from '../models/ILoginUser';
 import useForm from '../hooks/UseForm';
 
 const Login = () => {
-  const [loginInfo, , handleChange, handleSubmit, clearInfo] = useForm(
+  const {
+    form: loginInfo,
+    handleChange,
+    handleSubmit,
+    clearInfo,
+  } = useForm(
     {
       email: '',
       password: '',
@@ -54,6 +59,7 @@ const Login = () => {
     } catch (err) {
       console.error(err);
     }
+    clearInfo();
   };
 
   const handleLoginSubmit = async (loginInfo: ILoginUser) => {
