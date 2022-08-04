@@ -81,7 +81,7 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className={styles.register}>
       <h1>Register</h1>
       <form onSubmit={handleSubmit} className={styles.register__form}>
         <input
@@ -134,7 +134,9 @@ const Register = () => {
           onChange={handleChange}
           required
         />
-        <button type='submit'>Register</button>
+        <button type='submit' className={styles.register__btn}>
+          Register
+        </button>
       </form>
     </div>
   );

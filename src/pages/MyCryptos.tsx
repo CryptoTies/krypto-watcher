@@ -7,6 +7,7 @@ import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import { ICoin } from '../models/ICoin';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
 import { useNavigate } from 'react-router-dom';
+import styles from '../styles/MyCryptos.module.css';
 
 function MyCryptos() {
   const [myCoins, setMyCoins] = useState<ICoin[]>([]);
@@ -17,7 +18,7 @@ function MyCryptos() {
 
   const navigate = useNavigate();
 
-  const noIssues =
+  const showPage =
     authUser &&
     !authLoading &&
     !authError &&
@@ -42,14 +43,14 @@ function MyCryptos() {
   }, [authUser, coinsData]);
 
   useEffect(() => {
-    if (noIssues) {
+    if (showPage) {
       getMyCryptos();
     }
 
     if (!authUser && !authLoading) {
       navigate('/login');
     }
-  }, [noIssues, getMyCryptos, navigate, authUser, authLoading]);
+  }, [showPage, getMyCryptos, navigate, authUser, authLoading]);
 
   if (authLoading) {
     return <div>Loading...</div>;
@@ -75,8 +76,8 @@ function MyCryptos() {
 
   return (
     <>
-      {noIssues && (
-        <div>
+      {showPage && (
+        <div className={styles['my-cryptos']}>
           <h1>My Account</h1>
           <div>
             {myCoins.map((coin: ICoin) => (

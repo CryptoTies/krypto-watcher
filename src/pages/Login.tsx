@@ -7,6 +7,7 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
+import styles from '../styles/Login.module.css';
 
 const Login = () => {
   const [loginInfo, setLoginInfo] = useState({
@@ -76,7 +77,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className={styles.login}>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <input

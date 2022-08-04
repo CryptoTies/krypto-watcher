@@ -12,8 +12,8 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Logout from '@mui/icons-material/Logout';
-import styles from '../styles/Header.module.css';
 import { NavLink } from 'react-router-dom';
+import styles from '../styles/Header.module.css';
 
 const Header = () => {
   const [authUser] = useAuthState(auth);

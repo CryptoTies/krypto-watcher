@@ -6,6 +6,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { updatePassword } from 'firebase/auth';
 import { ICheckedUser } from '../models/ICheckedUser';
 import { formatPhoneNum } from '../utils/formatPhoneNum';
+import styles from '../styles/MyAccount.module.css';
 
 enum EProvider {
   GOOGLE = 'google.com',
@@ -90,14 +91,19 @@ const MyAccount = () => {
   return (
     <Fragment>
       {showPage && (
-        <div>
+        <div className={styles['my-account']}>
           <h1>My Account</h1>
           <p>Full Name: {authUser.displayName}</p>
           <p>Email: {authUser.email}</p>
           <p>Email Verified: {authUser.emailVerified.toString()}</p>
-          {checkedUser.phoneNumber && (
-            <p>Phone Number: {formatPhoneNum(checkedUser.phoneNumber)}</p>
+          {(authUser.phoneNumber || checkedUser.phoneNumber) && (
+            <p>
+              Phone Number:{' '}
+              {formatPhoneNum(authUser.phoneNumber as string) ||
+                formatPhoneNum(checkedUser.phoneNumber as string)}
+            </p>
           )}
+
           <p>Last Signed In: {authUser.metadata.lastSignInTime}</p>
 
           {authProvider === EProvider.NATIVE && (

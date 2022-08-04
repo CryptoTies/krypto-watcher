@@ -1,4 +1,11 @@
+.register {
+  margin-top: var(--header-margin);
+}
+
 .register__form {
   display: flex;
   flex-direction: column;
+}
+
+.register__btn {
 }

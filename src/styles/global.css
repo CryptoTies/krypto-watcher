@@ -1,3 +1,6 @@
+:root {
+  --header-margin: 7rem;
+}
 body {
   background: ghostwhite;
   margin: 0;
