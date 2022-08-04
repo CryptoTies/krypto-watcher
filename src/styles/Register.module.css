@@ -1,5 +1,6 @@
 .register {
   margin-top: var(--header-margin);
+  padding: 1rem;
 }
 
 .register__form {
@@ -8,4 +9,5 @@
 }
 
 .register__btn {
+  margin-top: 1rem !important;
 }

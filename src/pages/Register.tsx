@@ -7,6 +7,8 @@ import { IRegisterUser } from '../models/IRegisterUser';
 import styles from '../styles/Register.module.css';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import TextField from '@material-ui/core/TextField';
+import { Button, Paper } from '@material-ui/core';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -81,34 +83,36 @@ const Register = () => {
   };
 
   return (
-    <div className={styles.register}>
+    <Paper className={styles.register}>
       <h1>Register</h1>
       <form onSubmit={handleSubmit} className={styles.register__form}>
-        <input
+        <TextField
           type='text'
-          placeholder='First Name'
+          label='First Name'
           name='firstName'
           value={registerInfo.firstName}
           onChange={handleChange}
           required
         />
-        <input
+        <TextField
           type='text'
-          placeholder='Last Name'
+          label='Last Name'
           name='lastName'
           value={registerInfo.lastName}
           onChange={handleChange}
           required
         />
-        <input
+        <TextField
           type='email'
-          placeholder='Email'
+          label='Email'
           name='email'
           value={registerInfo.email}
           onChange={handleChange}
           required
         />
         <PhoneInput
+          containerStyle={{ marginTop: '1.7rem' }}
+          inputStyle={{ width: '100%' }}
           country={'us'}
           value={registerInfo.phoneNumber}
           onChange={phoneNumber => {
@@ -118,27 +122,32 @@ const Register = () => {
             }));
           }}
         />
-        <input
+        <TextField
           type='password'
-          placeholder='Password'
+          label='Password'
           name='password'
           value={registerInfo.password}
           onChange={handleChange}
           required
         />
-        <input
+        <TextField
           type='password'
-          placeholder='Confirm Password'
+          label='Confirm Password'
           name='confirmPassword'
           value={registerInfo.confirmPassword}
           onChange={handleChange}
           required
         />
-        <button type='submit' className={styles.register__btn}>
+        <Button
+          type='submit'
+          variant='contained'
+          color='primary'
+          className={styles.register__btn}
+        >
           Register
-        </button>
+        </Button>
       </form>
-    </div>
+    </Paper>
   );
 };
 

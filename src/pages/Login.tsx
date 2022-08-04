@@ -8,6 +8,8 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import styles from '../styles/Login.module.css';
+import TextField from '@material-ui/core/TextField';
+import { Button, Paper } from '@material-ui/core';
 
 const Login = () => {
   const [loginInfo, setLoginInfo] = useState({
@@ -77,27 +79,31 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.login}>
+    <Paper className={styles.login}>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <input
+        <TextField
           type='email'
           placeholder='Email'
           name='email'
           value={loginInfo.email}
           onChange={handleChange}
         />
-        <input
+        <TextField
           type='password'
           placeholder='Password'
           name='password'
           value={loginInfo.password}
           onChange={handleChange}
         />
-        <button type='submit'>Login</button>
+        <Button type='submit' variant='contained' color='primary'>
+          Login
+        </Button>
       </form>
-      <button onClick={googleSignIn}>Google Login</button>
-    </div>
+      <Button onClick={googleSignIn} variant='contained' color='secondary'>
+        Google Login
+      </Button>
+    </Paper>
   );
 };
 
