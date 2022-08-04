@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../../firebaseConfig';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
@@ -9,28 +8,26 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import TextField from '@material-ui/core/TextField';
 import { Button, Paper } from '@material-ui/core';
+import useForm from '../hooks/UseForm';
 
 const Register = () => {
   const navigate = useNavigate();
 
-  const [registerInfo, setRegisterInfo] = useState<IRegisterUser>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    password: '',
-    confirmPassword: '',
-  });
+  const [registerInfo, setRegisterInfo, handleChange, handleSubmit] = useForm(
+    {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      password: '',
+      confirmPassword: '',
+    },
+    (registerData: IRegisterUser) => {
+      handleRegisterSubmit(registerData);
+    }
+  );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRegisterInfo(currRegisterInfo => ({
-      ...currRegisterInfo,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleRegisterSubmit = async (registerInfo: IRegisterUser) => {
     const {
       email,
       password,
@@ -116,7 +113,7 @@ const Register = () => {
           country={'us'}
           value={registerInfo.phoneNumber}
           onChange={phoneNumber => {
-            setRegisterInfo(currRegisterInfo => ({
+            setRegisterInfo((currRegisterInfo: IRegisterUser) => ({
               ...currRegisterInfo,
               phoneNumber,
             }));
