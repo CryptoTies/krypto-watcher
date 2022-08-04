@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { db, auth, googleProvider } from '../../firebaseConfig';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
@@ -10,21 +9,21 @@ import {
 import styles from '../styles/Login.module.css';
 import TextField from '@material-ui/core/TextField';
 import { Button, Paper } from '@material-ui/core';
+import { ILoginUser } from '../models/ILoginUser';
+import useForm from '../hooks/UseForm';
 
 const Login = () => {
-  const [loginInfo, setLoginInfo] = useState({
-    email: '',
-    password: '',
-  });
+  const [loginInfo, , handleChange, handleSubmit, clearInfo] = useForm(
+    {
+      email: '',
+      password: '',
+    },
+    (loginData: ILoginUser) => {
+      handleLoginSubmit(loginData);
+    }
+  );
 
   const navigate = useNavigate();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginInfo(currLoginInfo => ({
-      ...currLoginInfo,
-      [e.target.name]: e.target.value,
-    }));
-  };
 
   const googleSignIn = async () => {
     try {
@@ -57,8 +56,7 @@ const Login = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleLoginSubmit = async (loginInfo: ILoginUser) => {
     const { email, password } = loginInfo;
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -72,10 +70,7 @@ const Login = () => {
       console.error(err);
       if (err instanceof Error) alert(err.message);
     }
-    setLoginInfo({
-      email: '',
-      password: '',
-    });
+    clearInfo();
   };
 
   return (

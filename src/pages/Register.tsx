@@ -13,19 +13,20 @@ import useForm from '../hooks/UseForm';
 const Register = () => {
   const navigate = useNavigate();
 
-  const [registerInfo, setRegisterInfo, handleChange, handleSubmit] = useForm(
-    {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      password: '',
-      confirmPassword: '',
-    },
-    (registerData: IRegisterUser) => {
-      handleRegisterSubmit(registerData);
-    }
-  );
+  const [registerInfo, setRegisterInfo, handleChange, handleSubmit, clearInfo] =
+    useForm(
+      {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        confirmPassword: '',
+      },
+      (registerData: IRegisterUser) => {
+        handleRegisterSubmit(registerData);
+      }
+    );
 
   const handleRegisterSubmit = async (registerInfo: IRegisterUser) => {
     const {
@@ -69,14 +70,7 @@ const Register = () => {
     } catch (err) {
       console.error(err);
     }
-    setRegisterInfo({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      password: '',
-      confirmPassword: '',
-    });
+    clearInfo();
   };
 
   return (

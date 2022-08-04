@@ -15,7 +15,11 @@ const UseForm = (initialState: any, submitFn: any) => {
     submitFn(form);
   };
 
-  return [form, setForm, handleChange, handleSubmit];
+  const handleReset = () => {
+    setForm(initialState);
+  };
+
+  return [form, setForm, handleChange, handleSubmit, handleReset];
 };
 
 export default UseForm;
