@@ -10,7 +10,6 @@ import TextField from '@material-ui/core/TextField';
 import { Button, Paper } from '@material-ui/core';
 import useForm from '../hooks/UseForm';
 import { formatPhoneNum } from '../utils/formatPhoneNum';
-import _ from 'lodash';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -83,6 +82,27 @@ const Register = () => {
     clearInfo();
   };
 
+  const handleIsPhoneInputValid = (value: string, country: any) => {
+    // do this
+    console.log(country.format);
+    let formattedIntPhoneNum = '';
+    let phoneNumArr = formatPhoneNum('+' + value)
+      .replace(/[()\-.]|ext/gi, '')
+      .split(' ');
+
+    formattedIntPhoneNum += phoneNumArr[0] + ' ';
+    phoneNumArr.shift();
+    formattedIntPhoneNum += phoneNumArr.join('');
+
+    if (value.length === 0 || value === country.dialCode) {
+      return true;
+    } else if (/^(\+\d{1,3}[- ]?)?\d{7,13}$/g.test(formattedIntPhoneNum)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <Paper className={styles.register}>
       <h1>Register</h1>
@@ -134,25 +154,7 @@ const Register = () => {
               phoneNumber,
             }));
           }}
-          isValid={(value, country: any) => {
-            let str = '';
-            let trial = formatPhoneNum('+' + value)
-              .replace(/[()\-\.]|ext/gi, '')
-              .split(' ');
-
-            str += trial[0] + ' ';
-
-            trial.splice(0, 1);
-
-            str += trial.join('');
-            if (value.length === 0) {
-              return true;
-            } else if (/^(\+\d{1,3}[- ]?)?\d{7,13}$/g.test(str)) {
-              return true;
-            } else {
-              return false;
-            }
-          }}
+          isValid={handleIsPhoneInputValid}
         />
         <TextField
           type='password'
