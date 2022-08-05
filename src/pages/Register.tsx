@@ -87,7 +87,7 @@ const Register = () => {
       <form onSubmit={handleSubmit} className={styles.register__form}>
         <TextField
           type='text'
-          label='First Name'
+          label='First Name*'
           name='firstName'
           value={registerInfo.firstName}
           onChange={handleChange}
@@ -99,7 +99,7 @@ const Register = () => {
         />
         <TextField
           type='text'
-          label='Last Name'
+          label='Last Name*'
           name='lastName'
           value={registerInfo.lastName}
           onChange={handleChange}
@@ -111,7 +111,7 @@ const Register = () => {
         />
         <TextField
           type='email'
-          label='Email'
+          label='Email*'
           name='email'
           value={registerInfo.email}
           onChange={handleChange}
@@ -135,7 +135,7 @@ const Register = () => {
         />
         <TextField
           type='password'
-          label='Password'
+          label='Password*'
           name='password'
           value={registerInfo.password}
           onChange={handleChange}
@@ -147,7 +147,7 @@ const Register = () => {
         />
         <TextField
           type='password'
-          label='Confirm Password'
+          label='Confirm Password*'
           name='confirmPassword'
           value={registerInfo.confirmPassword}
           onChange={handleChange}
