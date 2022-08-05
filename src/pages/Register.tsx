@@ -9,6 +9,8 @@ import 'react-phone-input-2/lib/style.css';
 import TextField from '@material-ui/core/TextField';
 import { Button, Paper } from '@material-ui/core';
 import useForm from '../hooks/UseForm';
+import { formatPhoneNum } from '../utils/formatPhoneNum';
+import _ from 'lodash';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -131,6 +133,25 @@ const Register = () => {
               ...currRegisterInfo,
               phoneNumber,
             }));
+          }}
+          isValid={(value, country: any) => {
+            let str = '';
+            let trial = formatPhoneNum('+' + value)
+              .replace(/[()\-\.]|ext/gi, '')
+              .split(' ');
+
+            str += trial[0] + ' ';
+
+            trial.splice(0, 1);
+
+            str += trial.join('');
+            if (value.length === 0) {
+              return true;
+            } else if (/^(\+\d{1,3}[- ]?)?\d{7,13}$/g.test(str)) {
+              return true;
+            } else {
+              return false;
+            }
           }}
         />
         <TextField
