@@ -18,6 +18,8 @@ const Login = () => {
     handleChange,
     handleSubmit,
     clearInfo,
+    formIsValid,
+    errors,
   } = useForm(
     {
       email: '',
@@ -89,6 +91,11 @@ const Login = () => {
           name='email'
           value={loginInfo.email}
           onChange={handleChange}
+          onBlur={handleChange}
+          {...(errors['email'] && {
+            error: true,
+            helperText: errors['email'],
+          })}
         />
         <TextField
           type='password'
@@ -96,8 +103,18 @@ const Login = () => {
           name='password'
           value={loginInfo.password}
           onChange={handleChange}
+          onBlur={handleChange}
+          {...(errors['password'] && {
+            error: true,
+            helperText: errors['password'],
+          })}
         />
-        <Button type='submit' variant='contained' color='primary'>
+        <Button
+          type='submit'
+          variant='contained'
+          color='primary'
+          disabled={!formIsValid()}
+        >
           Login
         </Button>
       </form>
