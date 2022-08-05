@@ -66,7 +66,8 @@ const Register = () => {
           firstName,
           lastName,
           email,
-          phoneNumber: phoneNumber ? '+' + phoneNumber : null,
+          phoneNumber:
+            phoneNumber && phoneNumber.length > 3 ? '+' + phoneNumber : null,
           favorites: [],
           lastSeen: serverTimestamp(),
         },
