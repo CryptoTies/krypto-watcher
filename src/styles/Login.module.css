@@ -1,3 +1,17 @@
 .login {
   margin-top: var(--header-margin);
+  padding: 1rem;
+}
+
+.login__header {
+  text-align: center;
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login__input {
+  width: 100% !important;
 }

@@ -116,7 +116,7 @@ const Register = () => {
 
   return (
     <Paper className={styles.register}>
-      <h1>Register</h1>
+      <h1 className={styles.register__header}>Register</h1>
       <form onSubmit={handleSubmit} className={styles.register__form}>
         <TextField
           type='text'

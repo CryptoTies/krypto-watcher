@@ -3,6 +3,10 @@
   padding: 1rem;
 }
 
+.register__header {
+  text-align: center;
+}
+
 .register__form {
   display: flex;
   flex-direction: column;

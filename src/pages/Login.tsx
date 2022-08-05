@@ -19,7 +19,6 @@ const Login = () => {
     handleSubmit,
     clearInfo,
     formIsValid,
-    errors,
   } = useForm(
     {
       email: '',
@@ -83,31 +82,25 @@ const Login = () => {
 
   return (
     <Paper className={styles.login}>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
+      <h1 className={styles.login__header}>Login</h1>
+      <form onSubmit={handleSubmit} className={styles.login__form}>
         <TextField
+          className={styles.login__input}
           type='email'
           placeholder='Email'
+          label={loginInfo.email.length > 0 ? 'Email' : ''}
           name='email'
           value={loginInfo.email}
           onChange={handleChange}
-          onBlur={handleChange}
-          {...(errors['email'] && {
-            error: true,
-            helperText: errors['email'],
-          })}
         />
         <TextField
+          className={styles.login__input}
           type='password'
           placeholder='Password'
+          label={loginInfo.password.length > 0 ? 'Password' : ''}
           name='password'
           value={loginInfo.password}
           onChange={handleChange}
-          onBlur={handleChange}
-          {...(errors['password'] && {
-            error: true,
-            helperText: errors['password'],
-          })}
         />
         <Button
           type='submit'
