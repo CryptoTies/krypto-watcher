@@ -1,27 +1,60 @@
 import React, { useState } from 'react';
 
-const UseForm = (initialState: any, submitFn: any) => {
+const UseForm = (
+  initialState: any,
+  submitFn: any,
+  optionalFields?: string[]
+) => {
   const [form, setForm] = useState(initialState);
-  const [errors, setErrors] = useState();
+  const [errors, setErrors] = useState({} as any);
 
-  const validate = () => {
-    // this function will check if the form values are valid
+  const validate = (form: any) => {
+    let tempErrors: any = { ...errors };
+
+    for (let key in form) {
+      if (key === 'email' && form[key]) {
+        tempErrors[key] = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email)
+          ? ''
+          : 'Email is not valid';
+      } else if (form[key]) {
+        tempErrors[key] = '';
+      } else {
+        tempErrors[key] = 'This field is required';
+      }
+    }
+    setErrors({
+      ...tempErrors,
+    });
   };
 
   const formIsValid = () => {
-    // this function will check if the form values and return a boolean value
+    let isValid = true;
+
+    for (let key in initialState) {
+      if (Array.isArray(optionalFields) && optionalFields.includes(key)) {
+        continue;
+      }
+      if (!form[key]) {
+        isValid = false;
+      }
+    }
+
+    return isValid && Object.values(errors).every(x => x === '');
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: any) => {
     setForm((currForm: any) => ({
       ...currForm,
       [e.target.name]: e.target.value,
     }));
+    validate({ [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    submitFn(form);
+    if (formIsValid()) {
+      submitFn(form);
+    }
   };
 
   const clearInfo = () => {

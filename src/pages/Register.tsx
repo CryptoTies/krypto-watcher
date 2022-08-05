@@ -19,6 +19,8 @@ const Register = () => {
     handleChange,
     handleSubmit,
     clearInfo,
+    formIsValid,
+    errors,
   } = useForm(
     {
       firstName: '',
@@ -30,7 +32,8 @@ const Register = () => {
     },
     (registerData: IRegisterUser) => {
       handleRegisterSubmit(registerData);
-    }
+    },
+    ['phoneNumber']
   );
 
   const handleRegisterSubmit = async (registerInfo: IRegisterUser) => {
@@ -88,7 +91,11 @@ const Register = () => {
           name='firstName'
           value={registerInfo.firstName}
           onChange={handleChange}
-          required
+          onBlur={handleChange}
+          {...(errors['firstName'] && {
+            error: true,
+            helperText: errors['firstName'],
+          })}
         />
         <TextField
           type='text'
@@ -96,7 +103,11 @@ const Register = () => {
           name='lastName'
           value={registerInfo.lastName}
           onChange={handleChange}
-          required
+          onBlur={handleChange}
+          {...(errors['lastName'] && {
+            error: true,
+            helperText: errors['lastName'],
+          })}
         />
         <TextField
           type='email'
@@ -104,7 +115,11 @@ const Register = () => {
           name='email'
           value={registerInfo.email}
           onChange={handleChange}
-          required
+          onBlur={handleChange}
+          {...(errors['email'] && {
+            error: true,
+            helperText: errors['email'],
+          })}
         />
         <PhoneInput
           containerStyle={{ marginTop: '1.7rem' }}
@@ -124,7 +139,11 @@ const Register = () => {
           name='password'
           value={registerInfo.password}
           onChange={handleChange}
-          required
+          onBlur={handleChange}
+          {...(errors['password'] && {
+            error: true,
+            helperText: errors['password'],
+          })}
         />
         <TextField
           type='password'
@@ -132,13 +151,18 @@ const Register = () => {
           name='confirmPassword'
           value={registerInfo.confirmPassword}
           onChange={handleChange}
-          required
+          onBlur={handleChange}
+          {...(errors['confirmPassword'] && {
+            error: true,
+            helperText: errors['confirmPassword'],
+          })}
         />
         <Button
           type='submit'
           variant='contained'
           color='primary'
           className={styles.register__btn}
+          disabled={!formIsValid()}
         >
           Register
         </Button>
