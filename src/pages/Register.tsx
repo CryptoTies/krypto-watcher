@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../../firebaseConfig';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
@@ -13,6 +14,8 @@ import { ECountryCodes } from '../models/ECountryCodes';
 
 const Register = () => {
   const navigate = useNavigate();
+
+  const [validPhoneNumb, setValidPhoneNumb] = useState(true);
 
   const {
     form: registerInfo,
@@ -100,10 +103,13 @@ const Register = () => {
         : value.length === ECountryCodes.TRIPLE_DIGITS_LEN - 2;
 
     if (value.length === 0 || value === country.dialCode) {
+      setValidPhoneNumb(true);
       return true;
     } else if (isPhoneNumValid) {
+      setValidPhoneNumb(true);
       return true;
     } else {
+      setValidPhoneNumb(false);
       return false;
     }
   };
@@ -190,7 +196,7 @@ const Register = () => {
           variant='contained'
           color='primary'
           className={styles.register__btn}
-          disabled={!formIsValid()}
+          disabled={!formIsValid() || !validPhoneNumb}
         >
           Register
         </Button>
