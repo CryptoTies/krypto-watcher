@@ -9,7 +9,7 @@ import 'react-phone-input-2/lib/style.css';
 import TextField from '@material-ui/core/TextField';
 import { Button, Paper } from '@material-ui/core';
 import useForm from '../hooks/UseForm';
-import { formatPhoneNum } from '../utils/formatPhoneNum';
+import { ECountryCodes } from '../models/ECountryCodes';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -83,20 +83,24 @@ const Register = () => {
   };
 
   const handleIsPhoneInputValid = (value: string, country: any) => {
-    // do this
-    console.log(country.format);
-    let formattedIntPhoneNum = '';
-    let phoneNumArr = formatPhoneNum('+' + value)
-      .replace(/[()\-.]|ext/gi, '')
-      .split(' ');
+    let periodCount = 0;
 
-    formattedIntPhoneNum += phoneNumArr[0] + ' ';
-    phoneNumArr.shift();
-    formattedIntPhoneNum += phoneNumArr.join('');
+    for (const val of country.format) {
+      if (val === '.') {
+        periodCount += 1;
+      }
+    }
+
+    let isPhoneNumValid =
+      periodCount === value.length
+        ? true
+        : periodCount === ECountryCodes.DOUBLE_DIGITS_LEN
+        ? value.length === ECountryCodes.DOUBLE_DIGITS_LEN - 1
+        : value.length === ECountryCodes.TRIPLE_DIGITS_LEN - 2;
 
     if (value.length === 0 || value === country.dialCode) {
       return true;
-    } else if (/^(\+\d{1,3}[- ]?)?\d{7,13}$/g.test(formattedIntPhoneNum)) {
+    } else if (isPhoneNumValid) {
       return true;
     } else {
       return false;
