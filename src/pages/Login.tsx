@@ -103,6 +103,7 @@ const Login = () => {
           onChange={handleChange}
         />
         <Button
+          className={styles.login__logInBtn}
           type='submit'
           variant='contained'
           color='primary'
@@ -111,9 +112,17 @@ const Login = () => {
           Login
         </Button>
       </form>
-      <Button onClick={googleSignIn} variant='contained' color='secondary'>
-        Google Login
-      </Button>
+      <p className={styles.login__or}>OR</p>
+      <div className={styles.login__googleContainer}>
+        <Button
+          onClick={googleSignIn}
+          variant='contained'
+          color='secondary'
+          className={styles.login__googleLogInBtn}
+        >
+          Google Login
+        </Button>
+      </div>
     </Paper>
   );
 };

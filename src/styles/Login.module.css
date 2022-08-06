@@ -1,5 +1,5 @@
 .login {
-  margin-top: var(--header-margin);
+  margin: var(--header-margin) 1rem 1rem 1rem;
   padding: 1rem;
 }
 
@@ -10,8 +10,30 @@
 .login__form {
   display: flex;
   flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .login__input {
   width: 100% !important;
+}
+
+.login__logInBtn {
+  margin-top: 1.5rem !important;
+}
+
+.login__googleContainer {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.login__googleLogInBtn {
+}
+
+.login__or {
+  text-align: center;
 }

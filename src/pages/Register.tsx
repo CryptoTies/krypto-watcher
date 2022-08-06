@@ -119,6 +119,7 @@ const Register = () => {
       <h1 className={styles.register__header}>Register</h1>
       <form onSubmit={handleSubmit} className={styles.register__form}>
         <TextField
+          className={styles.register__input}
           type='text'
           label='First Name*'
           name='firstName'
@@ -131,6 +132,7 @@ const Register = () => {
           })}
         />
         <TextField
+          className={styles.register__input}
           type='text'
           label='Last Name*'
           name='lastName'
@@ -143,6 +145,7 @@ const Register = () => {
           })}
         />
         <TextField
+          className={styles.register__input}
           type='email'
           label='Email*'
           name='email'
@@ -168,6 +171,7 @@ const Register = () => {
           isValid={handleIsPhoneInputValid}
         />
         <TextField
+          className={styles.register__input}
           type='password'
           label='Password*'
           name='password'
@@ -180,6 +184,7 @@ const Register = () => {
           })}
         />
         <TextField
+          className={styles.register__input}
           type='password'
           label='Confirm Password*'
           name='confirmPassword'
