@@ -1,5 +1,6 @@
 :root {
   --header-margin: 7rem;
+  --header-height: 4rem;
 }
 body {
   background: ghostwhite;
