@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import styles from '../styles/SearchBar.module.css';
 
 interface Props {
   value: string;
@@ -7,8 +8,17 @@ interface Props {
 
 const SearchBar = forwardRef<HTMLInputElement, Props>((props: Props, ref) => {
   return (
-    <form>
-      <input type='text' placeholder='Search Coin...' ref={ref} {...props} />
+    <form className={styles.searchBar}>
+      <input
+        className={styles.searchBar__input}
+        type='text'
+        placeholder='Search Coin...'
+        ref={ref}
+        {...props}
+      />
+      <button className={styles.searchBar__btn} type='button'>
+        <i className='fas fa-search'></i>
+      </button>
     </form>
   );
 });
