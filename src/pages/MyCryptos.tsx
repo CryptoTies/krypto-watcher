@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import useFetch from '../hooks/UseFetch';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../firebaseConfig';
@@ -14,10 +14,6 @@ import { IChart } from '../models/IChart';
 // import { IgrFinancialChartModule } from 'igniteui-react-charts';
 
 // IgrFinancialChartModule.register();
-
-getChartData('BTC').then(res => {
-  console.log('RES', res);
-});
 
 function MyCryptos() {
   const [myCoins, setMyCoins] = useState<ICoin[]>([]);
@@ -38,31 +34,66 @@ function MyCryptos() {
     !coinsLoading &&
     !coinsError;
 
-  const getMyCryptos = useCallback(async () => {
-    if (authUser && coinsData) {
-      const userRef = doc(db, 'users', authUser.uid);
-      const userDoc = await getDoc(userRef);
-      const myFavCoins = userDoc.data()?.favorites;
-      const coins = (coinsData as ICryptoApiRes).coins;
-      const filteredCoins = (coins as ICoin[])?.filter((coin: ICoin) =>
-        myFavCoins.includes(coin.id)
-      );
-
-      setMyCoins(
-        filteredCoins.map((coin: ICoin) => ({ ...coin, isFavorited: true }))
-      );
-    }
-  }, [authUser, coinsData]);
-
   useEffect(() => {
-    if (showPage) {
-      getMyCryptos();
-    }
-
     if (!authUser && !authLoading) {
       navigate('/login');
     }
-  }, [showPage, getMyCryptos, navigate, authUser, authLoading, myCoins]);
+  }, [navigate, authUser, authLoading]);
+
+  const memoCoins = useMemo(() => {
+    async function main() {
+      const getCoins = async () => {
+        if (authUser && coinsData) {
+          const userRef = doc(db, 'users', authUser.uid);
+          const userDoc = await getDoc(userRef);
+          const myFavCoins = userDoc.data()?.favorites;
+          const coins = (coinsData as ICryptoApiRes).coins;
+          const filteredCoins =
+            (coins as ICoin[]).filter((coin: ICoin) =>
+              myFavCoins.includes(coin.id)
+            ) ?? [];
+          return filteredCoins.map((coin: ICoin) => ({
+            ...coin,
+            isFavorited: true,
+          }));
+        }
+      };
+
+      if (showPage) {
+        return await getCoins();
+      } else {
+        return [];
+      }
+    }
+    return main();
+  }, [showPage, authUser, coinsData]);
+
+  useEffect(() => {
+    async function main() {
+      const awaitedMemoCoins = await memoCoins;
+      if (Array.isArray(awaitedMemoCoins)) {
+        setMyCoins(awaitedMemoCoins);
+      }
+    }
+    main();
+  }, [memoCoins]);
+
+  useEffect(() => {
+    async function main() {
+      if (showPage) {
+        const awaitedCharts = await Promise.all(
+          myCoins.map(async (coin: ICoin) => {
+            const chartData = await getChartData(coin.symbol);
+            console.log('awaited chart data', chartData);
+            return chartData;
+          })
+        );
+        console.log('USE EFFECT', awaitedCharts);
+        setCharts(awaitedCharts);
+      }
+    }
+    main();
+  }, [myCoins, showPage]);
 
   if (authLoading) {
     return <div>Loading...</div>;
@@ -85,6 +116,8 @@ function MyCryptos() {
       });
     }
   };
+
+  console.log('CHARTS STATE', charts);
 
   return (
     <>

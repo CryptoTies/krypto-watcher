@@ -18,7 +18,10 @@ export const getChartData = async (symbol: string) => {
     `https://www.alphavantage.co/query?function=CRYPTO_INTRADAY&symbol=${symbol}&market=USD&interval=5min&apikey=LZ830RKAZD7ZRGBM`
   );
   const data = await res.json();
-  const chartData = Object.entries(data['Time Series Crypto (5min)'])[0];
+  console.log('data', data);
+  const chartData = Object.entries(data['Time Series Crypto (5min)'])[0] ?? [];
+  console.log('Chart Data', chartData);
   const formattedChartData = formatChartData(chartData);
+  console.log('formattedChartData', formattedChartData);
   return formattedChartData;
 };
