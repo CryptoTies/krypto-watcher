@@ -26,6 +26,8 @@
     "express": "^4.18.1",
     "firebase": "^9.8.4",
     "helmet": "^5.1.0",
+    "igniteui-react-charts": "^16.16.3",
+    "igniteui-react-core": "^16.16.3",
     "libphonenumber-js": "^1.10.11",
     "lodash": "^4.17.21",
     "prettier": "^2.7.1",

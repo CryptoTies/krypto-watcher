@@ -8,6 +8,16 @@ import { ICoin } from '../models/ICoin';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MyCryptos.module.css';
+import { getChartData } from '../utils/getChartData';
+import { IChart } from '../models/IChart';
+// import { IgrFinancialChart } from 'igniteui-react-charts';
+// import { IgrFinancialChartModule } from 'igniteui-react-charts';
+
+// IgrFinancialChartModule.register();
+
+getChartData('BTC').then(res => {
+  console.log('RES', res);
+});
 
 function MyCryptos() {
   const [myCoins, setMyCoins] = useState<ICoin[]>([]);
@@ -15,6 +25,8 @@ function MyCryptos() {
   const [authUser, authLoading, authError] = useAuthState(auth);
 
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
+
+  const [charts, setCharts] = useState<IChart[]>([]);
 
   const navigate = useNavigate();
 
@@ -50,7 +62,7 @@ function MyCryptos() {
     if (!authUser && !authLoading) {
       navigate('/login');
     }
-  }, [showPage, getMyCryptos, navigate, authUser, authLoading]);
+  }, [showPage, getMyCryptos, navigate, authUser, authLoading, myCoins]);
 
   if (authLoading) {
     return <div>Loading...</div>;
@@ -96,6 +108,19 @@ function MyCryptos() {
           ) : (
             <p>No coins added yet</p>
           )}
+          {/* <section>
+            <IgrFinancialChart
+              width='100%'
+              height='100%'
+              chartType='Line'
+              thickness={2}
+              chartTitle='Google vs Microsoft Changes'
+              subtitle='Between 2013 and 2017'
+              yAxisMode='PercentChange'
+              yAxisTitle='Percent Changed'
+              dataSource={chartData}
+            />
+          </section> */}
         </div>
       )}
     </>
