@@ -1,4 +1,10 @@
 import { COIN_FILTER_OPTIONS } from '../models/CoinFilterOptions';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import styles from '../styles/CoinFilterOptions.module.css';
 
 interface Props {
   handleFilterOptionsChange: (filterState: string) => void;
@@ -10,21 +16,27 @@ const CoinFilterOptions = ({
   coinOptionsState,
 }: Props) => {
   return (
-    <div>
-      <label htmlFor='coins'>Filter by: </label>
-      <select
-        value={coinOptionsState}
-        id='coins'
-        name='coins'
-        onChange={e => handleFilterOptionsChange(e.target.value)}
-      >
-        {COIN_FILTER_OPTIONS.map((option, idx) => (
-          <option key={idx} value={option[0]}>
-            {option[1]}
-          </option>
-        ))}
-      </select>
-    </div>
+    <Box>
+      <FormControl className={styles.coinFilter__bar}>
+        <InputLabel htmlFor='coins'>Filter by: </InputLabel>
+        <Select
+          labelId='coins'
+          label='Filter by: '
+          id='coins'
+          name='coins'
+          value={coinOptionsState}
+          onChange={(e: SelectChangeEvent) =>
+            handleFilterOptionsChange(e.target.value)
+          }
+        >
+          {COIN_FILTER_OPTIONS.map((option, idx) => (
+            <MenuItem key={idx} value={option[0]}>
+              {option[1]}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   );
 };
 
