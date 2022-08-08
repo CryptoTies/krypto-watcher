@@ -171,7 +171,7 @@ function MyCryptos() {
                         height: 350,
                       },
                       title: {
-                        text: 'CandleStick Chart',
+                        text: myCoins[idx].name,
                         align: 'left',
                       },
                       xaxis: {
