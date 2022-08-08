@@ -116,28 +116,37 @@ function MyCryptos() {
     <>
       {showPage && (
         <div className={styles['my-cryptos']}>
-          <h1>My Account</h1>
+          <h1 className={styles['my-cryptos__header']}>My Cryptos</h1>
           {myCoins.length > 0 && charts.length > 0 ? (
             <ul className={styles['my-cryptos__list']}>
               {myCoins.map((coin: ICoin, idx: number) => (
                 <li key={coin.id}>
-                  <h2>{coin.name}</h2>
-                  <img src={coin.icon} alt={coin.name} loading='lazy' />
-                  {coin.isFavorited && (
-                    <button id={coin.id} onClick={handleToggleFavorite}>
-                      Remove
-                    </button>
-                  )}
-                  <Chart
-                    options={
-                      configChartOptions(coin.name) as ApexCharts.ApexOptions
-                    }
-                    series={[
-                      {
-                        data: charts[idx],
-                      },
-                    ]}
-                  />
+                  <div className={styles['my-cryptos__listSubContainer']}>
+                    <div className={styles['my-cryptos__iconContainer']}>
+                      <h2>{coin.name}</h2>
+                      <img src={coin.icon} alt={coin.name} loading='lazy' />
+                      {coin.isFavorited && (
+                        <button id={coin.id} onClick={handleToggleFavorite}>
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                    <div className={styles['my-cryptos__chartContainer']}>
+                      <Chart
+                        className={styles['my-cryptos__chart']}
+                        options={
+                          configChartOptions(
+                            coin.name
+                          ) as ApexCharts.ApexOptions
+                        }
+                        series={[
+                          {
+                            data: charts[idx],
+                          },
+                        ]}
+                      />
+                    </div>
+                  </div>
                 </li>
               ))}
             </ul>

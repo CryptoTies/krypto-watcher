@@ -2,7 +2,26 @@
   margin-top: var(--header-margin);
 }
 
+.my-cryptos__header {
+  text-align: center;
+}
+
 .my-cryptos__list {
   padding: 0;
   list-style: none;
+}
+
+.my-cryptos__chartContainer {
+}
+
+.my-cryptos__chart {
+  width: 150%;
+}
+
+.my-cryptos__iconContainer {
+}
+
+.my-cryptos__listSubContainer {
+  display: flex;
+  justify-content: space-evenly;
 }
