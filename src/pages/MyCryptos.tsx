@@ -12,6 +12,7 @@ import { getChartData } from '../utils/getChartData';
 import Chart from 'react-apexcharts';
 import { IChart } from '../models/IChart';
 import { configChartOptions } from '../utils/configChartOptions';
+import { Button } from '@mui/material';
 
 function MyCryptos() {
   const [myCoins, setMyCoins] = useState<ICoin[]>([]);
@@ -116,19 +117,29 @@ function MyCryptos() {
     <>
       {showPage && (
         <div className={styles['my-cryptos']}>
-          <h1 className={styles['my-cryptos__header']}>My Cryptos</h1>
           {myCoins.length > 0 && charts.length > 0 ? (
             <ul className={styles['my-cryptos__list']}>
               {myCoins.map((coin: ICoin, idx: number) => (
-                <li key={coin.id}>
+                <li key={coin.id} className={styles['my-cryptos__listItem']}>
                   <div className={styles['my-cryptos__listSubContainer']}>
                     <div className={styles['my-cryptos__iconContainer']}>
                       <h2>{coin.name}</h2>
-                      <img src={coin.icon} alt={coin.name} loading='lazy' />
+                      <img
+                        src={coin.icon}
+                        alt={coin.name}
+                        loading='lazy'
+                        className={styles.iconImg}
+                      />
                       {coin.isFavorited && (
-                        <button id={coin.id} onClick={handleToggleFavorite}>
+                        <Button
+                          id={coin.id}
+                          onClick={handleToggleFavorite}
+                          variant='outlined'
+                          color='warning'
+                          className={styles.removeBtn}
+                        >
                           Remove
-                        </button>
+                        </Button>
                       )}
                     </div>
                     <div className={styles['my-cryptos__chartContainer']}>
@@ -136,7 +147,7 @@ function MyCryptos() {
                         className={styles['my-cryptos__chart']}
                         options={
                           configChartOptions(
-                            coin.name
+                            coin.symbol
                           ) as ApexCharts.ApexOptions
                         }
                         series={[

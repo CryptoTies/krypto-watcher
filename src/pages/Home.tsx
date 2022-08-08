@@ -133,7 +133,6 @@ const Home = () => {
     <>
       {showHomePage && (
         <div className={styles.home}>
-          <h1 className={styles.home__header}>Welcome to Krypto Watcher!</h1>
           <div className={styles.home__filterContainer}>
             <SearchBar
               ref={searchBarRef}
