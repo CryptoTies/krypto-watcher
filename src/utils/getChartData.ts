@@ -1,10 +1,13 @@
-import { IChartData } from '../models/IChart';
+import { IChartData } from '../models/IChartData';
 
 const formatChartData = (chartData: IChartData[]) => {
   return chartData.map((chartObj: IChartData) => {
     const { time, open, high, low, close } = chartObj;
 
-    return [time, [open, high, low, close]];
+    return {
+      x: new Date(time),
+      y: [open, high, low, close],
+    };
   });
 };
 

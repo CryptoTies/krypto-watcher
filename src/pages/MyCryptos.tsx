@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import useFetch from '../hooks/UseFetch';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../firebaseConfig';
@@ -10,27 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MyCryptos.module.css';
 import { getChartData } from '../utils/getChartData';
 import Chart from 'react-apexcharts';
-
-const chartOptions = {
-  options: {
-    chart: {
-      type: 'candlestick',
-      height: 350,
-    },
-    title: {
-      text: 'CandleStick Chart',
-      align: 'left',
-    },
-    xaxis: {
-      type: 'datetime',
-    },
-    yaxis: {
-      tooltip: {
-        enabled: true,
-      },
-    },
-  },
-};
+import { IChart } from '../models/IChart';
+import { configChartOptions } from '../utils/configChartOptions';
 
 function MyCryptos() {
   const [myCoins, setMyCoins] = useState<ICoin[]>([]);
@@ -39,7 +20,7 @@ function MyCryptos() {
 
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
 
-  const [charts, setCharts] = useState<any[]>([]);
+  const [charts, setCharts] = useState<IChart[][]>([]);
 
   const navigate = useNavigate();
 
@@ -97,17 +78,13 @@ function MyCryptos() {
 
   useEffect(() => {
     async function main() {
-      console.log('GET CHAR DATA: ', await getChartData('BTC'));
       if (showPage) {
         const awaitedCharts = await Promise.all(
           myCoins.map(async (coin: ICoin) => {
-            const chartData = await getChartData(coin.symbol);
-            console.log('awaited chart data', chartData);
-            return chartData;
+            return await getChartData(coin.symbol);
           })
         );
-        console.log('USE EFFECT', awaitedCharts);
-        setCharts(awaitedCharts);
+        setCharts(awaitedCharts as IChart[][]);
       }
     }
     main();
@@ -135,16 +112,14 @@ function MyCryptos() {
     }
   };
 
-  console.log('CHARTS STATE', charts);
-
   return (
     <>
       {showPage && (
         <div className={styles['my-cryptos']}>
           <h1>My Account</h1>
-          {myCoins.length > 0 ? (
+          {myCoins.length > 0 && charts.length > 0 ? (
             <ul className={styles['my-cryptos__list']}>
-              {myCoins.map((coin: ICoin) => (
+              {myCoins.map((coin: ICoin, idx: number) => (
                 <li key={coin.id}>
                   <h2>{coin.name}</h2>
                   <img src={coin.icon} alt={coin.name} loading='lazy' />
@@ -153,49 +128,22 @@ function MyCryptos() {
                       Remove
                     </button>
                   )}
+                  <Chart
+                    options={
+                      configChartOptions(coin.name) as ApexCharts.ApexOptions
+                    }
+                    series={[
+                      {
+                        data: charts[idx],
+                      },
+                    ]}
+                  />
                 </li>
               ))}
             </ul>
           ) : (
             <p>No coins added yet</p>
           )}
-          <section>
-            <h1>Charts</h1>
-            {charts.length > 0 && (
-              <div>
-                {charts.map((chart: any, idx: number) => (
-                  <Chart
-                    options={{
-                      chart: {
-                        type: 'candlestick',
-                        height: 350,
-                      },
-                      title: {
-                        text: myCoins[idx].name,
-                        align: 'left',
-                      },
-                      xaxis: {
-                        type: 'datetime',
-                      },
-                      yaxis: {
-                        tooltip: {
-                          enabled: true,
-                        },
-                      },
-                    }}
-                    series={[
-                      {
-                        data: chart,
-                      },
-                    ]}
-                    type='candlestick'
-                    width='100%'
-                    height={320}
-                  />
-                ))}
-              </div>
-            )}
-          </section>
         </div>
       )}
     </>
