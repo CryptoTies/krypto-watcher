@@ -1,12 +1,16 @@
 .coin {
-  border: 3px solid purple;
+  /* border: 3px solid purple; */
+  border-top: 3px solid purple;
+  padding: 1rem;
 }
 
 .coin__img {
   width: 5rem;
+  height: 5rem;
 }
 
 .coin__rank {
+  margin: 0;
 }
 
 .coin__name {
@@ -20,4 +24,24 @@
 }
 
 .coin__favBtn {
+  width: 6rem;
+  margin-top: 1rem !important;
+}
+
+.coin__chartContainer {
+}
+
+.coin__chart {
+  width: 150%;
+}
+
+.coin__iconContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.coin__subContainer {
+  display: flex;
+  justify-content: space-evenly;
 }

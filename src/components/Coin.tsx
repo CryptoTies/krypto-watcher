@@ -6,7 +6,7 @@ import { auth, db } from '../../firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useState, useEffect, useCallback } from 'react';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import style from '../styles/Coin.module.css';
+import styles from '../styles/Coin.module.css';
 import { getChartData } from '../utils/getChartData';
 import Chart from 'react-apexcharts';
 import { IChart } from '../models/IChart';
@@ -72,30 +72,42 @@ const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
   }
 
   return (
-    <li className={style.coin}>
-      <h3 className={style.coin__rank}>Rank {rank}</h3>
-      <Link to={`/coin/${id}`} style={{ color: 'blue' }}>
-        <h2 className={style.coin__name}>Name: {name}</h2>
-      </Link>
-      <p className={style.coin__symbol}>Symbol: {symbol}</p>
-      <p className={style.coin__price}>Price: {formatPrice(price)}</p>
-      <img src={icon} alt={name} loading='lazy' className={style.coin__img} />
-      <Button
-        onClick={handleToggleFavorite}
-        className={style.coin__favBtn}
-        variant='contained'
-        color='success'
-      >
-        {isCoinFavorited ? 'Favorited' : 'Favorite'}
-      </Button>
-      <Chart
-        options={configChartOptions(symbol) as ApexCharts.ApexOptions}
-        series={[
-          {
-            data: chart,
-          },
-        ]}
-      />
+    <li className={styles.coin}>
+      <div className={styles.coin__subContainer}>
+        <div className={styles.coin__iconContainer}>
+          <h3 className={styles.coin__rank}>Rank {rank}</h3>
+          <Link to={`/coin/${id}`} style={{ color: 'blue' }}>
+            <h2 className={styles.coin__name}>Name: {name}</h2>
+          </Link>
+          <p className={styles.coin__symbol}>Symbol: {symbol}</p>
+          <p className={styles.coin__price}>Price: {formatPrice(price)}</p>
+          <img
+            src={icon}
+            alt={name}
+            loading='lazy'
+            className={styles.coin__img}
+          />
+          <Button
+            onClick={handleToggleFavorite}
+            className={styles.coin__favBtn}
+            variant='contained'
+            color='success'
+          >
+            {isCoinFavorited ? 'Favorited' : 'Favorite'}
+          </Button>
+        </div>
+        <div className={styles.coin__chartContainer}>
+          <Chart
+            className={styles.coin__chart}
+            options={configChartOptions(symbol) as ApexCharts.ApexOptions}
+            series={[
+              {
+                data: chart,
+              },
+            ]}
+          />
+        </div>
+      </div>
     </li>
   );
 };
