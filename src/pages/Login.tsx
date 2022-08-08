@@ -55,7 +55,6 @@ const Login = () => {
         },
         { merge: true }
       );
-      console.log('USER GOOGLE LOGGED IN: ', user);
       navigate('/');
     } catch (err) {
       console.error(err);
@@ -66,12 +65,7 @@ const Login = () => {
   const handleLoginSubmit = async (loginInfo: ILoginUser) => {
     const { email, password } = loginInfo;
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log('LOGGED IN: ', userCredential);
+      await signInWithEmailAndPassword(auth, email, password);
       navigate('/');
     } catch (err) {
       console.error(err);
