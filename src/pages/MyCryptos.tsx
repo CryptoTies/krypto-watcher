@@ -9,11 +9,28 @@ import { ICryptoApiRes } from '../models/ICryptoApiRes';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/MyCryptos.module.css';
 import { getChartData } from '../utils/getChartData';
-import { IChart } from '../models/IChart';
-// import { IgrFinancialChart } from 'igniteui-react-charts';
-// import { IgrFinancialChartModule } from 'igniteui-react-charts';
+import Chart from 'react-apexcharts';
 
-// IgrFinancialChartModule.register();
+const chartOptions = {
+  options: {
+    chart: {
+      type: 'candlestick',
+      height: 350,
+    },
+    title: {
+      text: 'CandleStick Chart',
+      align: 'left',
+    },
+    xaxis: {
+      type: 'datetime',
+    },
+    yaxis: {
+      tooltip: {
+        enabled: true,
+      },
+    },
+  },
+};
 
 function MyCryptos() {
   const [myCoins, setMyCoins] = useState<ICoin[]>([]);
@@ -22,7 +39,7 @@ function MyCryptos() {
 
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
 
-  const [charts, setCharts] = useState<IChart[]>([]);
+  const [charts, setCharts] = useState<any[]>([]);
 
   const navigate = useNavigate();
 
@@ -42,7 +59,7 @@ function MyCryptos() {
 
   const memoCoins = useMemo(() => {
     async function main() {
-      const getCoins = async () => {
+      const getMyCoins = async () => {
         if (authUser && coinsData) {
           const userRef = doc(db, 'users', authUser.uid);
           const userDoc = await getDoc(userRef);
@@ -60,7 +77,7 @@ function MyCryptos() {
       };
 
       if (showPage) {
-        return await getCoins();
+        return await getMyCoins();
       } else {
         return [];
       }
@@ -80,6 +97,7 @@ function MyCryptos() {
 
   useEffect(() => {
     async function main() {
+      console.log('GET CHAR DATA: ', await getChartData('BTC'));
       if (showPage) {
         const awaitedCharts = await Promise.all(
           myCoins.map(async (coin: ICoin) => {
@@ -141,19 +159,43 @@ function MyCryptos() {
           ) : (
             <p>No coins added yet</p>
           )}
-          {/* <section>
-            <IgrFinancialChart
-              width='100%'
-              height='100%'
-              chartType='Line'
-              thickness={2}
-              chartTitle='Google vs Microsoft Changes'
-              subtitle='Between 2013 and 2017'
-              yAxisMode='PercentChange'
-              yAxisTitle='Percent Changed'
-              dataSource={chartData}
-            />
-          </section> */}
+          <section>
+            <h1>Charts</h1>
+            {charts.length > 0 && (
+              <div>
+                {charts.map((chart: any, idx: number) => (
+                  <Chart
+                    options={{
+                      chart: {
+                        type: 'candlestick',
+                        height: 350,
+                      },
+                      title: {
+                        text: 'CandleStick Chart',
+                        align: 'left',
+                      },
+                      xaxis: {
+                        type: 'datetime',
+                      },
+                      yaxis: {
+                        tooltip: {
+                          enabled: true,
+                        },
+                      },
+                    }}
+                    series={[
+                      {
+                        data: chart,
+                      },
+                    ]}
+                    type='candlestick'
+                    width='100%'
+                    height={320}
+                  />
+                ))}
+              </div>
+            )}
+          </section>
         </div>
       )}
     </>
