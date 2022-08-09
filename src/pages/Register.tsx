@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import { Button, Paper } from '@material-ui/core';
 import useForm from '../hooks/UseForm';
 import { ECountryCodes } from '../models/ECountryCodes';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -206,6 +207,11 @@ const Register = () => {
           Register
         </Button>
       </form>
+      <div>
+        <p>
+          Already have an account? <Link to='/login'>Login</Link>
+        </p>
+      </div>
     </Paper>
   );
 };

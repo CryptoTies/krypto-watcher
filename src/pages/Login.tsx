@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import { Button, Paper } from '@material-ui/core';
 import { ILoginUser } from '../models/ILoginUser';
 import useForm from '../hooks/UseForm';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const {
@@ -116,6 +117,15 @@ const Login = () => {
         >
           Google Login
         </Button>
+      </div>
+      <div>
+        <p className={styles.login__noAccount}>
+          Don't have an account?
+          <br />
+          <Link to='/register' className={styles.login__registerLink}>
+            Register
+          </Link>
+        </p>
       </div>
     </Paper>
   );

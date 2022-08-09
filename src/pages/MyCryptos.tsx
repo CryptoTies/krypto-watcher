@@ -22,6 +22,7 @@ function MyCryptos() {
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
 
   const [charts, setCharts] = useState<IChart[][]>([]);
+  const [chartsLoading, setChartsLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -40,7 +41,7 @@ function MyCryptos() {
   }, [navigate, authUser, authLoading]);
 
   const memoCoins = useMemo(() => {
-    async function main() {
+    async function memoCoinsFn() {
       const getMyCoins = async () => {
         if (authUser && coinsData) {
           const userRef = doc(db, 'users', authUser.uid);
@@ -64,22 +65,22 @@ function MyCryptos() {
         return [];
       }
     }
-    return main();
+    return memoCoinsFn();
   }, [showPage, authUser, coinsData]);
 
   useEffect(() => {
-    async function main() {
+    async function awaitedMemoCoinsFn() {
       const awaitedMemoCoins = await memoCoins;
       if (Array.isArray(awaitedMemoCoins)) {
         setMyCoins(awaitedMemoCoins);
       }
     }
-    main();
+    awaitedMemoCoinsFn();
   }, [memoCoins]);
 
   useEffect(() => {
-    async function main() {
-      if (showPage) {
+    async function chartsFn() {
+      if (showPage && myCoins.length > 0) {
         const awaitedCharts = await Promise.all(
           myCoins.map(async (coin: ICoin) => {
             return await getChartData(coin.symbol);
@@ -88,7 +89,7 @@ function MyCryptos() {
         setCharts(awaitedCharts as IChart[][]);
       }
     }
-    main();
+    chartsFn();
   }, [myCoins, showPage]);
 
   if (authLoading) {
@@ -113,11 +114,15 @@ function MyCryptos() {
     }
   };
 
+  console.log('chartIsLoading', chartsLoading);
+  console.log('charts', charts);
+  console.log('myCoins', myCoins);
+
   return (
     <>
       {showPage && (
         <div className={styles['my-cryptos']}>
-          {myCoins.length > 0 && charts.length > 0 ? (
+          {myCoins.length > 0 && charts.length > 0 && (
             <ul className={styles['my-cryptos__list']}>
               {myCoins.map((coin: ICoin, idx: number) => (
                 <li key={coin.id} className={styles['my-cryptos__listItem']}>
@@ -163,8 +168,6 @@ function MyCryptos() {
                 </li>
               ))}
             </ul>
-          ) : (
-            <p>No coins added yet</p>
           )}
         </div>
       )}

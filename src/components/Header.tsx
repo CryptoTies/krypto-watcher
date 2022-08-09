@@ -33,6 +33,15 @@ const Header = () => {
     }
   };
 
+  const handleCreateNewAccount = async () => {
+    try {
+      await signOut(auth);
+      navigate('/register');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleAcctClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -55,22 +64,6 @@ const Header = () => {
     <header className={styles.header}>
       <nav className={styles.navbar}>
         <ul className={styles.navbar__list}>
-          <li>
-            <NavLink
-              to='/login'
-              style={({ isActive }) => (isActive ? activeStyle : unActiveStyle)}
-            >
-              Login
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to='/register'
-              style={({ isActive }) => (isActive ? activeStyle : unActiveStyle)}
-            >
-              Register
-            </NavLink>
-          </li>
           <li>
             <NavLink
               to='/home'
@@ -122,6 +115,13 @@ const Header = () => {
                 <Divider />
                 <MenuItem onClick={() => navigate(`/account/${authUser.uid}`)}>
                   <Avatar /> My account
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={handleCreateNewAccount}>
+                  <ListItemIcon>
+                    <Logout fontSize='small' />
+                  </ListItemIcon>
+                  Create new account
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={handleSignOut}>
