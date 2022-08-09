@@ -23,8 +23,6 @@ function MyCryptos() {
 
   const [charts, setCharts] = useState<IChart[][]>([]);
 
-  const [chartLoading, setChartLoading] = useState(false);
-
   const navigate = useNavigate();
 
   const showPage =
@@ -33,7 +31,6 @@ function MyCryptos() {
     !authError &&
     coinsData &&
     !coinsLoading &&
-    !chartLoading &&
     !coinsError;
 
   useEffect(() => {
