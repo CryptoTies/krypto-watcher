@@ -11,16 +11,20 @@
 
 .coin__rank {
   margin: 0;
+  font-family: var(--custom-font);
 }
 
 .coin__name {
   color: blue;
+  font-family: var(--custom-font);
 }
 
 .coin__symbol {
+  font-family: var(--custom-font);
 }
 
 .coin__price {
+  font-family: var(--custom-font);
 }
 
 .coin__favBtn {

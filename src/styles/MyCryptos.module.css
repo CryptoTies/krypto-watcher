@@ -41,3 +41,7 @@
   width: 5rem;
   margin-top: 1rem !important;
 }
+
+.my-cryptos__name {
+  font-family: var(--custom-font);
+}

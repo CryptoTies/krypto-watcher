@@ -44,6 +44,7 @@ const Header = () => {
 
   let activeStyle = {
     color: 'gold',
+    fontWeight: 'bolder',
   };
 
   let unActiveStyle = {

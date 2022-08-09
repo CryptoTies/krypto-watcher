@@ -77,9 +77,8 @@ const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
         <div className={styles.coin__iconContainer}>
           <h3 className={styles.coin__rank}>Rank {rank}</h3>
           <Link to={`/coin/${id}`} style={{ color: 'blue' }}>
-            <h2 className={styles.coin__name}>Name: {name}</h2>
+            <h2 className={styles.coin__name}>{name}</h2>
           </Link>
-          <p className={styles.coin__symbol}>Symbol: {symbol}</p>
           <p className={styles.coin__price}>Price: {formatPrice(price)}</p>
           <img
             src={icon}

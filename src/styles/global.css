@@ -1,7 +1,9 @@
 :root {
   --header-margin: 7rem;
   --header-height: 4rem;
+  --custom-font: 'Hind Siliguri', sans-serif;
 }
+
 body {
   background: ghostwhite;
   margin: 0;

@@ -123,7 +123,9 @@ function MyCryptos() {
                 <li key={coin.id} className={styles['my-cryptos__listItem']}>
                   <div className={styles['my-cryptos__listSubContainer']}>
                     <div className={styles['my-cryptos__iconContainer']}>
-                      <h2>{coin.name}</h2>
+                      <h2 className={styles['my-cryptos__name']}>
+                        {coin.name}
+                      </h2>
                       <img
                         src={coin.icon}
                         alt={coin.name}
