@@ -1,5 +1,4 @@
 .coin {
-  /* border: 3px solid purple; */
   border-top: 3px solid purple;
   padding: 1rem;
 }
@@ -17,6 +16,7 @@
 .coin__name {
   color: blue;
   font-family: var(--custom-font);
+  margin: 0.5rem;
 }
 
 .coin__symbol {
@@ -25,11 +25,13 @@
 
 .coin__price {
   font-family: var(--custom-font);
+  margin: 0.5rem 0 1rem 0;
+  font-size: 1.25rem;
 }
 
 .coin__favBtn {
   width: 6rem;
-  margin-top: 1rem !important;
+  margin-top: 1.75rem !important;
 }
 
 .coin__chartContainer {

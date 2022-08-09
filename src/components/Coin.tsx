@@ -79,7 +79,7 @@ const Coin = ({ coin: { id, name, symbol, price, icon, rank } }: Props) => {
           <Link to={`/coin/${id}`} style={{ color: 'blue' }}>
             <h2 className={styles.coin__name}>{name}</h2>
           </Link>
-          <p className={styles.coin__price}>Price: {formatPrice(price)}</p>
+          <p className={styles.coin__price}>{formatPrice(price)}</p>
           <img
             src={icon}
             alt={name}
