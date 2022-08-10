@@ -12,6 +12,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Logout from '@mui/icons-material/Logout';
+import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import styles from '../styles/Header.module.css';
 
 const Header = () => {
@@ -110,16 +111,19 @@ const Header = () => {
                   elevation: 0,
                 }}
               >
-                <p>{authUser.displayName}</p>
-                <p>{authUser.email}</p>
+                <p className={styles.myAccount__name}>{authUser.displayName}</p>
+                <p className={styles.myAccount__email}>{authUser.email}</p>
                 <Divider />
-                <MenuItem onClick={() => navigate(`/account/${authUser.uid}`)}>
-                  <Avatar /> My account
+                <MenuItem
+                  onClick={() => navigate(`/account/${authUser.uid}`)}
+                  className={styles.myAccount__container}
+                >
+                  <Avatar className={styles.myAccount__icon} /> My account
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={handleCreateNewAccount}>
                   <ListItemIcon>
-                    <Logout fontSize='small' />
+                    <SwitchAccountIcon fontSize='small' />
                   </ListItemIcon>
                   Create new account
                 </MenuItem>

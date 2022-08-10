@@ -23,6 +23,7 @@ function MyCryptos() {
 
   const [charts, setCharts] = useState<IChart[][]>([]);
   const [chartsLoading, setChartsLoading] = useState(true);
+  const [myCoinsLoading, setMyCoinsLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -73,6 +74,7 @@ function MyCryptos() {
       const awaitedMemoCoins = await memoCoins;
       if (Array.isArray(awaitedMemoCoins)) {
         setMyCoins(awaitedMemoCoins);
+        setMyCoinsLoading(false);
       }
     }
     awaitedMemoCoinsFn();
@@ -80,21 +82,18 @@ function MyCryptos() {
 
   useEffect(() => {
     async function chartsFn() {
-      if (showPage && myCoins.length > 0) {
+      if (showPage) {
         const awaitedCharts = await Promise.all(
           myCoins.map(async (coin: ICoin) => {
             return await getChartData(coin.symbol);
           })
         );
         setCharts(awaitedCharts as IChart[][]);
+        setChartsLoading(false);
       }
     }
     chartsFn();
   }, [myCoins, showPage]);
-
-  if (authLoading) {
-    return <div>Loading...</div>;
-  }
 
   const handleToggleFavorite = async (
     e: React.MouseEvent<HTMLButtonElement>
@@ -114,64 +113,61 @@ function MyCryptos() {
     }
   };
 
-  console.log('chartIsLoading', chartsLoading);
+  console.log('MyCoinsLoading', myCoinsLoading);
+  console.log('chartsLoading', chartsLoading);
   console.log('charts', charts);
   console.log('myCoins', myCoins);
 
   return (
-    <>
-      {showPage && (
-        <div className={styles['my-cryptos']}>
-          {myCoins.length > 0 && charts.length > 0 && (
-            <ul className={styles['my-cryptos__list']}>
-              {myCoins.map((coin: ICoin, idx: number) => (
-                <li key={coin.id} className={styles['my-cryptos__listItem']}>
-                  <div className={styles['my-cryptos__listSubContainer']}>
-                    <div className={styles['my-cryptos__iconContainer']}>
-                      <h2 className={styles['my-cryptos__name']}>
-                        {coin.name}
-                      </h2>
-                      <img
-                        src={coin.icon}
-                        alt={coin.name}
-                        loading='lazy'
-                        className={styles.iconImg}
-                      />
-                      {coin.isFavorited && (
-                        <Button
-                          id={coin.id}
-                          onClick={handleToggleFavorite}
-                          variant='outlined'
-                          color='warning'
-                          className={styles.removeBtn}
-                        >
-                          Remove
-                        </Button>
-                      )}
-                    </div>
-                    <div className={styles['my-cryptos__chartContainer']}>
-                      <Chart
-                        className={styles['my-cryptos__chart']}
-                        options={
-                          configChartOptions(
-                            coin.symbol
-                          ) as ApexCharts.ApexOptions
-                        }
-                        series={[
-                          {
-                            data: charts[idx],
-                          },
-                        ]}
-                      />
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+    <div className={styles['my-cryptos']}>
+      {showPage && myCoins.length > 0 && charts.length > 0 && !chartsLoading && (
+        <ul className={styles['my-cryptos__list']}>
+          {myCoins.map((coin: ICoin, idx: number) => (
+            <li key={coin.id} className={styles['my-cryptos__listItem']}>
+              <div className={styles['my-cryptos__listSubContainer']}>
+                <div className={styles['my-cryptos__iconContainer']}>
+                  <h2 className={styles['my-cryptos__name']}>{coin.name}</h2>
+                  <img
+                    src={coin.icon}
+                    alt={coin.name}
+                    loading='lazy'
+                    className={styles.iconImg}
+                  />
+                  {coin.isFavorited && (
+                    <Button
+                      id={coin.id}
+                      onClick={handleToggleFavorite}
+                      variant='outlined'
+                      color='warning'
+                      className={styles.removeBtn}
+                    >
+                      Remove
+                    </Button>
+                  )}
+                </div>
+                <div className={styles['my-cryptos__chartContainer']}>
+                  <Chart
+                    className={styles['my-cryptos__chart']}
+                    options={
+                      configChartOptions(coin.symbol) as ApexCharts.ApexOptions
+                    }
+                    series={[
+                      {
+                        data: charts[idx],
+                      },
+                    ]}
+                  />
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       )}
-    </>
+      {showPage &&
+        !chartsLoading &&
+        myCoins.length === 0 &&
+        charts.length === 0 && <h1>You have no favorites</h1>}
+    </div>
   );
 }
 

@@ -42,3 +42,24 @@
   align-items: center !important;
   align-content: center !important;
 }
+
+.myAccount__container {
+  padding: 0.5rem 0.8rem !important;
+}
+
+.myAccount__icon {
+  margin-right: 0.7rem !important;
+}
+
+.myAccount__name {
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-size: 1.2rem !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+}
+
+.myAccount__email {
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-size: 1rem !important;
+  margin-left: 1rem !important;
+}
