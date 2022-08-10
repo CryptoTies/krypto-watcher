@@ -13,17 +13,15 @@ import Chart from 'react-apexcharts';
 import { IChart } from '../models/IChart';
 import { configChartOptions } from '../utils/configChartOptions';
 import { Button } from '@mui/material';
+import SearchBar from '../components/SearchBar';
 
 function MyCryptos() {
   const [myCoins, setMyCoins] = useState<ICoin[]>([]);
-
+  const [charts, setCharts] = useState<IChart[][]>([]);
   const [authUser, authLoading, authError] = useAuthState(auth);
-
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
 
-  const [charts, setCharts] = useState<IChart[][]>([]);
-  const [chartsLoading, setChartsLoading] = useState(true);
-  const [myCoinsLoading, setMyCoinsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const navigate = useNavigate();
 
@@ -74,7 +72,6 @@ function MyCryptos() {
       const awaitedMemoCoins = await memoCoins;
       if (Array.isArray(awaitedMemoCoins)) {
         setMyCoins(awaitedMemoCoins);
-        setMyCoinsLoading(false);
       }
     }
     awaitedMemoCoinsFn();
@@ -89,7 +86,6 @@ function MyCryptos() {
           })
         );
         setCharts(awaitedCharts as IChart[][]);
-        setChartsLoading(false);
       }
     }
     chartsFn();
@@ -113,14 +109,14 @@ function MyCryptos() {
     }
   };
 
-  console.log('MyCoinsLoading', myCoinsLoading);
-  console.log('chartsLoading', chartsLoading);
-  console.log('charts', charts);
-  console.log('myCoins', myCoins);
-
   return (
     <div className={styles['my-cryptos']}>
-      {showPage && myCoins.length > 0 && charts.length > 0 && !chartsLoading && (
+      <SearchBar
+        value={searchQuery}
+        onChange={e => setSearchQuery(e.target.value)}
+        placeholder='Search My Coins...'
+      />
+      {showPage && myCoins.length > 0 && charts.length > 0 && (
         <ul className={styles['my-cryptos__list']}>
           {myCoins.map((coin: ICoin, idx: number) => (
             <li key={coin.id} className={styles['my-cryptos__listItem']}>
@@ -163,10 +159,6 @@ function MyCryptos() {
           ))}
         </ul>
       )}
-      {showPage &&
-        !chartsLoading &&
-        myCoins.length === 0 &&
-        charts.length === 0 && <h1>You have no favorites</h1>}
     </div>
   );
 }

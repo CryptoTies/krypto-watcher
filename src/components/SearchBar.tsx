@@ -4,6 +4,7 @@ import styles from '../styles/SearchBar.module.css';
 interface Props {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder: string;
 }
 
 const SearchBar = forwardRef<HTMLInputElement, Props>((props: Props, ref) => {
@@ -12,7 +13,6 @@ const SearchBar = forwardRef<HTMLInputElement, Props>((props: Props, ref) => {
       <input
         className={styles.searchBar__input}
         type='text'
-        placeholder='Search Coin...'
         ref={ref}
         {...props}
       />

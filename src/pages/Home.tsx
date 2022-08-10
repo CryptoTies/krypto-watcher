@@ -138,6 +138,7 @@ const Home = () => {
               ref={searchBarRef}
               value={searchQuery}
               onChange={onSearchInputChange}
+              placeholder='Search Coin...'
             />
             <CoinFilterOptions
               handleFilterOptionsChange={(filterState: string) =>
