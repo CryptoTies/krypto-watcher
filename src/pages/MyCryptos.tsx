@@ -115,6 +115,7 @@ function MyCryptos() {
         value={searchQuery}
         onChange={e => setSearchQuery(e.target.value)}
         placeholder='Search My Coins...'
+        className='my-cryptos'
       />
       {showPage && myCoins.length > 0 && charts.length > 0 && (
         <ul className={styles['my-cryptos__list']}>
