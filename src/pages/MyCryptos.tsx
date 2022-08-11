@@ -51,10 +51,20 @@ function MyCryptos() {
             (coins as ICoin[]).filter((coin: ICoin) =>
               myFavCoins.includes(coin.id)
             ) ?? [];
-          return filteredCoins.map((coin: ICoin) => ({
-            ...coin,
-            isFavorited: true,
-          }));
+          return filteredCoins
+            .map((coin: ICoin) => ({
+              ...coin,
+              isFavorited: true,
+            }))
+            .sort((a: ICoin, b: ICoin) => {
+              if (a.name < b.name) {
+                return -1;
+              }
+              if (a.name > b.name) {
+                return 1;
+              }
+              return 0;
+            });
         }
       };
 

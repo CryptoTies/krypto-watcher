@@ -10,25 +10,27 @@ interface Props {
 
 const SearchBar = forwardRef<HTMLInputElement, Props>((props: Props, ref) => {
   return (
-    <form
+    <div
       className={
         props.className
           ? `${styles.searchBar} ${styles[props.className]}`
           : `${styles.searchBar}`
       }
     >
-      <input
-        className={styles.searchBar__input}
-        type='text'
-        ref={ref}
-        placeholder={props.placeholder}
-        value={props.value}
-        onChange={props.onChange}
-      />
-      <button className={styles.searchBar__btn} type='button'>
-        <i className='fas fa-search'></i>
-      </button>
-    </form>
+      <form className={styles.searchBar__form}>
+        <input
+          className={styles.searchBar__input}
+          type='text'
+          ref={ref}
+          placeholder={props.placeholder}
+          value={props.value}
+          onChange={props.onChange}
+        />
+        <button className={styles.searchBar__btn} type='button'>
+          <i className='fas fa-search'></i>
+        </button>
+      </form>
+    </div>
   );
 });
 

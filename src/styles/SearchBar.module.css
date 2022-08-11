@@ -1,13 +1,18 @@
 .searchBar {
   display: flex;
-  position: relative;
   width: 40%;
 }
 
 .searchBar.my-cryptos {
-  width: 95%;
   display: flex;
   justify-content: center;
+  width: 100%;
+}
+
+.searchBar__form {
+  width: 95%;
+  display: flex;
+  position: relative;
 }
 
 .searchBar__input {
