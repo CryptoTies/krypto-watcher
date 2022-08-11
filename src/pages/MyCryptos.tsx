@@ -119,6 +119,14 @@ function MyCryptos() {
     }
   };
 
+  const handleFilteredCoins = () => {
+    const filteredCoins = myCoins.filter((coin: ICoin) =>
+      coin.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    return filteredCoins;
+  };
+
   return (
     <div className={styles['my-cryptos']}>
       <SearchBar
@@ -129,7 +137,7 @@ function MyCryptos() {
       />
       {showPage && myCoins.length > 0 && charts.length > 0 && (
         <ul className={styles['my-cryptos__list']}>
-          {myCoins.map((coin: ICoin, idx: number) => (
+          {handleFilteredCoins().map((coin: ICoin, idx: number) => (
             <li key={coin.id} className={styles['my-cryptos__listItem']}>
               <div className={styles['my-cryptos__listSubContainer']}>
                 <div className={styles['my-cryptos__iconContainer']}>
