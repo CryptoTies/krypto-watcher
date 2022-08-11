@@ -5,12 +5,18 @@ interface Props {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
-  className: string;
+  className?: string;
 }
 
 const SearchBar = forwardRef<HTMLInputElement, Props>((props: Props, ref) => {
   return (
-    <form className={`${styles.searchBar} ${styles[props.className]}`}>
+    <form
+      className={
+        props.className
+          ? `${styles.searchBar} ${styles[props.className]}`
+          : `${styles.searchBar}`
+      }
+    >
       <input
         className={styles.searchBar__input}
         type='text'

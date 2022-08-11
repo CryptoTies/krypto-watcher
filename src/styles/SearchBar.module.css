@@ -5,7 +5,9 @@
 }
 
 .searchBar.my-cryptos {
-  width: 100%;
+  width: 95%;
+  display: flex;
+  justify-content: center;
 }
 
 .searchBar__input {
