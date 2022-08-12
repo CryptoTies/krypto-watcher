@@ -1,10 +1,18 @@
 .register {
   margin: var(--header-margin) 1rem 1rem 1rem;
   padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.register__paper {
+  width: 25rem;
+  height: 35rem;
 }
 
 .register__header {
   text-align: center;
+  font-family: var(--custom-font);
 }
 
 .register__form {
@@ -16,9 +24,29 @@
 }
 
 .register__btn {
-  margin-top: 1rem !important;
+  margin-top: 2rem !important;
 }
 
 .register__input {
-  width: 100%;
+  width: 90% !important;
+}
+
+.haveAcct__container {
+  font-family: var(--custom-font);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.haveAcct {
+  margin: 0;
+}
+
+.register__link {
+  color: blue;
+}
+
+.phoneInput__container {
+  width: 91%;
 }

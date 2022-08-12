@@ -12,6 +12,7 @@ import { Button, Paper } from '@material-ui/core';
 import { ILoginUser } from '../models/ILoginUser';
 import useForm from '../hooks/UseForm';
 import { Link } from 'react-router-dom';
+import GoogleButton from 'react-google-button';
 
 const Login = () => {
   const {
@@ -76,58 +77,57 @@ const Login = () => {
   };
 
   return (
-    <Paper className={styles.login}>
-      <h1 className={styles.login__header}>Login</h1>
-      <form onSubmit={handleSubmit} className={styles.login__form}>
-        <TextField
-          className={styles.login__input}
-          type='email'
-          placeholder='Email'
-          label={loginInfo.email.length > 0 ? 'Email' : ''}
-          name='email'
-          value={loginInfo.email}
-          onChange={handleChange}
-        />
-        <TextField
-          className={styles.login__input}
-          type='password'
-          placeholder='Password'
-          label={loginInfo.password.length > 0 ? 'Password' : ''}
-          name='password'
-          value={loginInfo.password}
-          onChange={handleChange}
-        />
-        <Button
-          className={styles.login__logInBtn}
-          type='submit'
-          variant='contained'
-          color='primary'
-          disabled={!formIsValid()}
-        >
-          Login
-        </Button>
-      </form>
-      <p className={styles.login__or}>OR</p>
-      <div className={styles.login__googleContainer}>
-        <Button
-          onClick={googleSignIn}
-          variant='contained'
-          color='secondary'
-          className={styles.login__googleLogInBtn}
-        >
-          Google Login
-        </Button>
-      </div>
-      <div>
-        <p className={styles.login__noAccount}>
-          Don't have an account?
-          <br />
-          <Link to='/register' className={styles.login__registerLink}>
-            Register
-          </Link>
-        </p>
-      </div>
-    </Paper>
+    <div className={styles.login}>
+      <Paper className={styles.login__paper}>
+        <h1 className={styles.login__header}>Login</h1>
+        <form onSubmit={handleSubmit} className={styles.login__form}>
+          <TextField
+            className={styles.login__input}
+            type='email'
+            placeholder='Email'
+            label={loginInfo.email.length > 0 ? 'Email' : ''}
+            name='email'
+            value={loginInfo.email}
+            onChange={handleChange}
+          />
+          <TextField
+            className={styles.login__input}
+            type='password'
+            placeholder='Password'
+            label={loginInfo.password.length > 0 ? 'Password' : ''}
+            name='password'
+            value={loginInfo.password}
+            onChange={handleChange}
+          />
+          <Button
+            className={styles.login__logInBtn}
+            type='submit'
+            variant='contained'
+            color='primary'
+            disabled={!formIsValid()}
+          >
+            Login
+          </Button>
+        </form>
+        <div className={styles.login__googleContainer}>
+          <GoogleButton
+            onClick={googleSignIn}
+            className={styles.login__googleLogInBtn}
+          >
+            Google Login
+          </GoogleButton>
+        </div>
+        <div className={styles.noAccountContainer}>
+          <p className={styles.noAccount}>
+            Don't have an account?
+            <br />
+            <Link to='/register' className={styles.login__registerLink}>
+              Register
+            </Link>
+          </p>
+        </div>
+      </Paper>
+    </div>
   );
 };
 

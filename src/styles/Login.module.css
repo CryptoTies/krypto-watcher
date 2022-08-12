@@ -1,16 +1,18 @@
 .login {
   margin: var(--header-margin) 1rem 1rem 1rem;
   padding: 1rem;
-
   display: flex;
-  flex-direction: column;
-  align-content: center;
   justify-content: center;
-  align-items: center;
+}
+
+.login__paper {
+  width: 25rem;
+  height: 35rem;
 }
 
 .login__header {
   text-align: center;
+  font-family: var(--custom-font);
 }
 
 .login__form {
@@ -22,11 +24,11 @@
 }
 
 .login__input {
-  width: 100% !important;
+  width: 90% !important;
 }
 
 .login__logInBtn {
-  margin-top: 1.5rem !important;
+  margin-top: 2rem !important;
 }
 
 .login__googleContainer {
@@ -35,11 +37,26 @@
   align-content: center;
   justify-content: center;
   align-items: center;
+  margin-top: 5rem;
 }
 
 .login__googleLogInBtn {
 }
 
-.login__or {
+.noAccountContainer {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4.5rem;
+  font-family: var(--custom-font);
+}
+
+.noAccount {
   text-align: center;
+}
+
+.login__registerLink {
+  color: blue;
 }
