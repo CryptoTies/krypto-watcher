@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { auth, db } from '../../firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { updatePassword } from 'firebase/auth';
 import { ICheckedUser } from '../models/ICheckedUser';
 import { formatPhoneNum } from '../utils/formatPhoneNum';
 import styles from '../styles/MyAccount.module.css';
+import { Helmet } from 'react-helmet';
 
 enum EProvider {
   GOOGLE = 'google.com',
@@ -89,7 +90,10 @@ const MyAccount = () => {
   };
 
   return (
-    <Fragment>
+    <>
+      <Helmet>
+        <title>My Account | Krypto Watcher</title>
+      </Helmet>
       {showPage && (
         <div className={styles['my-account']}>
           <h1>My Account</h1>
@@ -127,7 +131,7 @@ const MyAccount = () => {
           )}
         </div>
       )}
-    </Fragment>
+    </>
   );
 };
 

@@ -14,6 +14,7 @@ import { IChart } from '../models/IChart';
 import { configChartOptions } from '../utils/configChartOptions';
 import { Button } from '@mui/material';
 import SearchBar from '../components/SearchBar';
+import { Helmet } from 'react-helmet';
 
 function MyCryptos() {
   const [myCoins, setMyCoins] = useState<ICoin[]>([]);
@@ -128,57 +129,64 @@ function MyCryptos() {
   };
 
   return (
-    <div className={styles['my-cryptos']}>
-      <SearchBar
-        value={searchQuery}
-        onChange={e => setSearchQuery(e.target.value)}
-        placeholder='Search My Coins...'
-        className='my-cryptos'
-      />
-      {showPage && myCoins.length > 0 && charts.length > 0 && (
-        <ul className={styles['my-cryptos__list']}>
-          {handleFilteredCoins().map((coin: ICoin, idx: number) => (
-            <li key={coin.id} className={styles['my-cryptos__listItem']}>
-              <div className={styles['my-cryptos__listSubContainer']}>
-                <div className={styles['my-cryptos__iconContainer']}>
-                  <h2 className={styles['my-cryptos__name']}>{coin.name}</h2>
-                  <img
-                    src={coin.icon}
-                    alt={coin.name}
-                    loading='lazy'
-                    className={styles.iconImg}
-                  />
-                  {coin.isFavorited && (
-                    <Button
-                      id={coin.id}
-                      onClick={handleToggleFavorite}
-                      variant='outlined'
-                      color='warning'
-                      className={styles.removeBtn}
-                    >
-                      Remove
-                    </Button>
-                  )}
+    <>
+      <Helmet>
+        <title>My Cryptos | Krypto Watcher</title>
+      </Helmet>
+      <div className={styles['my-cryptos']}>
+        <SearchBar
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+          placeholder='Search My Coins...'
+          className='my-cryptos'
+        />
+        {showPage && myCoins.length > 0 && charts.length > 0 && (
+          <ul className={styles['my-cryptos__list']}>
+            {handleFilteredCoins().map((coin: ICoin, idx: number) => (
+              <li key={coin.id} className={styles['my-cryptos__listItem']}>
+                <div className={styles['my-cryptos__listSubContainer']}>
+                  <div className={styles['my-cryptos__iconContainer']}>
+                    <h2 className={styles['my-cryptos__name']}>{coin.name}</h2>
+                    <img
+                      src={coin.icon}
+                      alt={coin.name}
+                      loading='lazy'
+                      className={styles.iconImg}
+                    />
+                    {coin.isFavorited && (
+                      <Button
+                        id={coin.id}
+                        onClick={handleToggleFavorite}
+                        variant='outlined'
+                        color='warning'
+                        className={styles.removeBtn}
+                      >
+                        Remove
+                      </Button>
+                    )}
+                  </div>
+                  <div className={styles['my-cryptos__chartContainer']}>
+                    <Chart
+                      className={styles['my-cryptos__chart']}
+                      options={
+                        configChartOptions(
+                          coin.symbol
+                        ) as ApexCharts.ApexOptions
+                      }
+                      series={[
+                        {
+                          data: charts[idx],
+                        },
+                      ]}
+                    />
+                  </div>
                 </div>
-                <div className={styles['my-cryptos__chartContainer']}>
-                  <Chart
-                    className={styles['my-cryptos__chart']}
-                    options={
-                      configChartOptions(coin.symbol) as ApexCharts.ApexOptions
-                    }
-                    series={[
-                      {
-                        data: charts[idx],
-                      },
-                    ]}
-                  />
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </>
   );
 }
 

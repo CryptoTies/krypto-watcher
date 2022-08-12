@@ -14,6 +14,7 @@ import { PAGINATION_NUM } from '../utils/pagination-num';
 import SearchBar from '../components/SearchBar';
 import CoinFilterOptions from '../components/CoinFilterOptions';
 import { COIN_FILTER_OPTIONS } from '../models/CoinFilterOptions';
+import { Helmet } from 'react-helmet';
 
 const Home = () => {
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);
@@ -131,6 +132,9 @@ const Home = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Home | Krypto Watcher</title>
+      </Helmet>
       {showHomePage && (
         <div className={styles.home}>
           <div className={styles.home__filterContainer}>
