@@ -6,8 +6,8 @@ import { doc, getDoc } from 'firebase/firestore';
 import { updatePassword } from 'firebase/auth';
 import { ICheckedUser } from '../models/ICheckedUser';
 import { formatPhoneNum } from '../utils/formatPhoneNum';
-import styles from '../styles/MyAccount.module.css';
 import { Helmet } from 'react-helmet';
+import styles from '../styles/MyAccount.module.css';
 
 enum EProvider {
   GOOGLE = 'google.com',
@@ -97,19 +97,28 @@ const MyAccount = () => {
             <title>My Account | Krypto Watcher</title>
           </Helmet>
           <div className={styles['my-account']}>
-            <h1>My Account</h1>
-            <p>Full Name: {authUser.displayName}</p>
-            <p>Email: {authUser.email}</p>
-            <p>Email Verified: {authUser.emailVerified.toString()}</p>
+            <h1 className={styles['my-account__header']}>My Account</h1>
+            <div className={styles.divContainer}>
+              <p>Full Name: {authUser.displayName}</p>
+            </div>
+            <div className={styles.divContainer}>
+              <p>Email: {authUser.email}</p>
+            </div>
+            <div className={styles.divContainer}>
+              <p>Email Verified: {authUser.emailVerified.toString()}</p>
+            </div>
             {(authUser.phoneNumber || checkedUser.phoneNumber) && (
-              <p>
-                Phone Number:{' '}
-                {formatPhoneNum(authUser.phoneNumber as string) ||
-                  formatPhoneNum(checkedUser.phoneNumber as string)}
-              </p>
+              <div className={styles.divContainer}>
+                <p>
+                  Phone Number:{' '}
+                  {formatPhoneNum(authUser.phoneNumber as string) ||
+                    formatPhoneNum(checkedUser.phoneNumber as string)}
+                </p>
+              </div>
             )}
-
-            <p>Last Signed In: {authUser.metadata.lastSignInTime}</p>
+            <div className={styles.divContainer}>
+              <p>Last Signed In: {authUser.metadata.lastSignInTime}</p>
+            </div>
 
             {authProvider === EProvider.NATIVE && (
               <form onSubmit={handleSubmit}>

@@ -37,10 +37,7 @@
   align-content: center;
   justify-content: center;
   align-items: center;
-  margin-top: 5rem;
-}
-
-.login__googleLogInBtn {
+  margin: 5rem 1rem 5.3rem 1rem;
 }
 
 .noAccountContainer {
@@ -49,7 +46,6 @@
   align-content: center;
   justify-content: center;
   align-items: center;
-  margin-top: 4.5rem;
   font-family: var(--custom-font);
 }
 
@@ -59,4 +55,7 @@
 
 .login__registerLink {
   color: blue;
+}
+
+.login__googleLogInBtn {
 }

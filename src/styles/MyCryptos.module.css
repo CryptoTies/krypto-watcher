@@ -12,6 +12,8 @@
 
 .my-cryptos__listItem {
   width: 95%;
+  display: flex;
+  flex-direction: column;
 }
 
 .my-cryptos__listItem:not(:last-child) {
@@ -20,16 +22,17 @@
 
 .my-cryptos__chartContainer {
   margin-top: 1rem;
-}
-
-.my-cryptos__chart {
-  width: 150%;
+  width: 30rem;
 }
 
 .my-cryptos__iconContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 50%;
+}
+
+.my-cryptos__chart {
 }
 
 .my-cryptos__listSubContainer {

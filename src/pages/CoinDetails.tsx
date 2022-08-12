@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { cryptoAPI } from '../utils/crypto-api';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
 import { Helmet } from 'react-helmet';
+import commaNumber from 'comma-number';
 
 const CoinDetails = () => {
   const { id } = useParams();
@@ -32,11 +33,13 @@ const CoinDetails = () => {
           <div>
             <h1>Rank: {coin.rank}</h1>
             <h1>Symbol: {coin.symbol}</h1>
-            <h1>Price: {coin.price}</h1>
-            <h1>Volume: {coin.volume}</h1>
-            <h1>Market Cap: {coin.marketCap}</h1>
-            <h1>Total Supply: {coin.totalSupply}</h1>
-            <h1>Available Supply: {coin.availableSupply}</h1>
+            <h1>Price: ${commaNumber(coin.price.toFixed(2))}</h1>
+            <h1>Volume: ${commaNumber(coin.volume.toFixed(2))}</h1>
+            <h1>Market Cap: ${commaNumber(coin.marketCap.toFixed(2))}</h1>
+            <h1>Total Supply: ${commaNumber(coin.totalSupply.toFixed(2))}</h1>
+            <h1>
+              Available Supply: ${commaNumber(coin.availableSupply.toFixed(2))}
+            </h1>
             <h1>
               Official Site:{' '}
               <a href={coin.websiteUrl} target='_blank' rel='noreferrer'>

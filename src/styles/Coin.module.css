@@ -35,16 +35,17 @@
 }
 
 .coin__chartContainer {
+  width: 30rem;
 }
 
 .coin__chart {
-  width: 150%;
 }
 
 .coin__iconContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 50%;
 }
 
 .coin__subContainer {

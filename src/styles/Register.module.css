@@ -7,7 +7,7 @@
 
 .register__paper {
   width: 25rem;
-  height: 35rem;
+  height: fit-content;
 }
 
 .register__header {
@@ -45,6 +45,7 @@
 
 .register__link {
   color: blue;
+  margin-bottom: 1rem;
 }
 
 .phoneInput__container {
