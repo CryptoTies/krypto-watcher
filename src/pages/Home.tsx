@@ -43,7 +43,7 @@ const Home = () => {
 
   const anyErrors = coinsError || authError;
 
-  const showHomePage =
+  const showPage =
     authUser &&
     !authLoading &&
     (coinsData as ICryptoApiRes) &&
@@ -132,51 +132,53 @@ const Home = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Home | Krypto Watcher</title>
-      </Helmet>
-      {showHomePage && (
-        <div className={styles.home}>
-          <div className={styles.home__filterContainer}>
-            <SearchBar
-              ref={searchBarRef}
-              value={searchQuery}
-              onChange={onSearchInputChange}
-              placeholder='Search Coin...'
-            />
-            <CoinFilterOptions
-              handleFilterOptionsChange={(filterState: string) =>
-                setCoinOptionsState(filterState)
+      {showPage && (
+        <>
+          <Helmet>
+            <title>Home | Krypto Watcher</title>
+          </Helmet>
+          <div className={styles.home}>
+            <div className={styles.home__filterContainer}>
+              <SearchBar
+                ref={searchBarRef}
+                value={searchQuery}
+                onChange={onSearchInputChange}
+                placeholder='Search Coin...'
+              />
+              <CoinFilterOptions
+                handleFilterOptionsChange={(filterState: string) =>
+                  setCoinOptionsState(filterState)
+                }
+                coinOptionsState={coinOptionsState}
+              />
+            </div>
+            <InfiniteScroll
+              dataLength={slicedCoins?.length}
+              next={shouldFetchMoreCoins ? fetchMoreCoins : () => {}}
+              hasMore={true}
+              loader={
+                <h4
+                  className='scroll-load-text'
+                  style={{
+                    display:
+                      slicedCoins.length <= PAGINATION_NUM ? 'none' : 'block',
+                  }}
+                >
+                  {endOfListMsg}
+                </h4>
               }
-              coinOptionsState={coinOptionsState}
-            />
+            >
+              <Coins
+                slicedCoins={slicedCoins}
+                coins={(coinsData as ICryptoApiRes)!.coins as ICoin[]}
+                searchQuery={searchQuery}
+                handleFetchMoreCoinsState={handleFetchMoreCoinsState}
+                fetchMoreCoinsState={shouldFetchMoreCoins}
+                coinOptionsState={coinOptionsState}
+              />
+            </InfiniteScroll>
           </div>
-          <InfiniteScroll
-            dataLength={slicedCoins?.length}
-            next={shouldFetchMoreCoins ? fetchMoreCoins : () => {}}
-            hasMore={true}
-            loader={
-              <h4
-                className='scroll-load-text'
-                style={{
-                  display:
-                    slicedCoins.length <= PAGINATION_NUM ? 'none' : 'block',
-                }}
-              >
-                {endOfListMsg}
-              </h4>
-            }
-          >
-            <Coins
-              slicedCoins={slicedCoins}
-              coins={(coinsData as ICryptoApiRes)!.coins as ICoin[]}
-              searchQuery={searchQuery}
-              handleFetchMoreCoinsState={handleFetchMoreCoinsState}
-              fetchMoreCoinsState={shouldFetchMoreCoins}
-              coinOptionsState={coinOptionsState}
-            />
-          </InfiniteScroll>
-        </div>
+        </>
       )}
     </>
   );

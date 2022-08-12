@@ -91,45 +91,47 @@ const MyAccount = () => {
 
   return (
     <>
-      <Helmet>
-        <title>My Account | Krypto Watcher</title>
-      </Helmet>
       {showPage && (
-        <div className={styles['my-account']}>
-          <h1>My Account</h1>
-          <p>Full Name: {authUser.displayName}</p>
-          <p>Email: {authUser.email}</p>
-          <p>Email Verified: {authUser.emailVerified.toString()}</p>
-          {(authUser.phoneNumber || checkedUser.phoneNumber) && (
-            <p>
-              Phone Number:{' '}
-              {formatPhoneNum(authUser.phoneNumber as string) ||
-                formatPhoneNum(checkedUser.phoneNumber as string)}
-            </p>
-          )}
+        <>
+          <Helmet>
+            <title>My Account | Krypto Watcher</title>
+          </Helmet>
+          <div className={styles['my-account']}>
+            <h1>My Account</h1>
+            <p>Full Name: {authUser.displayName}</p>
+            <p>Email: {authUser.email}</p>
+            <p>Email Verified: {authUser.emailVerified.toString()}</p>
+            {(authUser.phoneNumber || checkedUser.phoneNumber) && (
+              <p>
+                Phone Number:{' '}
+                {formatPhoneNum(authUser.phoneNumber as string) ||
+                  formatPhoneNum(checkedUser.phoneNumber as string)}
+              </p>
+            )}
 
-          <p>Last Signed In: {authUser.metadata.lastSignInTime}</p>
+            <p>Last Signed In: {authUser.metadata.lastSignInTime}</p>
 
-          {authProvider === EProvider.NATIVE && (
-            <form onSubmit={handleSubmit}>
-              <label htmlFor='changePW'>Change Password</label>
-              <input
-                type='password'
-                id='changePW'
-                onChange={e => setNewPassword(e.target.value)}
-                value={newPassword}
-              />
-              <label htmlFor='confirmPW'>Confirm Password</label>
-              <input
-                type='password'
-                id='ConfirmPW'
-                onChange={e => setNewPasswordConfirm(e.target.value)}
-                value={newPasswordConfirm}
-              />
-              <button type='submit'>Submit</button>
-            </form>
-          )}
-        </div>
+            {authProvider === EProvider.NATIVE && (
+              <form onSubmit={handleSubmit}>
+                <label htmlFor='changePW'>Change Password</label>
+                <input
+                  type='password'
+                  id='changePW'
+                  onChange={e => setNewPassword(e.target.value)}
+                  value={newPassword}
+                />
+                <label htmlFor='confirmPW'>Confirm Password</label>
+                <input
+                  type='password'
+                  id='ConfirmPW'
+                  onChange={e => setNewPasswordConfirm(e.target.value)}
+                  value={newPasswordConfirm}
+                />
+                <button type='submit'>Submit</button>
+              </form>
+            )}
+          </div>
+        </>
       )}
     </>
   );
