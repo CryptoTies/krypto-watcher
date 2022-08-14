@@ -9,18 +9,16 @@
 }
 
 .coin__rank {
-  margin: 0;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
   font-family: var(--custom-font);
+  font-size: 1.5rem;
 }
 
 .coin__name {
   color: blue;
   font-family: var(--custom-font);
-  margin: 0.5rem;
-}
-
-.coin__symbol {
-  font-family: var(--custom-font);
+  margin: 0rem !important;
 }
 
 .coin__price {
@@ -45,10 +43,46 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 50%;
 }
 
 .coin__subContainer {
   display: flex;
   justify-content: space-evenly;
+}
+
+@media (max-width: 1024px) {
+  .coin__rank {
+    font-size: 1.25rem;
+  }
+
+  .coin__name {
+    font-size: 1.25rem;
+  }
+
+  .coin__img {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .coin__favBtn {
+    margin-top: 1rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .coin__price {
+    font-size: 1rem;
+  }
+
+  .coin__img {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .coin__favBtn {
+    width: 5rem !important;
+    font-size: 0.75rem !important;
+  }
 }
