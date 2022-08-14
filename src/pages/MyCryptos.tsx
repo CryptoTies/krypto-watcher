@@ -155,7 +155,7 @@ function MyCryptos() {
                           src={coin.icon}
                           alt={coin.name}
                           loading='lazy'
-                          className={styles.iconImg}
+                          className={styles['my-cryptos__img']}
                         />
                         {coin.isFavorited && (
                           <Button
@@ -163,7 +163,7 @@ function MyCryptos() {
                             onClick={handleToggleFavorite}
                             variant='outlined'
                             color='warning'
-                            className={styles.removeBtn}
+                            className={styles['my-cryptos__removeBtn']}
                           >
                             Remove
                           </Button>

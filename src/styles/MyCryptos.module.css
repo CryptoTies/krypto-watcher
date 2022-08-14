@@ -30,6 +30,7 @@
   flex-direction: column;
   align-items: center;
   width: 50%;
+  justify-content: center;
 }
 
 .my-cryptos__chart {
@@ -40,16 +41,37 @@
   justify-content: space-evenly;
 }
 
-.iconImg {
+.my-cryptos__img {
   width: 5rem;
   height: 5rem;
 }
 
-.removeBtn {
+.my-cryptos__removeBtn {
   width: 5rem;
   margin-top: 1rem !important;
 }
 
 .my-cryptos__name {
   font-family: var(--custom-font);
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .my-cryptos__name {
+    font-family: var(--custom-font);
+    margin-top: 0;
+    font-size: 1.3rem;
+  }
+  .my-cryptos__img {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+  .my-cryptos__removeBtn {
+    width: 3rem !important;
+    margin-top: 1rem !important;
+    font-size: 0.7rem !important;
+  }
+  .my-cryptos__chartContainer {
+    width: 20rem;
+  }
 }
