@@ -9,16 +9,21 @@
 .my-account__header {
   margin-top: 0;
 }
-
-.divContainer {
+.container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
 }
 
-.divContainer > p {
-  /* color: red; */
+.container div {
+  width: 50%;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  background: lavender;
+  color: blueviolet;
+}
+
+.container div p {
+  text-align: center;
 }

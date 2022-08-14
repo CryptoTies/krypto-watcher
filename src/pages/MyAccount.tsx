@@ -7,12 +7,8 @@ import { updatePassword } from 'firebase/auth';
 import { ICheckedUser } from '../models/ICheckedUser';
 import { formatPhoneNum } from '../utils/formatPhoneNum';
 import { Helmet } from 'react-helmet';
+import { EProvider } from '../models/EProvider';
 import styles from '../styles/MyAccount.module.css';
-
-enum EProvider {
-  GOOGLE = 'google.com',
-  NATIVE = 'password',
-}
 
 const MyAccount = () => {
   const [authUser, authLoading, authError] = useAuthState(auth);
@@ -98,26 +94,28 @@ const MyAccount = () => {
           </Helmet>
           <div className={styles['my-account']}>
             <h1 className={styles['my-account__header']}>My Account</h1>
-            <div className={styles.divContainer}>
-              <p>Full Name: {authUser.displayName}</p>
-            </div>
-            <div className={styles.divContainer}>
-              <p>Email: {authUser.email}</p>
-            </div>
-            <div className={styles.divContainer}>
-              <p>Email Verified: {authUser.emailVerified.toString()}</p>
-            </div>
-            {(authUser.phoneNumber || checkedUser.phoneNumber) && (
-              <div className={styles.divContainer}>
-                <p>
-                  Phone Number:{' '}
-                  {formatPhoneNum(authUser.phoneNumber as string) ||
-                    formatPhoneNum(checkedUser.phoneNumber as string)}
-                </p>
+            <div className={styles.container}>
+              <div className={styles.nameContainer}>
+                <p>Full Name: {authUser.displayName}</p>
               </div>
-            )}
-            <div className={styles.divContainer}>
-              <p>Last Signed In: {authUser.metadata.lastSignInTime}</p>
+              <div className={styles.emailContainer}>
+                <p>Email: {authUser.email}</p>
+              </div>
+              <div className={styles.verifiedContainer}>
+                <p>Email Verified: {authUser.emailVerified.toString()}</p>
+              </div>
+              {(authUser.phoneNumber || checkedUser.phoneNumber) && (
+                <div className={styles.phoneContainer}>
+                  <p>
+                    Phone Number:{' '}
+                    {formatPhoneNum(authUser.phoneNumber as string) ||
+                      formatPhoneNum(checkedUser.phoneNumber as string)}
+                  </p>
+                </div>
+              )}
+              <div className={styles.signedInContainer}>
+                <p>Last Signed In: {authUser.metadata.lastSignInTime}</p>
+              </div>
             </div>
 
             {authProvider === EProvider.NATIVE && (
