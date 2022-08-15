@@ -56,8 +56,8 @@ const ChangePassword = () => {
                 <TextField
                   className={styles['pw-input']}
                   type='password'
-                  label='Password'
-                  name='password'
+                  label='New Password'
+                  name='newPassword'
                   value={newPassword}
                   onChange={e => setNewPassword(e.target.value)}
                 />

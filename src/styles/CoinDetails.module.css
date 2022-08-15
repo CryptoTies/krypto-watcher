@@ -1,0 +1,57 @@
+.coinDetails {
+  margin-top: var(--header-margin);
+  font-family: var(--custom-font);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.coinDetails div {
+  background: gold;
+  margin-bottom: 1rem;
+  width: 50%;
+}
+
+.coinDetails div > * {
+  text-align: center;
+}
+
+.coinDetails div a {
+  color: blue;
+}
+
+.rankContainer {
+}
+
+.symbolContainer {
+}
+
+.priceContainer {
+}
+
+.volumeContainer {
+}
+
+.marketCapContainer {
+}
+
+.totalSupplyContainer {
+}
+
+.availableSupplyContainer {
+}
+
+.webSiteContainer {
+}
+
+.twitterContainer {
+}
+
+@media (max-width: 768px) {
+  .coinDetails div a {
+    font-size: 1.25rem;
+  }
+  .coinDetails div {
+    width: 90%;
+  }
+}
