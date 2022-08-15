@@ -14,7 +14,8 @@ import { IChart } from '../models/IChart';
 import { configChartOptions } from '../utils/configChartOptions';
 import { Button } from '@mui/material';
 import SearchBar from '../components/SearchBar';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
+import { helmetData } from '../utils/helmetData';
 
 function MyCryptos() {
   const [myCoins, setMyCoins] = useState<ICoin[]>([]);
@@ -132,7 +133,7 @@ function MyCryptos() {
     <>
       {showPage && (
         <>
-          <Helmet>
+          <Helmet helmetData={helmetData}>
             <title>My Cryptos | Krypto Watcher</title>
           </Helmet>
           <div className={styles['my-cryptos']}>

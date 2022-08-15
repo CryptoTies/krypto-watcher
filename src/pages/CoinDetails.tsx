@@ -2,9 +2,10 @@ import useFetch from '../hooks/UseFetch';
 import { useParams } from 'react-router-dom';
 import { cryptoAPI } from '../utils/crypto-api';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
-import { Helmet } from 'react-helmet';
 import commaNumber from 'comma-number';
 import styles from '../styles/CoinDetails.module.css';
+import { helmetData } from '../utils/helmetData';
+import { Helmet } from 'react-helmet-async';
 
 const CoinDetails = () => {
   const { id } = useParams();
@@ -28,7 +29,7 @@ const CoinDetails = () => {
     <>
       {coin && (
         <>
-          <Helmet>
+          <Helmet helmetData={helmetData}>
             <title>{coin.name} | Kyrpto Watcher</title>
           </Helmet>
           <div className={styles.coinDetails}>

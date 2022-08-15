@@ -5,7 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { ICheckedUser } from '../models/ICheckedUser';
 import { formatPhoneNum } from '../utils/formatPhoneNum';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
+import { helmetData } from '../utils/helmetData';
 import { EProvider } from '../models/EProvider';
 import { Link } from 'react-router-dom';
 import styles from '../styles/MyAccount.module.css';
@@ -71,7 +72,7 @@ const MyAccount = () => {
     <>
       {showPage && (
         <>
-          <Helmet>
+          <Helmet helmetData={helmetData}>
             <title>My Account | Krypto Watcher</title>
           </Helmet>
           <div className={styles['my-account']}>

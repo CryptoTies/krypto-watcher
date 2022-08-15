@@ -13,7 +13,8 @@ import { ILoginUser } from '../models/ILoginUser';
 import useForm from '../hooks/UseForm';
 import { Link } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
+import { helmetData } from '../utils/helmetData';
 
 const Login = () => {
   const {
@@ -79,7 +80,7 @@ const Login = () => {
 
   return (
     <>
-      <Helmet>
+      <Helmet helmetData={helmetData}>
         <title>Login | Krypto Watcher</title>
       </Helmet>
       <div className={styles.login}>

@@ -12,7 +12,8 @@ import { Button, Paper } from '@material-ui/core';
 import useForm from '../hooks/UseForm';
 import { ECountryCodes } from '../models/ECountryCodes';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
+import { helmetData } from '../utils/helmetData';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -118,7 +119,7 @@ const Register = () => {
 
   return (
     <>
-      <Helmet>
+      <Helmet helmetData={helmetData}>
         <title>Register | Kyrpto Watcher</title>
       </Helmet>
       <div className={styles.register}>
