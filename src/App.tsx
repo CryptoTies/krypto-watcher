@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import CoinDetails from './pages/CoinDetails';
 import MyAccount from './pages/MyAccount';
 import MyCryptos from './pages/MyCryptos';
+import ChangePassword from './pages/ChangePassword';
 
 const App = () => {
   return (
@@ -18,7 +19,19 @@ const App = () => {
         <Route path='/coin/:id' element={<CoinDetails />} />
         <Route path='/my-cryptos' element={<MyCryptos />} />
         <Route path='/account/:uuid' element={<MyAccount />} />
-        <Route path='*' element={<h1>404! Page not Found</h1>} />
+        <Route path='change-password' element={<ChangePassword />} />
+        <Route
+          path='*'
+          element={
+            <h1
+              style={{
+                marginTop: '200px',
+              }}
+            >
+              404! Page not Found
+            </h1>
+          }
+        />
       </Routes>
     </Layout>
   );

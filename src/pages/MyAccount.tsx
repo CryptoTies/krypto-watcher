@@ -3,11 +3,11 @@ import { auth, db } from '../../firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate, useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
-import { updatePassword } from 'firebase/auth';
 import { ICheckedUser } from '../models/ICheckedUser';
 import { formatPhoneNum } from '../utils/formatPhoneNum';
 import { Helmet } from 'react-helmet';
 import { EProvider } from '../models/EProvider';
+import { Link } from 'react-router-dom';
 import styles from '../styles/MyAccount.module.css';
 
 const MyAccount = () => {
@@ -20,8 +20,6 @@ const MyAccount = () => {
     phoneNumber: null,
     lastSeen: {},
   });
-  const [newPassword, setNewPassword] = useState('');
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
 
   const navigate = useNavigate();
 
@@ -69,22 +67,6 @@ const MyAccount = () => {
     navigate('/');
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (newPassword === newPasswordConfirm) {
-      try {
-        await updatePassword(authUser!, newPassword);
-        alert('Password updated');
-      } catch (err) {
-        console.error(err);
-      }
-    } else {
-      alert('Passwords do not match');
-    }
-    setNewPassword('');
-    setNewPasswordConfirm('');
-  };
-
   return (
     <>
       {showPage && (
@@ -119,23 +101,9 @@ const MyAccount = () => {
             </div>
 
             {authProvider === EProvider.NATIVE && (
-              <form onSubmit={handleSubmit}>
-                <label htmlFor='changePW'>Change Password</label>
-                <input
-                  type='password'
-                  id='changePW'
-                  onChange={e => setNewPassword(e.target.value)}
-                  value={newPassword}
-                />
-                <label htmlFor='confirmPW'>Confirm Password</label>
-                <input
-                  type='password'
-                  id='ConfirmPW'
-                  onChange={e => setNewPasswordConfirm(e.target.value)}
-                  value={newPasswordConfirm}
-                />
-                <button type='submit'>Submit</button>
-              </form>
+              <Link to='/change-password' className={styles['changePassword']}>
+                Change Password
+              </Link>
             )}
           </div>
         </>

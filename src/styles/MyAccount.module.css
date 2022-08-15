@@ -27,3 +27,7 @@
 .container div p {
   text-align: center;
 }
+
+.changePassword {
+  margin-top: 1rem;
+}
