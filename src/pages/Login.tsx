@@ -123,14 +123,14 @@ const Login = () => {
               Google Login
             </GoogleButton>
           </div>
-          <div className={styles.noAccountContainer}>
-            <p className={styles.noAccount}>
-              Don't have an account?
-              <br />
-              <Link to='/register' className={styles.login__registerLink}>
-                Register
-              </Link>
-            </p>
+          <div className={styles.linksContainer}>
+            <Link to='/register' className={styles.registerLink}>
+              Register
+            </Link>
+
+            <Link to='/forgot-password' className={styles.forgotLink}>
+              Forgot Password
+            </Link>
           </div>
         </Paper>
       </div>

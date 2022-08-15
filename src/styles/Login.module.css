@@ -8,6 +8,7 @@
 .login__paper {
   width: 25rem;
   height: 35rem;
+  position: relative;
 }
 
 .login__header {
@@ -37,25 +38,17 @@
   align-content: center;
   justify-content: center;
   align-items: center;
-  margin: 5rem 1rem 5.3rem 1rem;
+  margin: 5rem 1rem 2.5rem 1rem;
 }
 
-.noAccountContainer {
+.linksContainer {
   display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  font-family: var(--custom-font);
+  justify-content: space-around;
+  position: absolute;
+  width: 100%;
+  bottom: 2rem;
 }
 
-.noAccount {
-  text-align: center;
-}
-
-.login__registerLink {
+.linksContainer a {
   color: blue;
-}
-
-.login__googleLogInBtn {
 }
