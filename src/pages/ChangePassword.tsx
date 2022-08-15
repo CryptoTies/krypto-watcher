@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import styles from '../styles/ChangePassword.module.css';
 import Paper from '@mui/material/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@mui/material/Button';
@@ -8,6 +7,7 @@ import { auth } from '../../firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { EProvider } from '../models/EProvider';
+import styles from '../styles/ChangePassword.module.css';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ const ChangePassword = () => {
 
     if (
       authUser &&
+      !authLoading &&
       (authUser as any)?.reloadUserInfo?.providerUserInfo[0].providerId !==
         EProvider.NATIVE
     ) {

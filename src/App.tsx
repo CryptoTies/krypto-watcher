@@ -7,6 +7,7 @@ import CoinDetails from './pages/CoinDetails';
 import MyAccount from './pages/MyAccount';
 import MyCryptos from './pages/MyCryptos';
 import ChangePassword from './pages/ChangePassword';
+import ForgotPassword from './pages/ForgotPassword';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path='/my-cryptos' element={<MyCryptos />} />
         <Route path='/account/:uuid' element={<MyAccount />} />
         <Route path='change-password' element={<ChangePassword />} />
+        <Route path='forgot-password' element={<ForgotPassword />} />
         <Route
           path='*'
           element={
