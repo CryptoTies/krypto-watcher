@@ -33,8 +33,8 @@ const ChangePassword = () => {
       newPassword: '',
       newPasswordConfirm: '',
     },
-    (info: IChangePassword) => {
-      handleChangePWSubmit(info);
+    (data: IChangePassword) => {
+      handleChangePWSubmit(data);
     }
   );
 
@@ -54,16 +54,18 @@ const ChangePassword = () => {
   }, [authUser, authLoading, navigate]);
 
   const handleChangePWSubmit = async (info: IChangePassword) => {
+    const { oldPassword, newPassword, newPasswordConfirm } = info;
+
     const credential = EmailAuthProvider.credential(
       authUser?.email as string,
-      info.oldPassword
+      oldPassword
     );
     try {
       await reauthenticateWithCredential(authUser!, credential);
-      if (info.newPassword !== info.newPasswordConfirm) {
+      if (newPassword !== newPasswordConfirm) {
         throw new Error('New passwords do not match');
       }
-      await updatePassword(authUser!, info.newPassword);
+      await updatePassword(authUser!, newPassword);
       alert('Password updated');
     } catch (err) {
       console.error(err);
