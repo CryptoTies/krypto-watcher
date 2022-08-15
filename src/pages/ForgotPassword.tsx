@@ -5,6 +5,8 @@ import Button from '@mui/material/Button';
 import styles from '../styles/ForgotPassword.module.css';
 import { auth } from '../../firebaseConfig';
 import { sendPasswordResetEmail } from 'firebase/auth';
+import { Helmet } from 'react-helmet-async';
+import { helmetData } from '../utils/helmetData';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -21,32 +23,38 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className={styles.forgotPW}>
-      <Paper className={styles['forgotPW__paper']}>
-        <form
-          className={styles['forgotPW__form']}
-          onSubmit={handleResetPassword}
-        >
-          <TextField
-            className={styles['forgotPW__input']}
-            label='Email'
-            type='email'
-            value={email}
-            name='email'
-            onChange={e => setEmail(e.target.value)}
-          />
-          <Button
-            className={styles['forgotPW__btn']}
-            variant='contained'
-            color='primary'
-            type='submit'
-            disabled={!email}
+    <>
+      <Helmet helmetData={helmetData}>
+        <title>Forgot Password | Krypto Watcher</title>
+      </Helmet>
+      <div className={styles.forgotPW}>
+        <Paper className={styles['forgotPW__paper']}>
+          <h1 className={styles['forgotPW__header']}>Forgot Password</h1>
+          <form
+            className={styles['forgotPW__form']}
+            onSubmit={handleResetPassword}
           >
-            Reset Password
-          </Button>
-        </form>
-      </Paper>
-    </div>
+            <TextField
+              className={styles['forgotPW__input']}
+              label='Email'
+              type='email'
+              value={email}
+              name='email'
+              onChange={e => setEmail(e.target.value)}
+            />
+            <Button
+              className={styles['forgotPW__btn']}
+              variant='contained'
+              color='primary'
+              type='submit'
+              disabled={!email}
+            >
+              Reset Password
+            </Button>
+          </form>
+        </Paper>
+      </div>
+    </>
   );
 };
 

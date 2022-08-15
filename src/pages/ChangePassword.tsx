@@ -14,6 +14,8 @@ import { EProvider } from '../models/EProvider';
 import { IChangePassword } from '../models/IChangePassword';
 import useForm from '../hooks/UseForm';
 import styles from '../styles/ChangePassword.module.css';
+import { Helmet } from 'react-helmet-async';
+import { helmetData } from '../utils/helmetData';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -73,51 +75,60 @@ const ChangePassword = () => {
   return (
     <>
       {authUser && !authLoading && (
-        <div className={styles.changePW}>
-          <Paper className={styles['changePW__paper']}>
-            <form onSubmit={handleSubmit} className={styles['changePW__form']}>
-              <div className={styles.inputContainer}>
-                <TextField
-                  className={styles['oldPW-input']}
-                  type='password'
-                  label='Old Password'
-                  name='oldPassword'
-                  value={info.oldPassword}
-                  onChange={handleChange}
-                />
-                <TextField
-                  className={styles['newPW-input']}
-                  type='password'
-                  label='New Password'
-                  name='newPassword'
-                  value={info.newPassword}
-                  onChange={handleChange}
-                />
-                <TextField
-                  className={styles['confirmPW-input']}
-                  type='password'
-                  label='Confirm Password'
-                  name='newPasswordConfirm'
-                  value={info.newPasswordConfirm}
-                  onChange={handleChange}
-                />
-              </div>
-              <Button
-                type='submit'
-                variant='contained'
-                color='primary'
-                className={styles.changeBtn}
-                disabled={
-                  !info.oldPassword ||
-                  !info.newPassword ||
-                  !info.newPasswordConfirm
-                }
+        <>
+          <Helmet helmetData={helmetData}>
+            <title>Change Password | Krypto Watcher</title>
+          </Helmet>
+          <div className={styles.changePW}>
+            <Paper className={styles['changePW__paper']}>
+              <h1 className={styles['changePW__header']}>Change Password</h1>
+              <form
+                onSubmit={handleSubmit}
+                className={styles['changePW__form']}
               >
-                Change Password
-              </Button>
-            </form>
-          </Paper>
-        </div>
+                <div className={styles.inputContainer}>
+                  <TextField
+                    className={styles['oldPW-input']}
+                    type='password'
+                    label='Old Password'
+                    name='oldPassword'
+                    value={info.oldPassword}
+                    onChange={handleChange}
+                  />
+                  <TextField
+                    className={styles['newPW-input']}
+                    type='password'
+                    label='New Password'
+                    name='newPassword'
+                    value={info.newPassword}
+                    onChange={handleChange}
+                  />
+                  <TextField
+                    className={styles['confirmPW-input']}
+                    type='password'
+                    label='Confirm Password'
+                    name='newPasswordConfirm'
+                    value={info.newPasswordConfirm}
+                    onChange={handleChange}
+                  />
+                </div>
+                <Button
+                  type='submit'
+                  variant='contained'
+                  color='primary'
+                  className={styles.changeBtn}
+                  disabled={
+                    !info.oldPassword ||
+                    !info.newPassword ||
+                    !info.newPasswordConfirm
+                  }
+                >
+                  Change Password
+                </Button>
+              </form>
+            </Paper>
+          </div>
+        </>
       )}
     </>
   );
