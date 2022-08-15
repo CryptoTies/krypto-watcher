@@ -2,16 +2,22 @@ import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@mui/material/Button';
-import { resetPassword } from '../utils/resetPassword';
 import styles from '../styles/ForgotPassword.module.css';
+import { auth } from '../../firebaseConfig';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
 
   const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let res = await resetPassword(email);
-    console.log('RES: ', res);
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setEmail('');
+      alert('Password reset email sent');
+    } catch (err) {
+      alert((err as Error).message);
+    }
   };
 
   return (
