@@ -82,11 +82,12 @@ const Register = () => {
       await updateProfile(user, {
         displayName: `${firstName} ${lastName}`,
       });
+      clearInfo();
       navigate('/');
     } catch (err) {
       console.error(err);
+      alert((err as Error).message);
     }
-    clearInfo();
   };
 
   const handleIsPhoneInputValid = (value: string, country: any) => {

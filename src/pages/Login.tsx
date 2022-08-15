@@ -62,6 +62,7 @@ const Login = () => {
       navigate('/');
     } catch (err) {
       console.error(err);
+      alert((err as Error).message);
     }
     clearInfo();
   };
@@ -70,12 +71,12 @@ const Login = () => {
     const { email, password } = loginInfo;
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      clearInfo();
       navigate('/');
     } catch (err) {
       console.error(err);
       if (err instanceof Error) alert(err.message);
     }
-    clearInfo();
   };
 
   return (

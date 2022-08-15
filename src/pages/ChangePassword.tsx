@@ -1,20 +1,40 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@mui/material/Button';
-import { updatePassword } from 'firebase/auth';
+import {
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+} from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { EProvider } from '../models/EProvider';
+import { IChangePassword } from '../models/IChangePassword';
+import useForm from '../hooks/UseForm';
 import styles from '../styles/ChangePassword.module.css';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
 
   const [authUser, authLoading] = useAuthState(auth);
-  const [newPassword, setNewPassword] = useState('');
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
+
+  const {
+    form: info,
+    handleChange,
+    handleSubmit,
+    clearInfo,
+  } = useForm(
+    {
+      oldPassword: '',
+      newPassword: '',
+      newPasswordConfirm: '',
+    },
+    (info: IChangePassword) => {
+      handleChangePWSubmit(info);
+    }
+  );
 
   useEffect(() => {
     if (!authUser && !authLoading) {
@@ -31,20 +51,23 @@ const ChangePassword = () => {
     }
   }, [authUser, authLoading, navigate]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (newPassword === newPasswordConfirm) {
-      try {
-        await updatePassword(authUser!, newPassword);
-        alert('Password updated');
-      } catch (err) {
-        console.error(err);
+  const handleChangePWSubmit = async (info: IChangePassword) => {
+    const credential = EmailAuthProvider.credential(
+      authUser?.email as string,
+      info.oldPassword
+    );
+    try {
+      await reauthenticateWithCredential(authUser!, credential);
+      if (info.newPassword !== info.newPasswordConfirm) {
+        throw new Error('New passwords do not match');
       }
-    } else {
-      alert('Passwords do not match');
+      await updatePassword(authUser!, info.newPassword);
+      alert('Password updated');
+    } catch (err) {
+      console.error(err);
+      alert((err as Error).message);
     }
-    setNewPassword('');
-    setNewPasswordConfirm('');
+    clearInfo();
   };
 
   return (
@@ -55,20 +78,28 @@ const ChangePassword = () => {
             <form onSubmit={handleSubmit} className={styles['changePW__form']}>
               <div className={styles.inputContainer}>
                 <TextField
-                  className={styles['pw-input']}
+                  className={styles['oldPW-input']}
+                  type='password'
+                  label='Old Password'
+                  name='oldPassword'
+                  value={info.oldPassword}
+                  onChange={handleChange}
+                />
+                <TextField
+                  className={styles['newPW-input']}
                   type='password'
                   label='New Password'
                   name='newPassword'
-                  value={newPassword}
-                  onChange={e => setNewPassword(e.target.value)}
+                  value={info.newPassword}
+                  onChange={handleChange}
                 />
                 <TextField
                   className={styles['confirmPW-input']}
                   type='password'
                   label='Confirm Password'
-                  name='confirmPassword'
-                  value={newPasswordConfirm}
-                  onChange={e => setNewPasswordConfirm(e.target.value)}
+                  name='newPasswordConfirm'
+                  value={info.newPasswordConfirm}
+                  onChange={handleChange}
                 />
               </div>
               <Button
@@ -76,7 +107,11 @@ const ChangePassword = () => {
                 variant='contained'
                 color='primary'
                 className={styles.changeBtn}
-                disabled={!newPassword || !newPasswordConfirm}
+                disabled={
+                  !info.oldPassword ||
+                  !info.newPassword ||
+                  !info.newPasswordConfirm
+                }
               >
                 Change Password
               </Button>
