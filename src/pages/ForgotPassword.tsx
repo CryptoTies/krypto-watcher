@@ -1,13 +1,13 @@
-import Paper from '@mui/material/Paper';
-import TextField from '@material-ui/core/TextField';
-import Button from '@mui/material/Button';
-import styles from '../styles/ForgotPassword.module.css';
-import { auth } from '../../firebaseConfig';
+import { auth } from '../firebaseConfig';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { Helmet } from 'react-helmet-async';
 import { helmetData } from '../utils/helmetData';
 import { IForgotPassword } from '../models/IForgotPassword';
 import useForm from '../hooks/UseForm';
+import Paper from '@mui/material/Paper';
+import TextField from '@material-ui/core/TextField';
+import Button from '@mui/material/Button';
+import styles from '../styles/ForgotPassword.module.css';
 
 const ForgotPassword = () => {
   const {

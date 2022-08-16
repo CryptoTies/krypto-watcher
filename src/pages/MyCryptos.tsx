@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import useFetch from '../hooks/UseFetch';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from '../../firebaseConfig';
+import { auth, db } from '../firebaseConfig';
 import { cryptoAPI } from '../utils/crypto-api';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import { ICoin } from '../models/ICoin';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
 import { useNavigate } from 'react-router-dom';
-import styles from '../styles/MyCryptos.module.css';
 import { getChartData } from '../utils/getChartData';
-import Chart from 'react-apexcharts';
 import { IChart } from '../models/IChart';
 import { configChartOptions } from '../utils/configChartOptions';
 import { Button } from '@mui/material';
-import SearchBar from '../components/SearchBar';
 import { Helmet } from 'react-helmet-async';
 import { helmetData } from '../utils/helmetData';
+import useFetch from '../hooks/UseFetch';
+import SearchBar from '../components/SearchBar';
+import Chart from 'react-apexcharts';
+import styles from '../styles/MyCryptos.module.css';
 
 function MyCryptos() {
   const [myCoins, setMyCoins] = useState<ICoin[]>([]);

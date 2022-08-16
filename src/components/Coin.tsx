@@ -2,16 +2,16 @@ import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ICoin } from '../models/ICoin';
 import { formatPrice } from '../utils/formatPrice';
-import { auth, db } from '../../firebaseConfig';
+import { auth, db } from '../firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useState, useEffect, useCallback } from 'react';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import styles from '../styles/Coin.module.css';
 import { getChartData } from '../utils/getChartData';
-import Chart from 'react-apexcharts';
 import { IChart } from '../models/IChart';
 import { configChartOptions } from '../utils/configChartOptions';
 import { Button } from '@mui/material';
+import Chart from 'react-apexcharts';
+import styles from '../styles/Coin.module.css';
 
 interface Props {
   coin: ICoin;

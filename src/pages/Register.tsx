@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth, db } from '../../firebaseConfig';
+import { auth, db } from '../firebaseConfig';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { IRegisterUser } from '../models/IRegisterUser';
-import styles from '../styles/Register.module.css';
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
-import TextField from '@material-ui/core/TextField';
 import { Button, Paper } from '@material-ui/core';
 import useForm from '../hooks/UseForm';
 import { ECountryCodes } from '../models/ECountryCodes';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { helmetData } from '../utils/helmetData';
+import TextField from '@material-ui/core/TextField';
+import PhoneInput from 'react-phone-input-2';
+import styles from '../styles/Register.module.css';
+import 'react-phone-input-2/lib/style.css';
 
 const Register = () => {
   const navigate = useNavigate();

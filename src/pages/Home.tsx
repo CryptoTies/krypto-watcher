@@ -2,20 +2,20 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { doc, setDoc, serverTimestamp, getDoc } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from '../../firebaseConfig';
+import { auth, db } from '../firebaseConfig';
 import { cryptoAPI } from '../utils/crypto-api';
 import { ICoin } from '../models/ICoin';
-import useFetch from '../hooks/UseFetch';
-import Coins from '../components/Coins';
-import styles from '../styles/Home.module.css';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { PAGINATION_NUM } from '../utils/pagination-num';
-import SearchBar from '../components/SearchBar';
-import CoinFilterOptions from '../components/CoinFilterOptions';
 import { COIN_FILTER_OPTIONS } from '../models/CoinFilterOptions';
 import { Helmet } from 'react-helmet-async';
 import { helmetData } from '../utils/helmetData';
+import useFetch from '../hooks/UseFetch';
+import SearchBar from '../components/SearchBar';
+import Coins from '../components/Coins';
+import CoinFilterOptions from '../components/CoinFilterOptions';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import styles from '../styles/Home.module.css';
 
 const Home = () => {
   const [coinsData, coinsLoading, coinsError] = useFetch(`${cryptoAPI}?skip=0`);

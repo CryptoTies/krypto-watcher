@@ -1,11 +1,6 @@
-import { db, auth, googleProvider } from '../../firebaseConfig';
+import { db, auth, googleProvider } from '../firebaseConfig';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import {
-  signInWithPopup,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
 import styles from '../styles/Login.module.css';
 import TextField from '@material-ui/core/TextField';
 import { Button, Paper } from '@material-ui/core';
@@ -15,6 +10,11 @@ import { Link } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
 import { Helmet } from 'react-helmet-async';
 import { helmetData } from '../utils/helmetData';
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 
 const Login = () => {
   const {
