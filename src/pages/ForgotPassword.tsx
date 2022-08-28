@@ -3,7 +3,7 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 import { Helmet } from 'react-helmet-async';
 import { helmetData } from '../utils/helmetData';
 import { IForgotPassword } from '../models/IForgotPassword';
-import useForm from '../hooks/UseForm';
+import { useForm } from '../hooks/useForm';
 import Paper from '@mui/material/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@mui/material/Button';

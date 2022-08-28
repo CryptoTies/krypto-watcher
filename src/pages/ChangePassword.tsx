@@ -12,7 +12,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { EProvider } from '../models/EProvider';
 import { IChangePassword } from '../models/IChangePassword';
-import useForm from '../hooks/UseForm';
+import {useForm} from '../hooks/useForm';
 import styles from '../styles/ChangePassword.module.css';
 import { Helmet } from 'react-helmet-async';
 import { helmetData } from '../utils/helmetData';

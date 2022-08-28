@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const UseForm = (
+export const useForm = (
   initialState: any,
   submitFn: any,
   optionalFields?: string[]
@@ -71,5 +71,3 @@ const UseForm = (
     errors,
   };
 };
-
-export default UseForm;

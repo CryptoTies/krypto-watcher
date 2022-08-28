@@ -10,7 +10,7 @@ import { PAGINATION_NUM } from '../utils/pagination-num';
 import { COIN_FILTER_OPTIONS } from '../models/CoinFilterOptions';
 import { Helmet } from 'react-helmet-async';
 import { helmetData } from '../utils/helmetData';
-import useFetch from '../hooks/UseFetch';
+import { useFetch } from '../hooks/useFetch';
 import SearchBar from '../components/SearchBar';
 import Coins from '../components/Coins';
 import CoinFilterOptions from '../components/CoinFilterOptions';

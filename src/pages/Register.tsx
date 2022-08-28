@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { IRegisterUser } from '../models/IRegisterUser';
 import { Button, Paper } from '@material-ui/core';
-import useForm from '../hooks/UseForm';
+import { useForm } from '../hooks/useForm';
 import { ECountryCodes } from '../models/ECountryCodes';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';

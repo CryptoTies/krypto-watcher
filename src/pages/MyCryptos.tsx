@@ -12,7 +12,7 @@ import { configChartOptions } from '../utils/configChartOptions';
 import { Button } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { helmetData } from '../utils/helmetData';
-import useFetch from '../hooks/UseFetch';
+import { useFetch } from '../hooks/useFetch';
 import SearchBar from '../components/SearchBar';
 import Chart from 'react-apexcharts';
 import styles from '../styles/MyCryptos.module.css';

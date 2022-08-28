@@ -3,7 +3,7 @@ import { cryptoAPI } from '../utils/crypto-api';
 import { ICryptoApiRes } from '../models/ICryptoApiRes';
 import { Helmet } from 'react-helmet-async';
 import { helmetData } from '../utils/helmetData';
-import useFetch from '../hooks/UseFetch';
+import { useFetch } from '../hooks/useFetch';
 import commaNumber from 'comma-number';
 import styles from '../styles/CoinDetails.module.css';
 
