@@ -8,6 +8,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@mui/material/Button';
 import styles from '../styles/ForgotPassword.module.css';
+import { Link } from 'react-router-dom';
 
 const ForgotPassword = () => {
   const {
@@ -70,6 +71,9 @@ const ForgotPassword = () => {
               Reset Password
             </Button>
           </form>
+          <Link to='/login' className={styles.login__link}>
+            Back to Login
+          </Link>
         </Paper>
       </div>
     </>
